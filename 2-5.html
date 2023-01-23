@@ -36,21 +36,20 @@
 <BR><HR><H2>サンプルアプリケーションの実行とソース解説 1</H2>
 
 　Kodatuno CAM Kernelを使ったCAMアプリケーションの実装手順を説明します．<BR>
-　<A HREF="./2-3.html">2.3 各ウィンドウの名称と機能</A>で述べたとおり，KodatunonにはKodatunoが提供するライブラリをユーザーが呼び出し，
+　<A HREF="./2-3.html">2.3 各ウィンドウの名称と機能</A>で述べたとおり，KodatunoにはKodatunoが提供するライブラリをユーザーが呼び出し，
 独自のCAMアプリケーションを構築するための仕組みが用意されています．<BR>
-　"UA"フォルダに"UserFunc.cpp/.h", "SampleFunc1.cpp", "SampleFunc2.cpp", "SampleFunc.h"の4つのソースファイルがあることを確認してください．
+　"UA"フォルダに"UserFunc.cpp/.h", "SampleFunc1.cpp", "SampleFunc2.cpp", "SampleFunc3.cpp", "SampleFunc.h"の5つのソースファイルがあることを確認してください．
 "UserFunc.cpp/.h"は，KodatunoのGE部/GUI部と，ユーザーが独自に作成するソースコードとのブリッジとしての役割を果たす部分です．
-また，Kodatuno R3.0 W/S Ver. Qt Ver.には8つのサンプルアプリケーションが用意されており，それらが"SampleFunc1.cpp"および"SapmeFunc2.cpp"に記述されています．
-本セクションおよび次セクションにてこれら8つのサンプルアプリケーションの解説を行いますが，その前に"UserFunc.cpp/.h"の取り扱いについて説明します．<BR><BR>
+また，Kodatuno R3.4 W/S Ver. Qt Ver.には9つのサンプルアプリケーションが用意されており，それらが"SampleFunc1.cpp"，"SapmeFunc2.cpp"および"SapmeFunc3.cpp"に記述されています．
+本セクションおよび次セクションにてこれら9つのサンプルアプリケーションの解説を行いますが，その前に"UserFunc.cpp/.h"の取り扱いについて説明します．<BR><BR>
 
-<BR><LI><H3>UserFunc.cpp/.h</H3>
+<BR><H3>UserFunc.cpp/.h</H3>
 　"UserFunc.cpp/.h"にはUSERクラスが定義されており，メイン画面に割り当てられたユーザー用ボタンにイベントが発生すると，このクラスを介してKodatuno GUI部とUser部が情報をやりとりします．
 具体例として, ピックされたBody情報をコンソールに出力するサンプル関数ExecSampleFunc0()を用意しましたので，これを通してどのような情報がUser部に渡されるかを解説します．
 
 <H4>＜実行手順＞</H4>
-<OL>
 <LI>まず、<A HREF="./2-2.html">2.2 Kodatunoを動かしてみよう</A>で示したように，Kodatunoアプリケーションを起動します．<BR><BR>
-<BR><LI>次に適当なIGESファイルを読み込みます．W/S Ver.ではメイン画面右上"Open"ボタン，Qt Ver.ではをメニューバーの"file"を選択し，押し，"Kodatuno_R***"フォルダ内にある，"Model"-->
+<BR><LI>次に適当なIGESファイルを読み込みます．W/S Ver.ではメイン画面右上"Open"ボタン，Qt Ver.ではメニューバーの"file"を選択し，押し，"Kodatuno_R***"フォルダ内にある，"Model"-->
 "IGES"フォルダを開くと，"FreeSurf.IGS"という名前のIGESファイルがありますので，それを選択し、"OK"．グラフィック領域に
 自由曲面が表示されたことを確認します．
 
@@ -239,7 +238,7 @@ void USER::SetMenuLabelName()
 
 
 
-</blockquote> <HR> Document Release 3.3 for Kodatuno R3.3, May 2018<P> <hr> <center>
+</blockquote> <HR> Document Release 3.4 for Kodatuno R3.4, January 2019<P> <hr> <center>
 <A HREF="./2-4.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-6.html">Next</A><br>
@@ -249,7 +248,7 @@ void USER::SetMenuLabelName()
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: May 9, 2018</i></small>      
+		<small><i>Last modified: January 7, 2019</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  
