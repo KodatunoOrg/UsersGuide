@@ -30,10 +30,10 @@
 
 　Kodatunoは純国産のマルチプラットフォームなオープンソースCAMカーネルを目指し開発中の
 ソフトウェアです．種々のCAMアプリケーションを構築するための様々な関数をライブラリとして提供します．
-<BR><BR>　マルチプラットフォーム環境を確保するため，開発言語はC/C++を用いてお
-り，3D描画用APIにOpenGL GLUTを用いています．また更に，R1.1からは高機能GUIアプリケーション開発環境である
-Wide StudioをGUIとして用いています．R2.0では，WideStudioをGUIに用いたVersion（W/S Ver）及び，
-OpenGLのみを用いたVersion（N/W Ver）の両方を同包しています．<BR><BR>
+<BR><BR>　マルチプラットフォーム環境を確保するため，開発言語はC/C++を用いており，3D描画用APIにOpenGLを用いています．
+また更に，R1.1からは高機能GUIアプリケーション開発環境である Wide StudioをGUIとして用いています．R2.0では，
+WideStudioをGUIに用いたVersion（W/S Ver）及び， OpenGLのみを用いたVersion（N/W Ver）の両方を同包しています．
+R3以降ではQt版も追加されています．<BR><BR>
 　本ソフトウェアは，CADデータの中間フォーマ
 ットであるIGES(JAMA-IS V1.04)をサポートしています．このIGESデータ
 を構成する全ての曲線・曲面エンティティは，内部表現としてNURBSに変換され，保持される構
@@ -49,7 +49,8 @@ Kodatuno<BR>
 
 <BR><BR><H3>ライセンス</H3>
 Kodatunoはオープンソースソフトウェアです．
-GNUの一般使用許可契約(GPL)に基づいて利用願います．<BR>
+LGPLに基づいて利用願います．<BR>
+※ R3.1以降はGNU Lesser General Public License (LGPL)に移行しました．
 
 <BR><BR><H3>連絡先</H3>
 ご意見，ご要望，問い合わせ等は下記電子メールでお送りください．<BR><BR>
@@ -63,9 +64,7 @@ http://www-mm.hm.t.kanazawa-u.ac.jp/research/kodatuno/<BR>
 
 <BR><BR><H3>動作確認環境</H3>
 <UL>
-<LI>WindowsXP/Vista/7<BR>
-<LI>FreeBSD: 6.2-RELEASE, compiler: gcc3.4.6<BR>
-<LI>Debian: GNU/Linux ver5.0, Kernel: 2.6.26-2-686, compiler: gcc4.3.2<BR>
+<LI>Windows Vista/7/8/8.1/10<BR>
 <LI>Ubuntu: 8.10, compiler: gcc4.2.4
 </LI></UL>
 
@@ -78,17 +77,17 @@ http://www-mm.hm.t.kanazawa-u.ac.jp/research/kodatuno/<BR>
 <LI>2013/01 Kodatuno R2.2　　　バグ修正，機能強化，機能の一部変更<BR>
 <LI>2013/07 Kodatuno R2.3　　　バグ修正<BR>
 <LI>2014/09 Kodatuno R3.0　　　ディレクトリ構造変更，Qtの実装，バグ修正<BR>
-<LI>2014/10 Kodatuno R3.0.1　　バグ修正<BR>
+<LI>2013/07 Kodatuno R3.0.1　　バグ修正<BR>
+<LI>2015/12 Kodatuno R3.1　　　バグ修正，機能強化，GLUTパージ
 
 </LI></UL>
 
 <BR><H3>クレジット</H3>
   総指揮：浅川直紀（金沢大学）<BR>
   開発コアチーム：高杉敬吾（金沢工業大学）<BR>
-  　　　　　　　　 　　鬼頭亮太（金沢大学）<BR>
 
 <BR><BR><H3>謝辞</H3>
-  本システムの基礎開発に尽力いただいた元マンマシン研究室の西野高志，松本健児，三枝史岳，熊坂拓也の
+  本システムの基礎開発に尽力いただいた元マンマシン研究室の西野高志，松本健児，三枝史岳，熊坂拓也，鬼頭亮太の
   諸氏に感謝します．<BR>
 
 <BR><BR><HR><H3><<免責事項>></H3>
@@ -97,7 +96,7 @@ http://www-mm.hm.t.kanazawa-u.ac.jp/research/kodatuno/<BR>
 の責任においてご使用ください．
 
 
-</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
+</blockquote> <HR> Document Release 3.1 for Kodatuno R3.1, Dec. 2015<P> <hr> <center>
 <A HREF="./index.html">index</A>
 <A HREF="./1-2.html">Next</A><br>
 </center> <hr> <table cellpadding="0" cellspacing="0" border="0" width="100%">    
@@ -106,7 +105,7 @@ http://www-mm.hm.t.kanazawa-u.ac.jp/research/kodatuno/<BR>
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Oct. 22, 2014</i></small>      
+		<small><i>Last modified: Dec. 25, 2015</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  
