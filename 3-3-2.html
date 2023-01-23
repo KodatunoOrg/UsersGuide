@@ -71,7 +71,7 @@ Describe_BODY() <BR>
 
 <A NAME="DrawBody()"> </A>
 <H4>public<BR>
-void DrawBody(BODY *Body) <BR></H3>
+static void DrawBody(BODY *Body) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>BODYを描画する。</DD>
@@ -84,7 +84,7 @@ void DrawBody(BODY *Body) <BR></H3>
 
 <A NAME="DrawCompositeCurve()"> </A>
 <H4>public<BR>
-void DrawCompositeCurve(COMPC *) <BR></H3>
+static void DrawCompositeCurve(COMPC *CompC) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>複合曲線を描画する。</DD>
@@ -97,7 +97,7 @@ void DrawCompositeCurve(COMPC *) <BR></H3>
 
 <A NAME="DrawLine()"> </A>
 <H4>public<BR>
-void DrawLine(LINE_) <BR></H3>
+static void DrawLine(LINE_ Line) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>線分を描画する。</DD>
@@ -108,9 +108,22 @@ void DrawLine(LINE_) <BR></H3>
 </DL>
 <BR><BR>
 
+<A NAME="DrawCircleArc()"> </A>
+<H4>public<BR>
+static void DrawCircleArc(CIRA Cira) <BR></H3>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>円・円弧の描画</DD>
+<DT> ＜引数＞ </DT>
+<DD>CIRA Cira: 描画する円・円弧構造体</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし</DD>
+</DL>
+<BR><BR>
+
 <A NAME="DrawNurbsCurve()"> </A>
 <H4>public<BR>
-void DrawNurbsCurve(NURBSC) <BR></H3>
+static void DrawNurbsCurve(NURBSC) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>NURBS曲線を描画する。</DD>
@@ -123,7 +136,7 @@ void DrawNurbsCurve(NURBSC) <BR></H3>
 
 <A NAME="DrawTrimdNurbsSurfe()"> </A>
 <H4>public<BR>
-void DrawTrimdNurbsSurfe(NURBSS *) <BR></H3>
+static void DrawTrimdNurbsSurfe(NURBSS *NurbsS) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>トリム面を持つNURBS曲面を描画する。</DD>
@@ -136,7 +149,7 @@ void DrawTrimdNurbsSurfe(NURBSS *) <BR></H3>
 
 <A NAME="DrawNurbsSurfe()"> </A>
 <H4>public<BR>
-void DrawNurbsSurfe(NURBSS) <BR></H3>
+static void DrawNurbsSurfe(NURBSS NurbsS) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>トリム面を持たないNURBS曲面を描画する。</DD>
@@ -149,7 +162,7 @@ void DrawNurbsSurfe(NURBSS) <BR></H3>
 
 <A NAME="DrawCurveOnParamSurfe()"> </A>
 <H4>public<BR>
-void DrawCurveOnParamSurfe(CONPS *) <BR></H3>
+static void DrawCurveOnParamSurfe(CONPS *ConpS) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>面上線を描画する。</DD>
@@ -162,7 +175,7 @@ void DrawCurveOnParamSurfe(CONPS *) <BR></H3>
 
 <A NAME="DrawTrimdSurf()"> </A>
 <H4>public<BR>
-void DrawTrimdSurf(TRMS) <BR></H3>
+static void DrawTrimdSurf(TRMS TrmS) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>トリム面を描画する。上述のDrawTrimdNurbsSurfe()はこの関数からのみ唯一呼び出される。
@@ -176,7 +189,7 @@ void DrawTrimdSurf(TRMS) <BR></H3>
 
 <A NAME="DrawNurbsCurve_Param()"> </A>
 <H4>public<BR>
-void DrawNurbsCurve_Param(NURBSC *) <BR></H3>
+static void DrawNurbsCurve_Param(NURBSC *NurbsC) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>トリムを構成する2DパラメトリックNURBS曲線要素を描画する。上述のDrawCompositeCurve()はこの関数からのみ唯一呼び出される。</DD>
@@ -187,9 +200,35 @@ void DrawNurbsCurve_Param(NURBSC *) <BR></H3>
 </DL>
 <BR><BR>
 
+<A NAME="Draw_Lines()"> </A>
+<H4>public<BR>
+static void Draw_Lines(BODY *Body) <BR></H3>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>BODYに含まれる線分を全て描画</DD>
+<DT> ＜引数＞ </DT>
+<DD>*Body：BODY構造体へのポインタ</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし</DD>
+</DL>
+<BR><BR>
+
+<A NAME="Draw_CircleArcs()"> </A>
+<H4>public<BR>
+static void Draw_CircleArcs(BODY *Body) <BR></H3>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>BODYに含まれる円，円弧を全て描画</DD>
+<DT> ＜引数＞ </DT>
+<DD>*Body：BODY構造体へのポインタ</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし</DD>
+</DL>
+<BR><BR>
+
 <A NAME="Draw_NurbsCurves()"> </A>
 <H4>public<BR>
-void Draw_NurbsCurves(BODY *Body) <BR></H3>
+static void Draw_NurbsCurves(BODY *Body) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>BODYに含まれるNURBS曲線を全て描画</DD>
@@ -202,7 +241,7 @@ void Draw_NurbsCurves(BODY *Body) <BR></H3>
 
 <A NAME="Draw_NurbsSurfaces()"> </A>
 <H4>public<BR>
-void Draw_NurbsSurfaces(BODY *Body) <BR></H3>
+static void Draw_NurbsSurfaces(BODY *Body) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>BODYに含まれるNURBS曲面を全て描画</DD>
@@ -215,7 +254,7 @@ void Draw_NurbsSurfaces(BODY *Body) <BR></H3>
 
 <A NAME="Draw_TrimSurfes()"> </A>
 <H4>public<BR>
-void Draw_TrimSurfes(BODY *Body) <BR></H3>
+static void Draw_TrimSurfes(BODY *Body) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>BODYに含まれるトリム面を全て描画</DD>
@@ -228,7 +267,7 @@ void Draw_TrimSurfes(BODY *Body) <BR></H3>
 
 <A NAME="SetNurbsStat()"> </A>
 <H4>public<BR>
-void SetNurbsStat() <BR></H3>
+static void SetNurbsStat() <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>本クラスのコンストラクタにて唯一呼び出される。NURBS描画エラーコールバック関数の定義を行う。</DD>
@@ -241,7 +280,7 @@ void SetNurbsStat() <BR></H3>
 
 <A NAME="SetNurbsSTolerance()"> </A>
 <H4>public<BR>
-void SetNurbsSTolerance(GLfloat) <BR></H3>
+static void SetNurbsSTolerance(GLfloat) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>NURBS曲面を描画する際のトレランスを指定する。</DD>
@@ -282,18 +321,30 @@ GLfloat val: gluNurbsProperty()関数のValue値を指定。<BR>
 <BR><BR>
 <HR>
 
+<A NAME="DrawMesh()"> </A>
+<H4>public<BR>
+static void DrawMesh(MESH *mesh,int flag) <BR></H3>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>メッシュの描画</DD>
+<DT> ＜引数＞ </DT>
+<DD>MESH *mesh: Meshクラスのオブジェクトへのポインタ<BR>
+int flag: KOD_TRUEの場合，スケルトン表示．   KOD_FALSEの場合，面表示<BR>
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし</DD>
+</DL>
+<BR><BR>
+<HR>
+
 <BR>■変数(Class Describe_BODY)<BR>
 <pre><font size="3">
 protected<BR>
 GLUnurbsObj *NurbsSurf                     NURBS曲面用オブジェクト
 GLUnurbsObj *NurbsCurve                    NURBS曲線用オブジェクト
-GLfloat	uKnot[KNOTNUMMAX]                  NURBS描画用U方向ノットベクトルバッファ
-GLfloat	vKnot[KNOTNUMMAX]                  NURBS描画用V方向ノットベクトルバッファ
-GLfloat	CCtlp[CTLPNUMMAX][4]               NURBS曲線描画用コントロールポイントバッファ
-GLfloat	SCtlp[CTLPNUMMAX][CTLPNUMMAX][4]   NURBS曲面描画用コントロールポイントバッファ
 </font></pre>
 
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 			<A HREF="./3-2.html" TARGET="_top">Prev</A>     
 			<A HREF="./index.html" TARGET="_top">Index</A>          
 			<A HREF="./3-4.html" TARGET="_top">Next</A><br>     
@@ -303,7 +354,7 @@ GLfloat	SCtlp[CTLPNUMMAX][CTLPNUMMAX][4]   NURBS曲面描画用コントロールポイントバ
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

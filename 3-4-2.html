@@ -33,29 +33,36 @@
 
 <BR>■シンボル
 <pre><font size="3">
-#define KOD_ERR       -1                  ERRORのシンボル
-#define KOD_FALSE     0                   偽のシンボル
-#define KOD_TRUE      1                   真のシンボル
-#define KOD_DONE      2                   実行済みを示すシンボル
-#define KOD_ONEDGE    2                   点がエッジ上にあることを示すシンボル
-#define KOD_EQUAL     2                   同値のシンボル
-#define LOW_ACCURACY  0                   低精度のシンボル
-#define MID_ACCURACY  1                   普通精度のシンボル
-#define HIGH_ACCURACY 2                   高精度のシンボル
-#define FNAMEMAX      256                 ファイル名の最大文字数
-#define PI            3.141592653589793   円周率
-#define APPROX_ZERO_L 1.0e-6              ゼロと見なせる値(低精度)
-#define APPROX_ZERO   1.0e-12             ゼロと見なせる値(普通精度)
-#define APPROX_ZERO_H 1.0e-16             ゼロと見なせる値(高精度)
-#define LOOPCOUNTMAX  100                 収束計算回数の条件
-#define COORDINDEX    3                   3次元座標を示すインデックス数
-#define QUADINDEX     4                   3次元同次座標を示すインデックス数
+#define KOD_ERR          -1                  ERRORのシンボル
+#define KOD_FALSE        0                   偽のシンボル
+#define KOD_TRUE         1                   真のシンボル
+#define KOD_DONE         2                   実行済みを示すシンボル
+#define KOD_ONEDGE       2                   点がエッジ上にあることを示すシンボル
+#define KOD_LARGE        0                   a > b　のシンボル
+#define KOD_SMALL        1                   a < b　のシンボル
+#define KOD_EQUAL        2                   同値のシンボル
+#define KOD_LARGE_EQ     3                   a >= b　のシンボル
+#define KOD_SMALL_EQ     4                   a <= b　のシンボル
+#define LOW_LOW_ACCURACY -1                  低低精度のシンボル
+#define LOW_ACCURACY     0                   低精度のシンボル
+#define MID_ACCURACY     1                   普通精度のシンボル
+#define HIGH_ACCURACY    2                   高精度のシンボル
+#define FNAMEMAX         256                 ファイル名の最大文字数
+#define PI               3.141592653589793   円周率
+#define APPROX_ZERO_L_L  1.0e-3              ゼロと見なせる値(低精度)
+#define APPROX_ZERO_L    1.0e-6              ゼロと見なせる値(低低精度)
+#define APPROX_ZERO      1.0e-9              ゼロと見なせる値(普通精度)
+#define APPROX_ZERO_H    1.0e-12             ゼロと見なせる値(高精度)
+#define LOOPCOUNTMAX     1000                収束計算回数の条件
+#define COORDINDEX       3                   3次元座標を示すインデックス数
+#define QUADINDEX        4                   3次元同次座標を示すインデックス数
+#define CW               0                   正転のシンボル
+#define CCW              1                   逆転のシンボル
 </font></pre>
 
 <HR>
 <BR>■インクルードライブラリ<BR><BR>
-&lt;stdio.h&gt;<BR> &lt;stdlib.h&gt;<BR> &lt;math.h&gt;<BR> &lt;string.h&gt;<BR> &lt;GL/glut.h&gt;<BR>
-"StdAfxWS.h"<BR><BR>
+"Kutil.h"<BR><BR>
 
 <HR>
 <BR>■型定義
@@ -318,6 +325,16 @@ Coord CalcOuterProduct2D(Coord A, Coord B);  </H4>
     角度を求めたい2つの空間ベクトル  
 ＜戻り値＞  
     角度(rad) 
+    
+<A NAME=" CalcAnglePlaneVec()"> </A>
+<H4>double CalcAnglePlaneVec(Coord a,Coord n); </H4>
+＜説明＞
+    平面と直線とのなす角を求める  
+＜引数＞  
+    a：直線の方向ベクトル 
+    b：平面の法線ベクトル 
+＜戻り値＞  
+    平面と直線とのなす角 
 
 <A NAME=" CalcInterDivPt()"> </A>
 <H4>Coord CalcInterDivPt(Coord A, Coord B, double t); </H4>
@@ -670,8 +687,29 @@ int CalcLinearEquation(double *A, double *Ans);  </H4>
     r：nCrのr  
 ＜戻り値＞  
     計算結果 
+    
+<A NAME=" Factorial()"> </A>
+<H4>int Factorial(int n);  </H4>
+＜説明＞
+    整数nの階乗を求める  
+＜引数＞  
+    n：整数 
+＜戻り値＞  
+    計算結果 
+    
+<A NAME=" Round()"> </A>
+<H4>double Round(double x);  </H4>
+＜説明＞
+    四捨五入する  
+＜引数＞  
+    x：四捨五入する自然数 
+＜戻り値＞  
+    計算結果 
+    
 </font></pre>
 <BR><BR>
+
+
 
 <H2>＜Drawing＞</H2>
 <pre><font size="3">
@@ -889,6 +927,40 @@ void BubbleSort(double Arr[], int n);  </H4>
 <BR><BR><BR>
 <HR>
 
+<A NAME="CheckTheSamePoints()"> </A>
+<H4>private<BR>
+int CheckTheSamePoints(Coord *P,int N)<BR>
+int CheckTheSamePoints(double *P,int N)<BR>
+int CheckTheSamePoints2D(Coord *P,int)<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>同一点を除去する</DD>
+<DT> ＜引数＞ </DT>
+<DD> *P：点列<BR>
+ PNum：点列数<BR>
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>残った点数 <BR>
+</DD>
+</DL>
+<BR><BR>
+
+<A NAME="CoordToArray()"> </A>
+<H4>private<BR>
+double CoordToArray(Coord a,double b[3])<BR>
+double CoordToArray2D(Coord a,double b[2])<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>Coordをdouble配列に代入</DD>
+<DT> ＜引数＞ </DT>
+<DD> a：Coord<BR>
+ b[]：double配列<BR>
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし <BR>
+</DD>
+</DL>
+<BR><BR>
 
 
 【Quaternion.h】<BR><BR>
@@ -1024,7 +1096,7 @@ Quat QSlerp(Quat p, Quat q, double t);  </H4>
     補間された点を表すクォータニオン 
 </font></pre>
 
-</blockquote> <HR>  Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR>  Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 			<A HREF="./3-2.html" TARGET="_top">Prev</A>     
 			<A HREF="./index.html" TARGET="_top">Index</A>          
 			<A HREF="./3-4.html" TARGET="_top">Next</A><br>     
@@ -1034,7 +1106,7 @@ Quat QSlerp(Quat p, Quat q, double t);  </H4>
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

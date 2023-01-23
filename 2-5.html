@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+<script src="shCore.js"></script>  <!--必須-->
+<script src="shBrushCpp.js"></script>  <!--C++-->
+<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -32,9 +38,9 @@
 　Kodatuno CAM Kernelを使ったCAMアプリケーションの実装手順を説明します．<BR>
 　<A HREF="./2-3.html">2.3 各ウィンドウの名称と機能</A>で述べたとおり，KodatunonにはKodatunoが提供するライブラリをユーザーが呼び出し，
 独自のCAMアプリケーションを構築するための仕組みが用意されています．<BR>
-　"WS"フォルダに"UserFunc.cpp/.h", "SampleFunc1.cpp", "SampleFunc2.cpp", "SampleFunc.h"の5つのソースファイルがあることを確認してください．
+　"UA"フォルダに"UserFunc.cpp/.h", "SampleFunc1.cpp", "SampleFunc2.cpp", "SampleFunc.h"の4つのソースファイルがあることを確認してください．
 "UserFunc.cpp/.h"は，KodatunoのGE部/GUI部と，ユーザーが独自に作成するソースコードとのブリッジとしての役割を果たす部分です．
-また，Kodatuno R2.2 W/S Ver.には8つのサンプルアプリケーションが用意されており，それらが"SampleFunc1.cpp"および"SapmeFunc2.cpp"に記述されています．
+また，Kodatuno R3.0 W/S Ver. Qt Ver.には8つのサンプルアプリケーションが用意されており，それらが"SampleFunc1.cpp"および"SapmeFunc2.cpp"に記述されています．
 本セクションおよび次セクションにてこれら8つのサンプルアプリケーションの解説を行いますが，その前に"UserFunc.cpp/.h"の取り扱いについて説明します．<BR><BR>
 
 <BR><LI><H3>UserFunc.cpp/.h</H3>
@@ -44,19 +50,39 @@
 <H4>＜実行手順＞</H4>
 <OL>
 <LI>まず、<A HREF="./2-2.html">2.2 Kodatunoを動かしてみよう</A>で示したように，Kodatunoアプリケーションを起動します．<BR><BR>
-<BR><LI>次に適当なIGESファイルを読み込みます．メイン画面右上"Open"ボタンを押し，"Kodatuno_R***"フォルダ内にある，
+<BR><LI>次に適当なIGESファイルを読み込みます．W/S Ver.ではメイン画面右上"Open"ボタン，Qt Ver.ではをメニューバーの"file"を選択し，押し，"Kodatuno_R***"フォルダ内にある，"Model"-->
 "IGES"フォルダを開くと，"FreeSurf.IGS"という名前のIGESファイルがありますので，それを選択し、"OK"．グラフィック領域に
 自由曲面が表示されたことを確認します．
 
-<P><CENTER><IMG SRC="pixmaps/FreeSurfView.jpg"></CENTER></P>
+<P><CENTER>
+<img SRC="pixmaps/FreeSurfView.jpg">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img SRC="pixmaps/FreeSurfView_Qt.jpg"></CENTER></P>
+
+<P><CENTER>
+(a) W/S Ver
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(b) Qt Ver
+</CENTER></P>
 
 <BR><LI>"FreeSurf.IGS"は1枚の自由曲面と4本のエッジから成っています．これらを適当にピックします．
 
-<P><CENTER><IMG SRC="pixmaps/Seld_Stat.jpg"></CENTER></P>
+<P><CENTER>
+<img SRC="pixmaps/Seld_Stat_WS.jpg">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img SRC="pixmaps/Seld_Stat_Qt.jpg">
+</CENTER></P>
 
-<BR><LI>次に，ユーザー用ボタンの中から，"User Status"をクリック，User Statusダイアログを表示します．Modeを適当に選択，Prop1, Prop2に適当な数値を入れ，OK．
+<P><CENTER>
+(a) W/S Ver
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(b) Qt Ver
+</CENTER></P>
 
-<P><CENTER><IMG SRC="pixmaps/Ex1_UserStat.jpg"></CENTER></P>
+<BR><LI>次に，W/S Verではユーザー用ボタンの中から，Qt Verではメニューバーの"User"から"User Status"をクリック，User Statusダイアログを表示します．Modeを適当に選択，Prop1, Prop2に適当な数値を入れ，OK．
+
+<P><CENTER><img SRC="pixmaps/Ex1_UserStat.jpg"></CENTER></P>
+<P><CENTER>[User dialog]</CENTER></P>
 
 <BR><LI>最後に，ユーザー用ボタンの"Sample Func 0"をクリックすることによって，このボタンに割り当てられた関数が実行されます．
 ボタンを押すことによって，コンソールに"User Status"情報およびピックされたオブジェクトの情報が出力されたことを確認してください．
@@ -66,11 +92,43 @@
 
 まずUSERクラスのコンストラクタを見てみましょう. 
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_Constructor.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[7];" title = "UserFunc.cpp">
+//コンストラクト
+USER::USER()
+{
+	// ここでUserFunc関数ポインタの指す関数を指定する
+	for(int i=0;i&lt;USERFUNCNUMMAX;i++){
+		if(i==0)
+			UserFunc[i] = &amp;USER::ExecSampleFunc0;		// サンプル
+		else if(i==1)
+			UserFunc[i] = &amp;USER::ExecSampleFunc1;		// サンプル
+		else if(i==2)
+			UserFunc[i] = &amp;USER::ExecSampleFunc2;		// サンプル
+		else if(i==3)
+            UserFunc[i] = &amp;USER::ExecSampleFunc3;		// サンプル
+		else if(i==4)
+            UserFunc[i] = &amp;USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+        else if(i==5)
+            UserFunc[i] = &amp;USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+        else if(i==6)
+            UserFunc[i] = &amp;USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+        else if(i==7)
+            UserFunc[i] = &amp;USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+        else
+            UserFunc[i] = &amp;USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+	}
 
-　ここでUserFunc()という関数ポインタにユーザーが作成した関数を登録します．13行目を見てみると，ExecSampleFunc0()という名の関数を
+	// Userステータスの初期化
+	UserStat.Mode = 0;
+	for(int i=0;i&lt;USERPROPNUM;i++)
+		UserStat.Prop[i] = 0;
+}
+</pre>
+<!--"<"=&lt; ">"=&gt; "&"=&amp;-->
+
+　ここでUserFunc()という関数ポインタにユーザーが作成した関数を登録します．7行目を見てみると，ExecSampleFunc0()という名の関数を
 UserFunc()に代入しています. これは，メイン画面ユーザーボタンの"Sample Func 0"に当たる部分に対応します．このように，関数ポインタを介してKodatuno GUI部とUser部がやりとりします．<BR>
-　ExecSampleFunc0()はユーザーが自作する関数であり，その実体は33行目から書かれています。（プロトタイプ宣言も当然必要です．UserFunc.h内に記述されています．）<BR>
+　ExecSampleFunc0()はユーザーが自作する関数であり，説明は後ほど記述します．（プロトタイプ宣言も当然必要です．UserFunc.h内に記述されています．）<BR>
 　また，UserFunc()自体は引数が決まっていますので、それに代入するExecSampleFunc0()の引数もUserFunc()に合わせる必要があります．引数は，
 <OL>
 <H4><LI>BODYList *BodyList</H4>
@@ -84,32 +142,104 @@ BODYクラスによって統括されています．*BodyListはリスト化されたBodyへのポインタで�
 </OL>
 の3つです．BODYListとOBJECTListはピックしたオブジェクトの実体を取り出すための重要な要素ですが，ここでは概略をおさえるだけにとどめ，<A HREF="./2-8.html">2.8 BODYListとOBJECTList</A>でまとめて解説します．<BR>
 　また，USERクラス内にUserStat構造体が定義されており，この中に"User Status"ダイアログでの設定情報が格納されています．
+<pre class = "brush:cpp toolbar:false; highlight:[7];" title = "UserFunc.h">
+//Userステータス値格納用構造体
+typedef struct{
+	int Mode;
+	double Prop[USERPROPNUM];
+}UserStat_;
+</pre>
+<!--"<"=&lt; ">"=&gt; "&"=&amp;-->
 
-<P><CENTER><IMG SRC="pixmaps/UserStat_.jpg"></CENTER></P>
 
 では，ExecSampleFunc0()を見てみましょう．
 
-<P><CENTER><IMG SRC="pixmaps/ExecSampleFunc0.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// Userボタン登録関数0の実体を記述
+// *BodyList:BODYの実体が登録順にリストされている
+// *ObjList:セレクションされたエンティティ情報
+// PickCount:セレクションされたエンティティの数
+int USER::ExecSampleFunc0(BODYList *BodyList,OBJECTList *ObjList,int PickCount)
+{
+	char mes[256];
+
+	// ユーザーステータスでの選択されたモード番号をコンソール出力
+	sprintf(mes,"Selected Mode : %d",UserStat.Mode);
+    GuiIF.SetMessage(mes);
+
+	// ユーザーステータスでのプロパティ値(最初の2つ)をコンソール出力
+	sprintf(mes,"User Property 1: %lf",UserStat.Prop[0]);
+    GuiIF.SetMessage(mes);
+	sprintf(mes,"User Property 2: %lf",UserStat.Prop[1]);
+    GuiIF.SetMessage(mes);
+
+    GuiIF.SetMessage("....");
+
+	// セレクション数をコンソール出力
+	sprintf(mes,"All Pick Count : %d",PickCount);
+    GuiIF.SetMessage(mes);
+
+	for(int i=0;i&lt;PickCount;i++){
+		OBJECT *obj = (OBJECT *)ObjList->getData(i);			// i番目にセレクションされたエンティティの情報を得る
+		sprintf(mes,"#%d",i+1);
+        GuiIF.SetMessage(mes);
+		sprintf(mes,"Body No. : %d",obj->Body);
+        GuiIF.SetMessage(mes);
+		sprintf(mes,"Selected Object Type : %d",obj->Type);
+        GuiIF.SetMessage(mes);
+		sprintf(mes,"Selected Object No. : %d",obj->Num);
+        GuiIF.SetMessage(mes);
+	}
+
+	return KOD_TRUE;
+}
+</pre>
+<!--"<"=&lt; ">"=&gt; "&"=&amp;-->
 
 　先ほども述べたとおり，引数は必ず固定しなければなりません．<BR>
-　コンソールへの文字列出力はSetMessage()関数を使います．42〜49行目では"User Status"ダイアログでの設定情報を取り出し，出力しています．
-54行目ではExecSampleFunc0()の引数PickCountを出力しています．57行目以降では，ピックした数分のオブジェクトの情報を出力しています．<BR>
-i番目にピックされたオブジェクトの情報を取得するには58行目のように記述します．この記述の意味は解説しませんので，58行目はおまじないとして覚えてしまってください．
-なお，OBJECT構造体は"BODY.h"の194行目に記述されています．
+　コンソールへの文字列出力はSetMessage()関数を使います．10〜19行目では"User Status"ダイアログでの設定情報を取り出し，出力しています．
+22行目ではExecSampleFunc0()の引数PickCountを出力しています．25行目以降では，ピックした数分のオブジェクトの情報を出力しています．<BR>
+i番目にピックされたオブジェクトの情報を取得するには26行目のように記述します．この記述の意味は解説しませんので，26行目はおまじないとして覚えてしまってください．
+なお，OBJECT構造体は"BODY.h"に記述されています．
 
-<P><CENTER><IMG SRC="pixmaps/OBJECT_Structure.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "BODY.h">
+// ピックされたオブジェクトを示す構造体
+typedef struct{
+	int Body;		// BODYオブジェクトの番号
+	int Type;		// エンティティタイプのシンボル(NURBS曲線:126 , NURBS曲面:128 , トリム面:144)
+	int Num;		// Typeにおける要素番号(NURBS曲線が4本あったら、その4本に割り当てられた0〜3の番号)
+	int CCount;		// 何番目にピックされた曲線かを表す
+	int SCount;		// 何番目にピックされた曲面かを表す
+}OBJECT;
+</pre>
+<!--"<"=&lt; ">"=&gt; "&"=&amp;-->
 
 　以上でExecSampleFunc0()の解説は終わりです．ユーザーが定義した関数の登録方法，ピックした曲面/曲線の幾何情報の取り出し方が理解できたでしょうか．<BR>
 　つづいて，サンプルアプリケーションの解説に入っていきます．<BR><BR>
-　そうそう，ユーザーボタン名を変更する方法を説明するのを忘れていました．ボタン名は"UserFunc.cpp"の169行目，SetMenuLabelName()関数内で記述します．
+　そうそう，ユーザーボタン名を変更する方法を説明するのを忘れていました．ボタン名は"UserFunc.cpp"の2行目，SetMenuLabelName()関数内で記述します．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_LabelName.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// Userメニュー名を登録(Userボタンの表示名)
+void USER::SetMenuLabelName()
+{
+	// 独自のメニュー名をここに記述してください
+	strcpy(MenuLabel1,"Sample Func 0");
+	strcpy(MenuLabel2,"Sample Func 1");
+	strcpy(MenuLabel3,"Sample Func 2");
+	strcpy(MenuLabel4,"Sample Func 3");
+	strcpy(MenuLabel5,"User Func 5");
+    strcpy(MenuLabel6,"User Func 6");
+    strcpy(MenuLabel7,"User Func 7");
+    strcpy(MenuLabel8,"User Func 8");
+}
+</pre>
+<!--"<"=&lt; ">"=&gt; "&"=&amp;-->
 
 適当に名前を変更し，変更が反映されることを確認してみましょう．
 
 
 
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-4.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-6.html">Next</A><br>
@@ -119,7 +249,7 @@ i番目にピックされたオブジェクトの情報を取得するには58行目のように記述します．こ�
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

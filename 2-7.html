@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+<script src="shCore.js"></script>  <!--必須-->
+<script src="shBrushCpp.js"></script>  <!--C++-->
+<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -24,34 +30,97 @@
 			<A HREF="./2-8.html">Next</A><br>
 		</td>   
 	</tr> 
-</table> 
+</table>
 <blockquote> 
 
 <BR><HR><H2>簡単なアプリケーションの作成</H2>
-
 　このセクションでは，サンプルアプリケーションの応用として，ユーザーボタンの5番目をクリックすると，1つのNURBS曲面をz方向にr倍し,y軸周りにdeg度回転させ，z方向にhだけシフトさせて
 新たなNURBS曲面を作成し，これら2つのNURBS曲面の交線を算出するアプリケーションを作成してみましょう．<BR>
 このとき，"User Status"のプロパティー値には，r, deg, hと，交点間隔の4つを入力する仕様とします．<BR>
-
+<H4>＜実行手順＞</H4>
 <OL>
 <BR><LI>まず、UserFunc.cpp内のUSERクラスのコンストラクタに，ユーザーボタンの5番目を押すと実行される関数を登録しましょう．USER::USER()を以下のように変更します。
 
-<P><CENTER><IMG SRC="pixmaps/MyApp1.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// コンストラクタ
+USER::USER()
+{
+	// ここでUserFunc関数ポインタの指す関数を指定する
+	for(int i=0;i< USERFUNCNUMMAX;i++){
+		if(i==0)
+			UserFunc[i] = &USER::ExecSampleFunc0;		// サンプル
+		else if(i==1)
+			UserFunc[i] = &USER::ExecSampleFunc1;		// サンプル
+		else if(i==2)
+			UserFunc[i] = &USER::ExecSampleFunc2;		// サンプル
+		else if(i==3)
+            UserFunc[i] = &USER::ExecSampleFunc3;		// サンプル
+		else if(i==4)
+            UserFunc[i] = &USER::ExecMyApp;             // 練習課題
+        else if(i==5)
+            UserFunc[i] = &USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+        else if(i==6)
+            UserFunc[i] = &USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+        else if(i==7)
+            UserFunc[i] = &USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+        else
+            UserFunc[i] = &USER::MasterUserFunc;		// 未使用のUserFunc[i]にはMasterUserFunc()を登録しておく
+	}
+
+	// Userステータスの初期化
+	UserStat.Mode = 0;
+	for(int i=0;i< USERPROPNUM;i++)
+		UserStat.Prop[i] = 0;
+}
+</pre><br>
 
 <BR><LI>次に、UserFunc.hにExecMyApp()をプロトタイプ宣言します。
 
-<P><CENTER><IMG SRC="pixmaps/MyApp2.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.h">
+///////////新たにUser関数等を登録する場合は以下にprivate:で記述////////////////////////////////////////
+private:
+	int ExecSampleFunc0(BODYList *,OBJECTList *,int);	// サンプル
+	int ExecSampleFunc1(BODYList *,OBJECTList *,int);	// サンプル
+	int ExecSampleFunc2(BODYList *,OBJECTList *,int);	// サンプル
+    int ExecSampleFunc3(BODYList *,OBJECTList *,int);	// サンプル
+    int ExecMyApp(BODYList *,OBJECTList *,int);         //練習課題
+
+};
+</pre><br>
 
 <BR><LI>また，ユーザーボタン名も変更しましょう．変更するには，"UserFunc.cpp"のUSER::SetMenuLabelName()を変更します．
 
-<P><CENTER><IMG SRC="pixmaps/MyApp5.jpg"></CENTER></P>
-
-こちらの例では，"Exec MyApp"という名前に変更しました．<BR>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// Userメニュー名を登録(Userボタンの表示名)
+void USER::SetMenuLabelName()
+{
+	// 独自のメニュー名をここに記述してください
+	strcpy(MenuLabel1,"Sample Func 0");
+	strcpy(MenuLabel2,"Sample Func 1");
+	strcpy(MenuLabel3,"Sample Func 2");
+	strcpy(MenuLabel4,"Sample Func 3");
+    strcpy(MenuLabel5,"Exec MyApp");
+    strcpy(MenuLabel6,"User Func 6");
+    strcpy(MenuLabel7,"User Func 7");
+    strcpy(MenuLabel8,"User Func 8");
+}
+</pre><br>
 
 <BR><LI>UserFunc.cppの適当な位置にExecMyAppの実体を記述します。ExeSampleFunc1()を参考にして，"User Status"がMode1のときに実行されるようにしましょう．
 実行される関数名は何でもかまいませんが，ここではMyAppMain()としました．<BR>
 
-<P><CENTER><IMG SRC="pixmaps/MyApp3.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// 練習課題
+int USER::ExecMyApp(BODYList *BodyList, OBJECTList *ObjList, int PickCount)
+{
+    // Mode1選択時のみMyAppMain（）を実行
+    if (UserStat.Mode == 0){
+        MyAppMain(BodyList,ObjList,PickCount,UserStat.Prop);
+        return KOD_TRUE;
+    }
+    return KOD_FALSE;
+}
+</pre><br>
 
 MyAppMain()に渡す引数は，BODYList, OBJECTList, PickCount, UserStat.Propの4つが必要になります．
 <UL>
@@ -62,12 +131,43 @@ MyAppMain()に渡す引数は，BODYList, OBJECTList, PickCount, UserStat.Propの4つが必
 </UL>
 とします。<BR>
 
-
 <BR><LI>MyAppMain()のプロトタイプ宣言を"SampleFunc.h"に記述します．<BR>
 
 <BR><LI>次にいよいよ，MyAppMain()の実体を書いていきます．今回は"SampleFunc2.cpp"に書いていきましょう．
 
-<P><CENTER><IMG SRC="pixmaps/MyApp4.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "SampleFunc2.cpp">
+// 練習課題
+int MyAppMain(BODYList *BodyList,OBJECTList *ObjList, int PickCount, double Prop[])
+{
+    if(!PickCount)	return KOD_ERR;		// セレクションされていなかったら、何もしない
+
+    NURBS_Func nfunc;
+    double green[3] = {0,1,0};
+
+    OBJECT *obj = (OBJECT *)ObjList->getData(0);		// 一番最初にセレクションされたエンティティの情報を得る
+    BODY *body = (BODY *)BodyList->getData(obj->Body);	// 一番最初にセレクションされたBODYの実体を得る
+    if(obj->Type != _TRIMMED_SURFACE)	return KOD_ERR;	// セレクションされた曲面がトリム面でない場合は終了
+
+    NURBSS *S = body->TrmS[obj->Num].pts;				// BODYからNURBS曲面を取り出す
+
+    NURBSS *S_ = new NURBSS;                            // アフィン変換を施したNURBS曲面を格納するために新たなNURBSSをS_として宣言，メモリー確保
+    nfunc.GenNurbsS(S_,*S);                             // 変換前のNURBS曲面SをS_にコピー
+
+    Coord ratio = SetCoord(1,1,Prop[0]);                // Prop[0]をz方向の倍率として取り出す
+    double deg = Prop[1];                               // Prop[1]を回転角度として取り出す
+    Coord shift = SetCoord(0,0,Prop[2]);                // Prop[2]をz方向の移動量として取り出す
+    double feed = Prop[3];                              // Prop[3]は交点群算出時の点間隔
+
+    nfunc.ChRatioNurbsS(S_,ratio);                      // S_をz方向にratio倍する.
+    nfunc.RotNurbsS(S_,SetCoord(0,1,0),deg);            // S_をy軸周りにdeg度回転
+    nfunc.ShiftNurbsS(S_,shift);                        // S_をsiftシフト
+
+    Describe_BODY desc;                                 // 新たなNURBS曲面を描画するときは，Describe_BODYクラスを使う
+    desc.DrawNurbsSurfe(*S_);                           // S_を描画
+
+    return KOD_TRUE;
+}
+</pre><br>
 
 　上のソースには，説明しやすいように1から順番に行番号が振ってあります．<BR>
 　この課題では，前例題にはない，NURBS曲面をコピーするということを行います．NURBS曲面をコピーするには，まず，コピーするための新たな箱を用意します(15行目)．
@@ -82,29 +182,63 @@ BODY描画を担当するクラスを呼び出しています．28行目では，このクラスに属するDescri
 コンパイル、実行してください。次に、"FreeSurf.IGS"を読み込み、選択状態にします。"User Stat"を開き、Modeを1にセット、Prop1〜3までに適当な値を入れ、
 "CalcIntersecLine"ボタンを押します。下図は、Prop1=2, Prop2=30, Prop3=10とした場合の結果です。
 
-<P><CENTER><IMG SRC="pixmaps/MyApp6.jpg"></CENTER></P>
+<p><CENTER><img src="pixmaps/MyApp.jpg"width="678.4" height="561.6"></CENTER></p>
 
 　新たに生成したNURBS曲面が表示されたと思います．しかし，試していただければ分かるようにピックすることはできません．これは，新たに生成したNURBS曲面をBODYListに新たな
 Bodyとして登録していないためです．言い換えれば，現時点ではただ表示しているだけということになります．<BR>
 そこで、新たに作成したNURBS曲面を新たなBodyとして登録してみましょう。新たに登録する場合は、
 BODYクラスのRegistNurbsStoBody()関数を用います。このとき、この関数の引数として、登録するBODYListへのポインタ, 新たなBody, Body名の3つが必要になります．
 
-<P><CENTER><IMG SRC="pixmaps/MyApp7.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "SampleFunc2.cpp">
+    nfunc.ChRatioNurbsS(S_,ratio);                      // S_をz方向にratio倍する.
+    nfunc.RotNurbsS(S_,SetCoord(0,1,0),deg);            // S_をy軸周りにdeg度回転
+    nfunc.ShiftNurbsS(S_,shift);                        // S_をsiftシフト
+
+    BODY *newbody = new BODY;                           // 生成したNURBS曲面を格納するための新たなBodyを用意
+    newbody->RegistNurbsStoBody(BodyList,*S_,"NewBody");// 1枚のNURBS曲面を新たなBodyとして登録する
+    
+    return KOD_TRUE;
+}
+</pre><br>
 
 ここで，Describe_BDOY::DrawNurbsSurf()が消えていることに注意してください．生成したNURBS曲面をBodyとしてリストに登録すると，Kodatuno内部で描画対象として
 認識してくれますので，わざわざ描画指令を送る必要がなくなります．さらに，リスト登録することによって，ピックが可能になります．
 
-<BR><LI>次に、NURBS曲面同士の交点群を算出するために、NFunc.CalcIntersecPtsNurbsSSearch()関数を用います。
-
-<P><CENTER><IMG SRC="pixmaps/MyApp8.jpg"></CENTER></P>
-
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "SampleFunc2.cpp">
+    BODY *newbody = new BODY;                           // 生成したNURBS曲面を格納するための新たなBodyを用意
+    newbody->RegistNurbsStoBody(BodyList,*S_,"NewBody");// 1枚のNURBS曲面を新たなBodyとして登録する
+    
+    Coord R[1000], R_[1000],Cod[1000];
+    int PtNum = nfunc.CalcIntersecPtsNurbsSSearch(S,S_,10,feed,R,R_,1000);  // NURBS曲面同士の交点群を算出
+    nfunc.CalcNurbsSCoords(S,PtNum,R,Cod);
+    
+    DrawPoints(Cod,PtNum,1,3,green);
+    
+    return KOD_TRUE;
+}
+</pre><br>
 
 <BR><LI>交点群が正しく描画されたら，最後に得られた交点群からNURBS曲線を生成してみましょう．
 
-<P><CENTER><IMG SRC="pixmaps/MyApp9.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "SampleFunc2.cpp">
+    BODY *newbody = new BODY;                           // 生成したNURBS曲面を格納するための新たなBodyを用意
+    newbody->RegistNurbsStoBody(BodyList,*S_,"NewBody");// 1枚のNURBS曲面を新たなBodyとして登録する
+    
+    Coord R[1000], R_[1000],Cod[1000];
+    int PtNum = nfunc.CalcIntersecPtsNurbsSSearch(S,S_,10,feed,R,R_,1000);  // NURBS曲面同士の交点群を算出
+    nfunc.CalcNurbsSCoords(S,PtNum,R,Cod);
+    
+    NURBSC C;
+    nfunc.GenInterpolatedNurbsC1(&C,Cod,PtNum,4);       // 指定した点群を通る4階のNURBS曲線を生成する
+    
+    Describe_BODY desc;
+    desc.DrawNurbsCurve(C);         // NURBS曲線の描画
+    
+    return KOD_TRUE;
+}
+</pre><br>
 
-<P><CENTER><IMG SRC="pixmaps/MyApp10.jpg"></CENTER></P>
-
+<p><CENTER><img src="pixmaps/MyApp2.jpg"width="681.6" height="562.4"></CENTER></p>
 
 交線の表示が部分的におかしいのは, 交点配列がきれいにソートされていないからです．CalcIntersecPtsNurbsSSearch()関数などを用いて交点群を生成する場合は，
 かならずしも，順序正しく点が格納されていないため，何らかのソート用コードを記述しなければなりません．<BR><BR>
@@ -112,7 +246,9 @@ BODYクラスのRegistNurbsStoBody()関数を用います。このとき、この関数の引数として、
 
 以上で、簡単なアプリケーション作成手順の説明を終わります。
 
-</blockquote> <HR>  Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+
+</blockquote>
+<HR>  Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-6.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-8.html">Next</A><br>
@@ -122,8 +258,7 @@ BODYクラスのRegistNurbsStoBody()関数を用います。このとき、この関数の引数として、
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
-</html>  
-
+</html>

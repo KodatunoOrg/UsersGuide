@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+<script src="shCore.js"></script>  <!--必須-->
+<script src="shBrushCpp.js"></script>  <!--C++-->
+<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -24,7 +30,7 @@
 			<A HREF="./2-7.html">Next</A><br>
 		</td>   
 	</tr> 
-</table> 
+</table>  
 <blockquote> 
 
 <BR><HR><H2>(Ex. 8) 平均曲率法線ベクトルを算出する</H2>
@@ -37,6 +43,10 @@
 　「平均曲率法線ベクトル」は法線ベクトルの大きさを平均曲率の値として表現したものになっています．<BR>
 　案ずるよりも産むが安しです．実際に"SampleFunc2.cpp"のSmpMeanCurvature()を実行してみましょう．<BR><BR><BR>
 
+　本例題では，図に示すように，Z方向に平面をZ_minからZ_maxまであるシフト量Dでシフトしていきながら，それぞれの等高線
+を求めていきます． ここで，"等高線"と言っていますが，実際には点群によって表現しています． "SampleFunc2.cpp"の
+SmpContourLine()を実行します．
+
 <H4>＜実行手順＞</H4>
 <OL>
 <LI>Kodatunoアプリケーションを起動し, 適当なIGESデータを1つ読み込みます．
@@ -46,20 +56,50 @@
 <LI>選択した面上に平均曲率法線ベクトルが生成されたことを確認してください．
 </OL>
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpMeanCurvature.jpg"></CENTER></P>
+<p><CENTER><img src="pixmaps/UserFunc_SmpMeanCurvature.jpg"width="679.2" height="561.6"></CENTER></p>
 
-<BR><BR>
-<H4>＜ソース解説＞</H4>
+<br><br>
+<h4>＜ソース解説＞</h4>
 　今回はMode3を選択し，"Sample Func2"ボタンを押しました．これによってSmpMeanCurvature()が実行されます．<BR>
 　では，SmpMeanCurvature()を見てみましょう．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpMeanCurvature2.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "SampleFunc2.cpp">
+// Sample8: NURBS曲面の適当な(u,v)における平均曲率法線ベクトルを算出する
+int SmpMeanCurvature(BODYList *BodyList,OBJECTList *ObjList, int PickCount, double Prop[])
+{
+	if(!PickCount)	return KOD_ERR;		// セレクションされていなかったら、何もしない
+
+	NURBS_Func nfunc;
+	double blue[3] = {0,0,1};
+
+	OBJECT *obj = (OBJECT *)ObjList->getData(0);		// 一番最初にセレクションされたエンティティの情報を得る
+	BODY *body = (BODY *)BodyList->getData(obj->Body);	// 一番最初にセレクションされたBODYの実体を得る
+	if(obj->Type != _TRIMMED_SURFACE)	return KOD_ERR;	// セレクションされた曲面がトリム面でない場合は終了
+
+	NURBSS *S = body->TrmS[obj->Num].pts;				// BODYからNURBS曲面を取り出す
+
+	int udiv = (int)Prop[0];		// u方向分割数
+	int vdiv = (int)Prop[1];		// v方向分割数
+
+	for(int i=0;i<=udiv;i++){
+		double u = S->U[0]+(double)i*(S->U[1] - S->U[0])/(udiv+1);
+		for(int j=0;j<=vdiv;j++){
+			double v = S->V[0]+(double)j*(S->V[1] - S->V[0])/(vdiv+1);
+			Coord P = nfunc.CalcNurbsSCoord(S,u,v);				// 現在の(u,v)上の(x,y,z)を求める
+			Coord Hn = nfunc.CalcMeanCurvatureNormVec(S,u,v);	// 平均曲率法線ベクトルを求める
+			DrawVector(P,Hn,100,1,blue);						// 平均曲率法線ベクトルを表示
+		}
+	}
+
+	return KOD_TRUE;
+}
+</pre><br>
 
 　序盤は概ね問題ないと思います．<BR>
-　114行目と116行目は<A HREF="./2-6-5.html">2.6.5 NURBS曲面を指定した分割数で分割した点を生成する</A>で説明した，NURBS曲面構造体NURBSSの変数で，
+　19行目と21行目は<A HREF="./2-6-5.html">2.6.5 NURBS曲面を指定した分割数で分割した点を生成する</A>で説明した，NURBS曲面構造体NURBSSの変数で，
 NURBS曲面の存在するパラメータ区間を表すU[2]とV[2]を使って平均曲率法線ベクトルを生成する曲面上の点をU，V方向の分割数から割り出しています．<BR>
 　平均曲率法線ベクトルは118行目のNURBS_Func::CalcMeanCurvatureNormVec()によって算出されます．算出されたベクトルの始点を曲面上の点とするために,
-117行目では現在注目中の(u,v)の三次元座標値を算出し，119行目で表示しています．<BR><BR>
+23行目では現在注目中の(u,v)の三次元座標値を算出し，24行目で表示しています．<BR><BR>
 
 　結果の図を見てもらう，急峻なところではベクトルは長く，なだらかなところでは短くなっているのが分かります．
 また，上に凸である場合と，下に凸である場合でベクトルの方向が逆になっているのが分かります．<BR>
@@ -68,9 +108,8 @@ NURBS曲面の存在するパラメータ区間を表すU[2]とV[2]を使って平均曲率法線ベクトルを�
 
 <BR><BR>
 　以上で例題は全て終わりです．次のセクションはこれまでの経験を生かして，簡単なアプリケーションを自分で作ってみる練習問題になっていますので，ぜひお試しください．
-
-
-</blockquote> <HR>  Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote>
+<HR>  Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-6-7.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-7.html">Next</A><br>
@@ -80,8 +119,7 @@ NURBS曲面の存在するパラメータ区間を表すU[2]とV[2]を使って平均曲率法線ベクトルを�
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
-</html>  
-
+</html>

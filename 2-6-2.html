@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+	<script src="shCore.js"></script>  <!--必須-->
+	<script src="shBrushCpp.js"></script>  <!--C++-->
+	<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+	<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -39,26 +45,47 @@
 <LI>"User Status"からMode2を選択し，"Sample Func 1"ボタンを押します．
 <LI>選択したBodyの位置と大きさが変わったことを確認してください．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_TransBody.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/UserFunc_TransBody.jpg"></CENTER></P>
 
 </OL>
 <BR><BR>
 <H4>＜ソース解説＞</H4>
-(Ex. 1)で解説したように，"Sample Func 1"をクリックしたので，"UserFunc.cpp"の77行目ExecSampleFunc1()が実行され，
+(Ex. 1)で解説したように，"Sample Func 1"をクリックしたので，"UserFunc.cpp"のExecSampleFunc1()が実行され，
 さらにMode2を選択したことから，UserStat.Modeには1が代入されているので，SmpTransBody()が実行されます．<BR>
-　では，SmpRegistBody()を見てみましょう．
+　では，SmpTranstBody()を見てみましょう．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_TransBody2.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "SampleFunc1.cpp">
+// Sample2: 指定したBodyに対しアフィン変換を行う
+int SmpTransBody(BODYList *BodyList,OBJECTList *ObjList, int PickCount, double Prop[])
+{
+	if(!PickCount)	return KOD_ERR;		// セレクションされていなかったら、何もしない
 
-　まず最初の行(37行目)には，ピックされたオブジェクトの数がゼロ，つまり何も選択されていない状態でこの関数が実行された場合のエラー処理が
+	OBJECT *obj = (OBJECT *)ObjList->getData(0);			// 一番最初にセレクションされたエンティティの情報を得る
+	BODY *body = (BODY *)BodyList->getData(obj->Body);		// 一番最初にセレクションされたBODYの実体を得る
+
+	Coord rot_ax = SetCoord(0,0,1);		// 回転軸
+	double deg = 90;					// 回転角度
+	Coord shift = SetCoord(0,0,10);		// シフト量
+	Coord expand = SetCoord(2,2,2);		// 拡大量
+
+	body->RotBody(rot_ax,deg);			// Z軸周りに90度回転
+	body->ShiftBody(shift);				// Z方向に10シフト
+	body->ExpandBody(expand);			// BODYを2倍に拡大
+
+	return KOD_TRUE;
+}
+</pre>
+<!--"<"=&lt; ">"=&gt;-->
+
+　まず最初の行(4行目)には，ピックされたオブジェクトの数がゼロ，つまり何も選択されていない状態でこの関数が実行された場合のエラー処理が
 記述されています．ポカよけの意味でこの処理を冒頭に記述しておくことをおすすめします．<BR>
-　つづいて39行目では，一番最初にピックしたオブジェクトの情報を取り出しています．
+　つづいて6行目では，一番最初にピックしたオブジェクトの情報を取り出しています．
 この記述は<A HREF="./2-5.html">2.5 サンプルアプリケーションの実行とソース解説 1</A>
 でも出てきました．本例では一番最初にピックしたものに限定していますが，実際のコーディングでは目的に応じて取り出すオブジェクトを変える工夫が必要です．<BR>
-　ピックしたオブジェクトの情報を取り出した後，その情報を元にBodyの実体を引っ張ってきます．それが40行目です．
+　ピックしたオブジェクトの情報を取り出した後，その情報を元にBodyの実体を引っ張ってきます．それが7行目です．
 OBJECT構造体のメンバー変数Bodyにはピックしたオブジェクトが属するBodyのインデックス番号が入っています．
 このインデックス番号のBodyをBODYListから取り出しています．
-この39，40行目の2行はセットで使うことがほとんどです．C言語に自信のない人はとりあえずこの2行はおまじないとしてしまってください．<BR>
+この6, 7行目の2行はセットで使うことがほとんどです．C言語に自信のない人はとりあえずこの2行はおまじないとしてしまってください．<BR>
 　Bodyの実体を取り出したら，あとはそのBodyのメンバー関数を用いてアフィン変換を適宜行うだけです．<BR>
 <UL>
 <LI>BODY::RotBody()は指定した軸周りに指定角度Bodyを回転させます．<BR>
@@ -66,7 +93,7 @@ OBJECT構造体のメンバー変数Bodyにはピックしたオブジェクトが属するBodyのインデック
 <LI>BODY::ExpandBody()は指定した拡大量だけBodyを拡大/縮小させます．<BR>
 </UL>
 　ここで，Kodatunoでは3次元座標を扱うクラスとして"StdAfx.h"に定義されたCoordクラスを用います．
-たとえば，44行目ではshiftという名のCoord変数を宣言すると同時に(0,0,10)という3次元座標値を代入しています．
+たとえば，15行目ではshiftという名のCoord変数を宣言すると同時に(0,0,10)という3次元座標値を代入しています．
 Coordを使った種々の計算は"StdAfx.h"にかなり多く用意していますので，一通り見ておくとよいと思います．
 <BR><BR>
 
@@ -74,7 +101,7 @@ Coordを使った種々の計算は"StdAfx.h"にかなり多く用意していますので，一通り見てお�
 まずは，NURBS曲線に対して指定した分割数で分割したときの分割点を生成する方法を示します．
 
 
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-6-1.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-6-3.html">Next</A><br>
@@ -84,7 +111,7 @@ Coordを使った種々の計算は"StdAfx.h"にかなり多く用意していますので，一通り見てお�
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

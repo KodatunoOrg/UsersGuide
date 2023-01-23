@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+<script src="shCore.js"></script>  <!--必須-->
+<script src="shBrushCpp.js"></script>  <!--C++-->
+<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -28,60 +34,163 @@
 <blockquote> 
 
 <BR><HR><H2>その他</H2>
-UserFuncには、これまで述べてきた機能に加え、更に以下に2つの機能があります。
+　UserFuncには、これまで述べてきた機能に加え、更に以下に2つの機能があります。
 <UL>
 <BR><LI>ユーザーコマンドの登録<BR><BR>
-Kodatunoでは、システムが提供するコマンド(<A HREF="2-4.html">2.4  各コマンドの名称と機能 </A>)以外に、
+　Kodatunoでは、システムが提供するコマンド(<A HREF="2-4.html">2.4  各コマンドの名称と機能 </A>)以外に、
 ユーザーが独自でコマンドを作成し、登録することができます。サンプルとして、(<A HREF="2-7.html">2.7 簡単なアプリケーションの作成  </A>)
 で示したプログラムをコンソールから実行できるようにしてみます。
 <OL>
 <BR><LI>まず、コマンド名を登録します。コマンド名は"cross"とします。<BR>
-UserFunc.cpp内にRegistUserCommand()関数があります。その関数内を次のように変更してください。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Command_Name.jpg"></CENTER></P>
-</CENTER></P>
+　UserFunc.cpp内にRegistUserCommand()関数があります。その関数内を次のように変更してください。
+
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// Userコマンドを登録
+void USER::RegistUserCommand(CommandMap *CmdMap)
+{
+	// 独自のコマンド情報をここに記述してください
+	// 第5引数はNULLを指定
+    SetCmdList(CmdMap,"cross","",CMD_CROSS,NULL);
+
+}
+</pre><br>
 
 SetCmdList()関数は、Command.cpp/.hに定義されています。第1引数はコマンドの名前やオプションの有無などを格納した構造体(実体はKodatuno.hで定義されています)への
 ポインタ(変更不可)、第2引数はコマンド名、第3引数はオプション指定、第4引数はこのコマンドのシンボル、第5引数はシステムコマンドでないことを明示するためにNULLを指定します。
 第4引数であるコマンドのシンボルは、UserFunc.hでユーザーが定義しなければなりません。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Command_Symbol.jpg"></CENTER></P>
-</CENTER></P>
+
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.h">
+// コマンド登録番号(登録コマンドのシンボルを100〜199の数値で指定する)
+#define CMD_CROSS   100
+</pre><br>
 
 <BR><LI>次に、"cross"が入力されたときの処理をUserFunc.cpp内のCommand()関数に記述します。<BR><BR>
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Command_Command.jpg"></CENTER></P>
-</CENTER></P>
 
-コンソールに"cross"が入力されると、Command()の第4引数CmdNoに先ほど定義したcrossコマンドシンボル"CMD_CROSS"が渡されます。
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// Userコマンドを実行
+// 引数   *BodList:BODYリストの先頭アドレス    *ObjList:セレクションされたエンティティの情報(セレクションの数だけリスト化)
+//        pickcount:セレクション数    CmdNo:実行されたコマンド番号      argc,*argv[]:いつものアレ
+void USER::Command(BODYList *BodyList,OBJECTList *ObjList,int pickcount,int CmdNo,int argc,char *argv[])
+{
+	// 登録したコマンドごとに処理を記述してください
+    if(CmdNo == CMD_CROSS){
+        ExecSampleFunc4(BodyList,ObjList,pickcount,UserStat.Prop);
+    }
+}
+</pre><br>
+
+　コンソールに"cross"が入力されると、Command()の第4引数CmdNoに先ほど定義したcrossコマンドシンボル"CMD_CROSS"が渡されます。
 よって、Command()内ではCMD_CORSSが入力されたことを条件として、ExecSampleFunc4()を実行するようにコーディングします。<BR><BR>
 </OL>
 
-以上で、コマンド登録及び、コマンド入力後の応答を実装することができました。<BR><BR>
+　以上で、コマンド登録及び、コマンド入力後の応答を実装することができました。<BR><BR>
 
-<BR><LI>Wide Studioが提供するダイアログの利用<BR>
-例えば、ユーザー独自のファイルフォーマットの読み込みを行いたい場合などに便利です。
-Wide Studioの機能をUser Funcより用いる場合は、専用の関数ExecWSFunc()を通して行う必要があります。
+<BR><LI>WideStudioが提供するダイアログの利用<BR>
+　例えば、ユーザー独自のファイルフォーマットの読み込みを行いたい場合などに便利です。
+WideStudioの機能をUser Funcより用いる場合は、専用の関数ExecGUIFunc()を通して行う必要があります。
 以下に、ユーザーボタン"User Func 5"にファイルをオープンするダイアログを適用する例を示します。
 <OL>
-<BR><LI>まず、ExecWSFunc()にこれから作成する関数名を記述します。今回の例では、MyOpenFileFunc()という名前とします。<BR>
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/UserWSFunc_ExecWSFunc.jpg"></CENTER></P>
-</CENTER></P>
-MyOpenFileFunc()をvalが4となる位置に挿入しました。valは"User Func"ボタンのシンボルを示し、val=4の場合、"User Func 5"を示します。<BR>
+<BR><LI>まず、ExecWidgetFunc()にこれから作成する関数名を記述します。今回の例では、MyOpenFileFunc()という名前とします。<BR>
 
-<BR><LI>次に、MyOpenFileFunc()を書いていきます。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/UserWSFunc_MyOpenFileFunc.jpg"></CENTER></P>
-</CENTER></P>
-Wide Studioに関するコーディングはWide Studioのリファレンスを参照してください。
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// UserがWSの機能を使い新たなDialogをポップアップさせたい場合は、ここにそのWS処理を記述
+// 引数   val:Userボタンのシンボル(0〜7)
+int USER::ExecWidgetFunc(int val)
+{
+	// Userボタン1が押された
+	if(val == 0){
+		// 処理を追加できます
+	}
+	// Userボタン2が押された
+	else if(val == 1){
+		// 処理を追加できます
+	}
+	// Userボタン3が押された
+	else if(val == 2){
+		// 処理を追加できます
+	}
+	// Userボタン4が押された
+	else if(val == 3){
+		// 処理を追加できます
+	}
+	// Userボタン5が押された
+	else if(val == 4){
+		// 処理を追加できます
+		MyOpenFileFunc();
+	}
+    else if(val == 5){
+        // 処理を追加できます
+    }
+
+    else if(val == 6){
+        // 処理を追加できます
+    }
+
+    else if(val == 7){
+        // 処理を追加できます
+    }
+
+	return KOD_TRUE;
+}
+
+</pre><br>
+
+　MyOpenFileFunc()をvalが4となる位置に挿入しました。valは"User Func"ボタンのシンボルを示し、val=4の場合、"User Func 5"を示します。<BR>
+
+<BR><LI>　次に、MyOpenFileFunc()を書いていきます。
+
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+void MyOpenFileFunc()
+{
+    WSCfileSelect *fs=WSGIappFileSelect();          // ファイル選択ダイアログのアドレスを取得
+    
+    fs->setProperty(WSNmaskFileName,"igs");         // igsファイルのみ選択可
+    
+    long fchoice_dlg = fs->popup();                 // ファイル選択ダイアログを開く
+    
+    if(fchoice_dlg == WS_DIALOG_OK){                // ダイアログのOKボタンが押されたら
+        // ここに処理を追加します
+    }
+}
+</pre><br>
+
+　WideStudioに関するコーディングはWideStudioのリファレンスを参照してください。
 関数冒頭の3行でダイアログを開く処理を行っています。今回の例では、拡張子igsのみダイアログに表示されるようにしています。
-次のif文以降で、ダイアログのOKが押された場合の処理を記述します。<BR><BR>
+次のif文以降で、ダイアログのOKが押された場合の処理を記述します。<BR><BR></UL>
+
+<BR><LI>Qtが提供するダイアログの利用<BR>
+　次はQtを使って、WideStudioと同じようにユーザーボタン"User Func 5"にファイルをオープンするダイアログを適用する例を示します。
+
+<OL>
+<BR><LI>
+　まず、ExecGUIFunc()にこれから作成する関数名を記述します。今回も、MyOpenFileFunc()という名前とします。記述はWideStudioと同様のため
+、前述を参考にしてください。<BR>
+
+<BR><LI>　次に、MyOpenFileFunc()を書いていきます。
+
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+void USER::MyOpenFileFunc()
+{
+    // ファイルのフィルタリスト
+    QString fileFilter = QObject::tr("IGS (*.igs)");    // igsファイルのみ選択可
+
+    QString fileName = QFileDialog::getOpenFileName(
+        0,                          //親widget
+        QObject::tr("Open File"),   // ダイアログタイトル
+        QDir::currentPath(),        // 起動時のディレクトリ
+        fileFilter                  // ファイルフィルター
+    );
+}
+</pre><br>
+
+　WideStudio版と同じようにigsファイルのみ表示されるようにしています。Qtに関するコーディングもQtに関するリファレンスを参照してください。
+
 </OL>
-以上で、UserFuncにおけるダイアログの表示が可能となります。
+　以上で、UserFuncにおけるダイアログの表示が可能となります。
 </UL>
 
-</blockquote> <HR>  Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote>
+<HR>  Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-8.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./3-1.html">Next</A><br>
@@ -91,8 +200,7 @@ Wide Studioに関するコーディングはWide Studioのリファレンスを参照してください。
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
-</html>  
-
+</html>

@@ -10,7 +10,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -28,7 +28,7 @@
 <blockquote> 
 
 <BR><HR><H2>環境構築</H2>
-Kodatunoの開発環境は次の通りです．
+Kodatunoの開発環境は次の通りです．なお，詳細な環境構築手順は同封のインストールガイドを参照してください．
 
 <UL>
 <BR><LI>プログラミング言語<BR><BR>
@@ -36,23 +36,28 @@ KodatunoはC++言語を用いて開発されていますので，C++プログラミング環境を各自で構築
   
 <BR><LI>OpenGL<BR><BR>
 KodatunoはOpenGL(GL/GLU/GLUT)を描画エンジンとして用いています．特にGLUTパッケージをインストール
-する必要があります．<BR><BR>
+する必要があります．また，OSやGUIアプリケーションソフトによって，必要なファイルやインストール方法が異なります．詳しくわ，<A HREF="http://www-mm.hm.t.kanazawa-u.ac.jp/research/kodatuno/inst/">インストールしてみた</A>
+に記述します．
 
-<UL><LI>Windowsの場合<BR>
-GLUTをインターネットよりダウンロードし，glut.hを次に示すWide Studioをインストールしたフォルダの所定の場所
-(例えば，C:\Program Files\WideStudio\ws\include\gl)に置いて下さい．また，glut.dllをWindowsのシステムフォルダに
-置いて下さい．glutパッケージによっては，上記以外にmesa_wgl.hを必要とする場合があります．この場合は，
-同様にインターネットよりダウンロードの上，glut.hと同じフォルダに置いて下さい．<BR><BR>
+</LI>
+
+<BR><LI>GUIアプリケーションソフト<BR><BR>
+Kodatunoは現在WideStudio版とQt版が存在します．よって，各自が使いたいGUIアプリケーションソフトをそれぞれインストールする必要があります．
+
 </LI></UL>
 
-<BR><LI>Wide Studio<BR><BR>
-Kodatunoは平林俊一氏の開発されたウィンドウ作成アプリケーションを用いているため，WideStudioをインストール
-する必要があります．なお，Wide Studioのインストールパッケージにはコンパイル環境としてgccが付加されていますので，
+<UL><UL>
+<BR><LI>WideStudio<BR><BR>
+平林俊一氏によって開発されたGUIアプリケーションソフトであります．なお，Wide Studioのインストールパッケージにはコンパイル環境としてgccが付加されていますので，
 C++プログラミング環境を同時に取得することができます．<BR><BR>
 
-</UL>
+<BR><LI>Qt<BR><BR>
+Qt Projectの開発されたGUIアプリケーションソフトであります．KodatunoはOpenGLを使用するので，OpenGL対応したQtのパッケージをインストールしてください．また，ライセンスも商用版とオープンソース版がありますので，ご自身にあったライセンスでインストールしてください．<BR><BR>
 
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</UL></UL>
+
+
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./1-4.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-2.html">Next</A><br>
@@ -62,7 +67,7 @@ C++プログラミング環境を同時に取得することができます．<BR><BR>
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

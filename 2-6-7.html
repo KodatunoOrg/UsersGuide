@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+<script src="shCore.js"></script>  <!--必須-->
+<script src="shBrushCpp.js"></script>  <!--C++-->
+<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -24,12 +30,13 @@
 			<A HREF="./2-6-8.html">Next</A><br>
 		</td>   
 	</tr> 
-</table> 
+</table>
 <blockquote> 
 
 <BR><HR><H2>(Ex. 7) NURBS曲面同士の交線を算出する</H2>
 　(Ex. 6)ではNURBS曲面と平面との交線を算出しました．ここでは，NURBS曲面同士の交線を算出してみたいと思います．<BR>
 　"SampleFunc2.cpp"のSmpIntersectSurfs()を実行します．<BR><BR><BR>
+
 
 <H4>＜実行手順＞</H4>
 <OL>
@@ -40,27 +47,65 @@
 <LI>2つの面の交線が生成されたことを確認してください．
 </OL>
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpIntersectSurfs.jpg"></CENTER></P>
+<p><CENTER><img src="pixmaps/UserFunc_SmpIntersectSurfs.jpg"width="679.2" height="560.8"></CENTER></p>
 
-<BR><BR>
-<H4>＜ソース解説＞</H4>
+<br><br>
+<h4>＜ソース解説＞</h4>
 　今回はMode2を選択し，"Sample Func2"ボタンを押しました．これによってSmpIntersectSurfs()が実行されます．<BR>
 　では，SmpIntersectSurfs()を見てみましょう．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpIntersectSurfs2.jpg"></CENTER></P>
+<pre class="brush:cpp toolbar:false; highlight:[];" title = "SampleFunc2.cpp">
+int SmpIntersectSurfs(BODYList *BodyList,OBJECTList *ObjList, int PickCount, double Prop[])
+{
+	if(!PickCount)	return KOD_ERR;		// セレクションされていなかったら、何もしない
 
-　序盤は概ね問題ないと思います．63，64行目は得られた交点群を格納するための箱ですが，2つの曲面上で得られますので，2つ用意する必要があります．
-また，71〜77行目ですが，2つのNURBS曲面をピックしていますので，順番に実体を取り出しています．<BR>
-　NURBS曲面同士の交線計算は85行目のNURBS_Func::CalcIntersecPtsNurbsSSearch()によって行われ，引数として指定したRtとStにそれぞれの面上の交点群が格納されます．
+	NURBS_Func nfunc;				// NURBS関連の関数を集めたクラスのオブジェクトを生成
+	Coord Rt[5000];					// NURBS曲面R(w,t)における解
+	Coord St[5000];					// NURBS曲面S(u,v)における解
+	double green[3] = {0,1,0};		// 点表示の色
+
+	double feed = Prop[0];			// 交点群の点間隔
+
+    GuiIF.SetMessage("Start calcu....");
+
+	// 1番目にセレクションされたBODYデータを得る
+	OBJECT *obj1 = (OBJECT *)ObjList->getData(0);
+	BODY *body1 = (BODY *)BodyList->getData(obj1->Body);
+
+	// 2番目にセレクションされたBODYデータを得る
+	OBJECT *obj2 = (OBJECT *)ObjList->getData(1);
+	BODY *body2 = (BODY *)BodyList->getData(obj2->Body);
+
+	if(obj1->Type != _TRIMMED_SURFACE || obj2->Type != _TRIMMED_SURFACE)	// セレクションされた2つのエンティティがトリム面でない場合は終了
+		return KOD_ERR;
+
+	NURBSS *S1 = body1->TrmS[obj1->Num].pts;	// BODY1からNURBS曲面を取り出す
+	NURBSS *S2 = body2->TrmS[obj2->Num].pts;	// BODY2からNURBS曲面を取り出す
+
+	int num = nfunc.CalcIntersecPtsNurbsSSearch(S1,S2,10,feed,Rt,St,5000);	// NURBS曲面同士の交線算出
+
+	for(int i=0;i< num;i++){
+		Coord p = nfunc.CalcNurbsSCoord(S1,Rt[i].x,Rt[i].y);	// uv座標上の点をxyz座標値に変換
+		DrawPoint(p,1,3,green);									// 描画
+	}
+
+    GuiIF.SetMessage("END");
+	return KOD_TRUE;
+}
+
+</pre><br>
+
+　序盤は概ね問題ないと思います．6,7行目は得られた交点群を格納するための箱ですが，2つの曲面上で得られますので，2つ用意する必要があります．
+また，14〜22行目ですが，2つのNURBS曲面をピックしていますので，順番に実体を取り出しています．<BR>
+　NURBS曲面同士の交線計算は28行目のNURBS_Func::CalcIntersecPtsNurbsSSearch()によって行われ，引数として指定したRtとStにそれぞれの面上の交点群が格納されます．
 注意点として，(Ex. 6)でも述べたとおり，交点群はパラメータ(u, v)として得られますので，3次元座標値に変換するNURBS_Func::CalcNurbsSCoord()が別途必要です．
 
 <BR><BR>
 　以上で(Ex. 7)の解説は終わりです．ここまできてしまえば，ほとんど説明することがないですね．<BR>
 　つぎが最後の例題になります．最後は平均曲率法線ベクトルと呼ばれる聞きなれない曲面情報の抽出を例に，Kodatunoの応用の可能性を広げます．
 
-
-
-</blockquote> <HR>  Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote>
+<HR>  Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-6-6.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-6-8.html">Next</A><br>
@@ -70,8 +115,7 @@
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
-</html>  
-
+</html>

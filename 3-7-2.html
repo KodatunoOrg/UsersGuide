@@ -35,13 +35,13 @@ Kodatunoカーネル部とUserアプリケーション部を繋ぐブリッジとして機能します。ユーザ
 <BR>■シンボル
 <pre><font size="3">
 #define LABELNAMEMAX    256    メニューに登録するメニュー名バッファ 
-#define USERFUNCNUMMAX  5      UserFuncの最大登録数 
+#define USERFUNCNUMMAX  8      UserFuncの最大登録数 
 #define USERPROPNUM     15     利用できるUserプロパティ数 
 </font></pre>
 
 <HR>
 <BR>■インクルードライブラリ<BR><BR>
-"BODY.h" "Command.h" " StdAfx.h" "UserFuncSub.h"<BR><BR>
+"BODY.h" "Command.h" " StdAfx.h" "SampleFunc.h"<BR><BR>
 
 <HR>
 <BR>■型定義
@@ -52,13 +52,16 @@ typedef struct{
     double Prop[USERPROPNUM];    Userステータスの15個のプロパティ値 
 }UserStat_;  
    
-＜5つのUserボタンをenumで定義＞
+＜8つのUserボタンをenumで定義＞
 enum Sub_Menu_Label{  
     M_Label1,                 ボタン1
     M_Label2,                 ボタン2
     M_Label3,                 ボタン3
     M_Label4,                 ボタン4
     M_Label5                  ボタン5
+    M_Label6                  ボタン6
+    M_Label7                  ボタン7
+    M_Label8                  ボタン8
 };   
 </font></pre>
 
@@ -177,11 +180,11 @@ void ExecdClear();  </H4>
 ＜戻り値＞  
     なし 
 
-<A NAME="ExecWSFunc()"> </A>
+<A NAME="ExecWidgetFunc()"> </A>
 <H4>public
-int ExecWSFunc(int);  </H4>
+int ExecWidgetFunc(int);  </H4>
 ＜説明＞
-    UserがWSの機能を使い新たなDialogをポップアップさせたい場合は、ここにそのWS処理を記述する。 
+    UserがWidgetの機能を使い新たなDialogをポップアップさせたい場合は、ここにそのExecWidgetFunc処理を記述する。 
 ＜引数＞  
     val：ラベル番号  
 ＜戻り値＞  
@@ -214,7 +217,7 @@ UserStat_  UserStat;                       Userステータス
 </font></pre>
 
 
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 			<A HREF="./3-6.html" TARGET="_top">Prev</A>     
 			<A HREF="./index.html" TARGET="_top">Index</A>          
 			<A HREF="./3-8.html" TARGET="_top">Next</A><br>     
@@ -224,7 +227,7 @@ UserStat_  UserStat;                       Userステータス
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

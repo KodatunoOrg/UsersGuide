@@ -10,7 +10,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -27,17 +27,17 @@
 </table> 
 <blockquote> 
 
-<BR><HR><H2>W/S Versionдм╗¤д─╡б╟╜</H2>
-W/S Versionд╟д╧бддвдщдлд╕дс╝яб╣д╬╡б╟╜дм═╤░╒д╡дьд╞дкдъбд
+<BR><HR><H2>W/Sд╚Qt Versionдм╗¤д─╡б╟╜</H2>
+W/Sд╚Qt Versionд╟д╧бддвдщдлд╕дс╝яб╣д╬╡б╟╜дм═╤░╒д╡дьд╞дкдъбд
 Kodatunoе│еєе╜б╝еыд╦┼╨╧┐д╡дьд┐е│е▐еєе╔дЄ╞■╬╧д╣дыд│д╚д╦дшдъбд╜ъ─ъд╬╡б╟╜дЄ╝┬╣╘д╣дыд│д╚дмд╟днд▐д╣бе
 ┼╨╧┐д╡дьд╞дддые│е▐еєе╔дЄ░╩▓╝д╦╝ид╖д▐д╣бе<BR><BR>
 <UL>
 <LI>verinf -f<BR><BR>
 е╨б╝е╕ечеє╛Ё╩єдЄе│еєе╜б╝еыд╦╜╨╬╧д╖д▐д╣бе<BR>
-░·┐ЇfдЄ╗╪─ъд╣дыд╚бдkodatunoд╬└╡╝░╠╛╛╬дЄ╜╨╬╧д╖д▐д╣бе<BR><BR>
+░·┐ЇfдЄ╗╪─ъд╣дыд╚бдKodatunoд╬└╡╝░╠╛╛╬дЄ╜╨╬╧д╖д▐д╣бе<BR><BR>
 
 <LI>open -N (File Name)<BR><BR>
-IGES/STLекб╝е╫еєе└едевеэе░дЄ╔╜╝ид╖д▐д╣бе<BR>
+IGES/STL/VRML/DXFекб╝е╫еєе└едевеэе░дЄ╔╜╝ид╖д▐д╣бе<BR>
 ░·┐ЇNдЄ╗╪─ъд╣дыд╚бдд╜д╬╕хд╦╗╪─ъд╖д┐File Nameд╬е╟б╝е┐дЄе└едевеэе░дЄ╔╜╝ид╣дыд│д╚д╩дп╝ш╞└д╣дыд│д╚дмд╟днд▐д╣бе<BR><BR>
 
 <LI>wire<BR><BR>
@@ -58,27 +58,42 @@ IGES/STLекб╝е╫еєе└едевеэе░дЄ╔╜╝ид╖д▐д╣бе<BR>
 ░·┐Їбзд╩д╖<BR><BR>
 
 <LI>surfinfo<BR><BR>
-╢╩╠╠╛Ё╩єдЄе│еєе╜б╝еыд╦╜╨╬╧д╖д▐д╣бе
+╢╩╠╠╛Ё╩єдЄе│еєе╜б╝еыд╦╜╨╬╧д╖д▐д╣бе<BR>
 ░·┐Їбзд╩д╖<BR><BR>
 
-<LI>exp -r (Value)<BR><BR>
+<LI>exp -r (Value_X) (Value_Y) (Value_Z)(Value)<BR><BR>
 ░·┐ЇrдЄ╗╪─ъд╣дыд╚бдValueд╟╗╪─ъд╖д┐╟▄╬ид╟BODYдЄ│╚┬чбж╜╠╛од╖д▐д╣бе<BR><BR>
 
 <LI>move -r (Value_X) (Value_Y) (Value_Z)<BR><BR>
 ░·┐ЇrдЄ╗╪─ъд╣дыд╚бдValueд╟╗╪─ъд╖д┐░▄╞░╬╠д└д▒д╟BODYдЄ╩┐╣╘░▄╞░д╖д▐д╣бе<BR><BR>
 
+<LI>rot -r (Axis_X) (Axis_Y) (Axis_Z) (Value_Deg)<BR><BR>
+░·┐ЇrдЄ╗╪─ъд╣дыд╚бдAxisд╟╗╪─ъд╖д┐╝┤╝■дъд╦бдValueд╟╗╪─ъд╖д┐▓є┼╛│╤┼┘д└д▒BODYдЄ▓є┼╛д╖д▐д╣бе<BR><BR>
+
 <LI>chbkcol -r (Value_R) (Value_G) (Value_B)<BR><BR>
 ░·┐ЇrдЄ╗╪─ъд╣дыд╚бд╟╪╖╩┐здЄValueд╟╗╪─ъд╖д┐RGB├═д╬┐зд╪д╚╩╤╣╣д╖д▐д╣бе<BR><BR>
+
+<LI>meshinf<BR><BR>
+есе├е╖ехд╬╛Ё╩єдЄе│еєе╜б╝еыд╦╜╨╬╧д╖д▐д╣бе<BR>
+░·┐Їбзд╩д╖<BR><BR>
+
+<LI>uvdir<BR><BR>
+╢╩╠╠д╬u, vд╬╩¤╕■дЄе░еще╒еге├еп╬╬░шд╦╔╜╝ид╖д▐д╣беuдм▓л┐збдvдм┐х┐зд╬└■д╟╔╜╝ид╡дьд▐д╣бе<BR>
+░·┐Їбзд╩д╖<BR><BR>
 
 <LI>rots<BR><BR>
 ▓є┼╛е╡б╝е╒езе╣дЄ└╕└од╖д▐д╣бе
 1д─д╬╢╩└■дЄ┴к┬Є╕хбдд│д╬е│е▐еєе╔дЄ╞■╬╧д╖д▐д╣бе<BR>
 ▓є┼╛е╡б╝е╒езе╣└╕└ое└едевеэе░дм╔╜╝ид╡дьд▐д╣д╬д╟бд╜ъ─ъд╬е╤ещесб╝е┐дЄ╞■╬╧д╖"OK"е▄е┐еєд╟бд
 ┴к┬Єд╖д┐╢╩└■дЄ360┼┘▓є┼╛д╡д╗д┐╢╩╠╠дм└╕└од╡дьд▐д╣бед▐д┐д╬д│д╚днбд"NewBody"д╚дддж
-╠╛┴░д╟└╕└од╖д┐NURBS╢╩╠╠дмBodyд╚д╖д╞┐╖д┐д╦┼╨╧┐д╡дьд▐д╣бед┐д└д╖бдR1.1╕╜║▀бд▓є┼╛│╤┼┘д╧360┼┘д╬д▀┬╨▒■д╖д╞дддыбе<BR>
+╠╛┴░д╟└╕└од╖д┐NURBS╢╩╠╠дмBodyд╚д╖д╞┐╖д┐д╦┼╨╧┐д╡дьд▐д╣бед╩дкбдQt Verд╟д╧╞▒══д╬д│д╚дЄесе╦ехб╝е╨б╝д╬"Create"длдщ"Rotation"дЄ┴к┬Єд╣дыд│д╚д╟╝┬╣╘д╟днд▐д╣бед┐д└д╖бдR3.0╕╜║▀бд▓є┼╛│╤┼┘д╧360┼┘д╬д▀┬╨▒■д╖д╞дддыбе<BR>
 ░·┐Їбзд╩д╖бе<BR><BR>
 <P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Rots.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/Rots.jpg"></CENTER></P>
+(a) WideStudio
+<P><CENTER><img SRC="pixmaps/Rots_Qt.jpg"></CENTER></P>
+(b) Qt
+<BR>
 <BR>
 б╬▓є┼╛е╡б╝е╒езе╣└╕└од╬▓с─°б╧
 </CENTER></P>
@@ -87,10 +102,14 @@ IGES/STLекб╝е╫еєе└едевеэе░дЄ╔╜╝ид╖д▐д╣бе<BR>
 е╣едб╝е╫е╡б╝е╒езе╣дЄ└╕└од╖д▐д╣бе<BR>
 1д─д╬╢╩└■дЄ┴к┬Є╕хбдд│д╬е│е▐еєе╔дЄ╞■╬╧д╖д▐д╣бе
 е╣едб╝е╫е╡б╝е╒езе╣└╕└ое└едевеэе░дм╔╜╝ид╡дьд▐д╣д╬д╟бд╜ъ─ъд╬е╤ещесб╝е┐дЄ╞■╬╧д╖"OK"е▄е┐еєд╟бд
-┴к┬Єд╖д┐╢╩└■дЄе╣едб╝е╫д╡д╗д┐╢╩╠╠дм└╕└од╡дьд▐д╣бе<BR>
+┴к┬Єд╖д┐╢╩└■дЄе╣едб╝е╫д╡д╗д┐╢╩╠╠дм└╕└од╡дьд▐д╣бед╩дкбдQt Verд╟д╧╞▒══д╬д│д╚дЄесе╦ехб╝е╨б╝д╬"Create"длдщ"Sweep"дЄ┴к┬Єд╣дыд│д╚д╟╝┬╣╘д╟днд▐д╣бе<BR>
 ░·┐Їбзд╩д╖бе<BR><BR>
 <P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Sweeps.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/Sweeps.jpg"></CENTER></P>
+(a) WideStudio
+<P><CENTER><img SRC="pixmaps/Sweeps_Qt.jpg"></CENTER></P>
+(b) Qt
+<BR>
 <BR>
 б╬е╣едб╝е╫е╡б╝е╒езе╣└╕└од╬▓с─°б╧
 </CENTER></P>
@@ -99,13 +118,17 @@ IGES/STLекб╝е╫еєе└едевеэе░дЄ╔╜╝ид╖д▐д╣бе<BR>
 <LI>nurbsc<BR><BR>
 NURBS╢╩└■дЄ└╕└од╖д▐д╣бе<BR>
 д│д╬е│е▐еєе╔дЄ╞■╬╧д╣дыд╚бдNURBS╢╩└■└╕└ое└едевеэе░дм╔╜╝ид╡дьд▐д╣д╬д╟бд└╕└од╖д┐ддNURBS╢╩└■д╬╝я╬р╡┌д╙бд
-Inputе╒ебедеыдЄ┴к┬Єд╖бд"OK"е▄е┐еєдЄ▓бд╣д╚бд1д─д╬NURBS╢╩└■дм└╕└од╡дьд▐д╣бед▐д┐д╬д│д╚днбд"NewBody_C"д╚дддж
-╠╛┴░д╟└╕└од╖д┐NURBS╢╩└■дмBodyд╚д╖д╞┐╖д┐д╦┼╨╧┐д╡дьд▐д╣бе<BR>
+Inputе╒ебедеыдЄ┴к┬Єд╖бд"OK"е▄е┐еєдЄ▓бд╣д╚бд1д─д╬NURBS╢╩└■дм└╕└од╡дьд▐д╣бед▐д┐д│д╬д╚днбд"NewBody_C"д╚дддж
+╠╛┴░д╟└╕└од╖д┐NURBS╢╩└■дмBodyд╚д╖д╞┐╖д┐д╦┼╨╧┐д╡дьд▐д╣бед╩дкбдQt Verд╟д╧╞▒══д╬д│д╚дЄесе╦ехб╝е╨б╝д╬"Create"длдщ"NURBSC Curve"дЄ┴к┬Єд╣дыд│д╚д╟╝┬╣╘д╟днд▐д╣бе<BR>
 Inputе╒ебедеыд╧бд└й╕ц┼└д╬x-y-z║┬╔╕дЄ1╣╘д╚д╖д╞┼└┐Ї╩м╡н╜╥д╖д▐д╣бее╒ебедеы╖┴╝░д╧CSV╖┴╝░д╚д╖бде╒ебедеы│╚─е╗╥д╧
-".inp"д╚д╖д▐д╣бее╡еєе╫еыInputе╒ебедеыдм"Kodatuno_R***\Input\NurbsC"д╦двдъд▐д╣бе<BR>
+".inp"д╚д╖д▐д╣бее╡еєе╫еыInputе╒ебедеыдм"Kodatuno_R***\Model\Input\NurbsC"д╦двдъд▐д╣бе<BR>
 ░·┐Їбзд╩д╖бе<BR><BR>
 <P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Nurbsc.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/Nurbsc.jpg"></CENTER></P>
+(a) WideStudio
+<P><CENTER><img SRC="pixmaps/Nurbsc_Qt.jpg"></CENTER></P>
+(b) Qt
+<BR>
 <BR>
 б╬NURBS╢╩└■└╕└од╬▓с─°б╧
 </CENTER></P>
@@ -117,7 +140,11 @@ Inputе╒ебедеыдЄ┴к┬Єд╖бд"OK"е▄е┐еєдЄ▓бд╣д╚бд1д─д╬NURBS╢╩╠╠дм└╕└од╡дьд▐д╣бед▐д┐д╬д
 ╠╛┴░д╟└╕└од╖д┐NURBS╢╩╠╠дмBodyд╚д╖д╞┐╖д┐д╦┼╨╧┐д╡дьд▐д╣бе
 ░·┐Їбзд╩д╖бе<BR><BR>
 <P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Nurbss.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/Nurbss.jpg"></CENTER></P>
+(a) WIdeStudio
+<P><CENTER><img SRC="pixmaps/Nurbss_Qt.jpg"></CENTER></P>
+(b) Qt
+<BR>
 <BR>
 б╬NURBS╢╩└■└╕└од╬▓с─°б╧
 </CENTER></P>
@@ -127,7 +154,7 @@ Inputе╒ебедеыдЄ┴к┬Єд╖бд"OK"е▄е┐еєдЄ▓бд╣д╚бд1д─д╬NURBS╢╩╠╠дм└╕└од╡дьд▐д╣бед▐д┐д╬д
 ╕╜╗■┼└д╟д╧╢╩╠╠д╬д▀д╪д╬┬╨▒■д╚д╩д├д╞ддд▐д╣бе
 │м┐ЇдЄ╛хд▓ды╛ь╣чд╧├э░╒дм╔м═╫д╟д╣бе│м┐Їд╧е│еєе╚еэб╝еые▌едеєе╚д╬┐Їд╦░═┬╕д╖д▐д╣бе<BR><BR>
 <P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/chrank.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/chrank.jpg"></CENTER></P>
 <BR>
 б╬NURBS╢╩╠╠д╬│м┐Їд╬╩╤╣╣╬уб╧
 </CENTER></P>
@@ -139,7 +166,7 @@ GE╔Їдм═╤░╒д╣ды┤╪┐Їд╚д╖д╞═╤░╒д╡дьд╞ддд▐д╣бе
 
 
 
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-3.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-5.html">Next</A><br>
@@ -149,7 +176,7 @@ GE╔Їдм═╤░╒д╣ды┤╪┐Їд╚д╖д╞═╤░╒д╡дьд╞ддд▐д╣бе
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

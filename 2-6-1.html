@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+	<script src="shCore.js"></script>  <!--必須-->
+	<script src="shBrushCpp.js"></script>  <!--C++-->
+	<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+	<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -37,45 +43,108 @@
 <OL>
 <LI>Kodatunoアプリケーションを起動し, "User Status"からMode1を選択し，"Sample Func 1"ボタンを押します．<BR><BR>
 
-<P><CENTER><IMG SRC="pixmaps/Select_Mode1.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/Select_Mode1.jpg"></CENTER></P>
 
 <LI>Bodyが1つ表示されたことを確認してください．
 
-<P><CENTER><IMG SRC="pixmaps/Select_Mode1_Result.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/Select_Mode1_Result.jpg"></CENTER></P>
 
 </OL>
 <BR><BR>
 <H4>＜ソース解説＞</H4>
-今回はユーザー用ボタンの2つ目，"Sample Func 1"を押しました．これはUSERクラスのコンストラクタ(UserFunc.cpp 8行目)にあるExecSampleFunc1()(15行目)が実行されたことを意味します．
-ExecSampleFunc1()の実体は"UserFunc.cpp"の77行目からです．
+今回はユーザー用ボタンの2つ目，"Sample Func 1"を押しました．これはUSERクラスのコンストラクタ(UserFunc.cpp )にあるExecSampleFunc1()が実行されたことを意味します．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_ExecSampleFunc1.jpg"></CENTER></P>
+
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "UserFunc.cpp">
+// Userボタン登録関数1の実体を記述
+// *BodyList:BODYの実体が登録順にリストされている
+// *ObjList:セレクションされたエンティティ情報
+// PickCount:セレクションされたエンティティの数
+int USER::ExecSampleFunc1(BODYList *BodyList,OBJECTList *ObjList,int pickcount)
+{
+	// User StatusのModeによって処理を分ける
+	if(UserStat.Mode == 0){
+		SmpRegistBody(BodyList,ObjList);	// IGESファイルを読み込み，Bodyとして登録する
+		return KOD_TRUE;
+	}
+	else if(UserStat.Mode == 1){
+		SmpTransBody(BodyList,ObjList,pickcount,UserStat.Prop);		// 指定したBodyに対しアフィン変換を行う
+		return KOD_TRUE;
+	}
+	else if(UserStat.Mode == 2){
+		SmpDivCurves(BodyList,ObjList,pickcount,UserStat.Prop);		// 曲線を指定した分割数で分割した点を生成する
+		return KOD_TRUE;
+	}
+	else if(UserStat.Mode == 3){
+		SmpNearestPt(BodyList,ObjList,pickcount,UserStat.Prop);		// 任意の点からの曲面上の最近傍点を求める
+		return KOD_TRUE;
+	}
+	else if(UserStat.Mode == 4){
+		SmpUVDivLine(BodyList,ObjList,pickcount,UserStat.Prop);		// 曲面のUVパラメータで等間隔に分割した点を生成する
+		return KOD_TRUE;
+	}
+	else{
+		// void
+		return KOD_FALSE;
+	}
+}
+</pre>
+<!--"<"=&lt; ">"=&gt;-->
+
 
 　SampleFunc0でも述べたように，引数は固定です．この関数内では"User Status"のMode番号によって実行される関数が変わるようなコーディングを行っています．
-今回はMode1選択しました．これによってUserStat.Modeに0が代入されますので，81行目のSmpRegistBody()関数が実行されます．<br>
+今回はMode1選択しました．これによってUserStat.Modeに0が代入されますので，9行目のSmpRegistBody()関数が実行されます．<br>
 　では，SmpRegistBody()を見てみましょう．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpRegistBody.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "SampleFunc1.cpp">
+// Sample1: IGESファイルを読み込み，Bodyとして登録する
+int SmpRegistBody(BODYList *BodyList,OBJECTList *ObjList)
+{
+	char fname[256] = "../../../Model/IGES/FreeSurf.igs";	// ここではファイル名は決め打ちとする
+	IGES_PARSER Iges;					// IGESファイルを読み込むためのクラスを呼び出す
+	BODY *body = new BODY;				// 読み込んだIGESデータを格納するための箱(BODY)を用意
 
-　今回の例では，読み込むファイル名は8行目に示すように，決め打ちしています．<BR>
-　このファイル名を持ったIGESファイルを実際に読み込むために，IGES_PARSERクラスを呼び出す必要があります(9行目)．
-さらに，読み込んだIGESデータをBodyとして新たに登録するため，BODYクラスの実体を1つ用意します(10行目)．<BR>
-　実際のIGESファイル読み込みは12行目で，IGESクラスのIGES_Parser_Main()関数を呼び出すことによって行われます．<BR>
+	int flag = Iges.IGES_Parser_Main(body,fname);	// IGESデータを読み込んで、bodyに格納
+	if(flag == KOD_TRUE){							// 読み込み成功なら
+		Iges.Optimize4OpenGL(body);					// 読み込んだIGESファイルをOpenGL用に最適化する(必ずこの関数を実行してください)
+        GuiIF.SetMessage("Succeeded to read IGES file");
+	}
+	else{											// 読み込みに失敗したら
+		delete body;								// 確保したメモリーを解放し
+        GuiIF.SetMessage("Error: fail to read IGES file");
+		return KOD_ERR;								// 終了
+	}
+
+	body->RegistBody(BodyList,fname);		// Bodyをリストに登録
+
+	// 読み込んだBODYを消去する場合は以下を実行
+	//body->DeleteBody(BodyList);			// Bodyをリストからはずす
+	//delete body;							// Body自身のメモリー解放
+
+	return KOD_TRUE;
+}
+</pre>
+<!--"<"=&lt; ">"=&gt;-->
+
+　今回の例では，読み込むファイル名は4行目に示すように，決め打ちしています．<BR>
+　このファイル名を持ったIGESファイルを実際に読み込むために，IGES_PARSERクラスを呼び出す必要があります(5行目)．
+さらに，読み込んだIGESデータをBodyとして新たに登録するため，BODYクラスの実体を1つ用意します(6行目)．<BR>
+　実際のIGESファイル読み込みは8行目で，IGESクラスのIGES_Parser_Main()関数を呼び出すことによって行われます．<BR>
 　IGESデータはそれを生成するCADソフトに依存した方言があり，そのままの形でOpenGLの描画関数に渡すと正しく表示されない場合があります．
-そこで，14行目のIGES_PARSER::Optimize4OpenGL()関数を呼び出し，OpenGLの仕様に沿ったデータ構造へとIGESデータを変更する必要があります．
+そこで，10行目のIGES_PARSER::Optimize4OpenGL()関数を呼び出し，OpenGLの仕様に沿ったデータ構造へとIGESデータを変更する必要があります．
 もちろんこの関数によって3D形状が変化するようなことはないはずですが，意図しない描画となってしまう場合はご一報ください．<BR>
 　ここまでで，IGESデータを読み込み，それを新たなBodyとして登録できたわけですが，これだけではグラフィック領域に描画されません．
 　<A HREF="./1-3.html">1.3 Kodatuno内部表現の概要</A>で示したように，新たに生成したBodyはBODYListと呼ばれるリストに登録しなければいけません．
-Kodatunoの描画関数はこのリストを辿りながらBodyを順番に描画していくようになっています．そこで，23行目のbody->RegistBody()関数を実行し，今生成したBody
+Kodatunoの描画関数はこのリストを辿りながらBodyを順番に描画していくようになっています．そこで，19行目のbody->RegistBody()関数を実行し，今生成したBody
 をリストに登録します．<BR>
 
 　逆にBodyを消去する方法もここで説明しておきます．<BR>
-　Bodyの消去は26, 27行目にコメントとして示しておきました．基本的には読み込みの逆順を辿ればよく，まずbody->DeleteBody()によってBodyをリストからはずし，(27行目)，
-自分で確保したBODY型のメモリーも消去(29行目)します．<BR><BR>
+　Bodyの消去は22, 23行目にコメントとして示しておきました．基本的には読み込みの逆順を辿ればよく，まずbody->DeleteBody()によってBodyをリストからはずし，(22行目)，
+自分で確保したBODY型のメモリーも消去(23行目)します．<BR><BR>
 
 　以上で(Ex. 1)の解説を終了します．次は読み込んだBodyに対して平行・回転・拡大・縮小などのアフィン変換を行う方法について解説します．
 
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-6.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-6-2.html">Next</A><br>
@@ -85,7 +154,7 @@ Kodatunoの描画関数はこのリストを辿りながらBodyを順番に描画していくようになってい
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

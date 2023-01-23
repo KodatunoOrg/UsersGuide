@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+<script src="shCore.js"></script>  <!--必須-->
+<script src="shBrushCpp.js"></script>  <!--C++-->
+<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -28,7 +34,6 @@
 <blockquote> 
 
 <BR><HR><H2>(Ex. 5) NURBS曲面を指定した分割数で分割した点を生成する</H2>
-
 　この例題は<A HREF="./2-6-3.html">2.6.3 NURBS曲線を指定した分割数で分割した点を生成する</A>の曲面バージョンです．<BR><BR>
 　"SampleFunc1.cpp"のSmpUVDivLine()を実行します．
 
@@ -40,44 +45,76 @@
 <LI>"Sample Func 1"ボタンを押します．
 <LI>選択した面上に分割点が生成されたことを確認してください．
 </OL>
+<p><CENTER><img src="pixmaps/UserFunc_SmpUVDivLine.jpg"width="679.2" height="558.4"></CENTER></p>
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpUVDivLine.jpg"></CENTER></P>
-
-<BR><BR>
-<H4>＜ソース解説＞</H4>
+<br><br>
+<h4>＜ソース解説＞</h4>
 　今回はMode5を選択し，"Sample Func1"ボタンを押しました．これによってSmpUVDiveLine()が実行されます．<BR>
 　では，SmpUVDiveLine()を見てみましょう．
+<pre class="brush: cpp toolbar:false; highlight:[];" title = "SampleFunc1.cpp">
+// Sample5: 曲面のUVパラメータで等間隔に分割した点を生成する
+int SmpUVDivLine(BODYList *BodyList,OBJECTList *ObjList, int PickCount, double Prop[])
+{
+	if(!PickCount)	return KOD_ERR;		// セレクションされていなかったら、何もしない
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpUVDivLine2.jpg"></CENTER></P>
+	NURBS_Func	nfunc;					// NURBSを扱う関数集を呼び出す
+	double green[3] = {0,1,0};			// 点表示の色(緑)
 
-　138〜149行目まではこれまでの例題と同じですので，説明を省略します．151行目から見ていきましょう．<BR>
-　151, 152行目では"User Status"のProp1，Prop2で入力したU方向V方向それぞれの分割数の値を取り出しています．<BR>
-　次に153，154行目ですが，これを理解するためには，NURBS曲面の知識が若干必要になります．
-<A HREF="./2-6-3.html">(Ex. 3)</A>の冒頭で，NURBS曲線/曲面を定義した構造体の変数は，Kodatunoモジュールを使う際，
-気にしなくてもよいようになっていると述べましたが，本例題ではあえてその一部を解説し，Kodatunoモジュール自体の理解へとつなげたいと思います．<BR>
-　（Ex. 3)で少しだけ触れましたが，NURBSはパラメータを媒介した表現になっています．下図を参照してください．
+	OBJECT *obj = (OBJECT *)ObjList->getData(0);		// 一番最初にセレクションされたエンティティの情報を得る
+	BODY *body = (BODY *)BodyList->getData(obj->Body);	// 一番最初にセレクションされたBODYの実体を得る
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpUVDivLine3.jpg"></CENTER></P>
+	// 本来であれば，Sample4に示した曲面のタイプによる条件分岐が必要であるが，これ以降のSampleではトリム面で決め打ちする
+	if(obj->Type != _TRIMMED_SURFACE)	return KOD_ERR;	
 
-　この図ではU-V座標系上の0-u_max, 0-v_maxの範囲でNURBS曲面が存在しており，その範囲内におけるある座標値(u,v)は，3次元空間における
-曲面上の点(x,y,z)に対応しています．(u,v)から(x,y,z)への変換は，(Ex. 4)で示したNURBS_Func::CalcNurbsSCoord()によって行うことができます．
-NURBS曲面が存在する範囲は，そのNURBS曲線/曲面を作成したCADソフト等によってまちまちで，決まりはありません．上の図では0からスタートしていますが，
-0でない場合も当然ありますので，正確にはu_min, v_minが存在し，今回はたまたま両方とも0だったということになります．<BR>
-　KodatunoにおいてNURBS曲面を表す構造体NURBSSで，曲面の存在範囲を格納している変数がU[2]とV[2]です(BODY.h 135-136行目)．
-U[0]にu_minが，U[1]にu_maxが格納されています．Vに関しても同様です．(ちなみにNURBS曲線の場合はBODY.h 118行目のV[2]の1つになります．)<BR>
-　ここでようやくソースに戻ります．ソースの153行目は，u_maxからu_minを引いて，指定した分割数で割っています．つまり，NURBS曲面のパラメータ座標上で
-等分割したときの区間長さを求めています．154行目は同様にv方向についての区間長さを求めています．
-そして157行目から162行目にかけて，U, V両方向の分割点を求め，3次元空間上の座標に変換しています．
+	NURBSS *S = body->TrmS[obj->Num].pts;				// BODYからNURBS曲面を取り出す
 
-<BR><BR>
-　以上で(Ex. 5)の解説は終了ですが，153〜162行目の一連のNURBSS構造体の変数を利用した分割点算出は，実は1つの関数としてKodatunoモジュールに実装されています．<BR>
-　それがNURBS_Func::CalcDeltaPtsOnNurbsS()です．153〜162行はこの関数によって1行に置き換えることができます．実際に"NURBS_Func.cpp"の3937行目をご覧ください．
-NURBS_Func::CalcDeltaPtsOnNurbsS()の実体が記述されていますが，例題の153〜162行目となんら変わっていないことが分かると思います．<BR><BR>
+	int u_divnum = (int)Prop[0];						// ユーザーステータスのprop1をu方向分割数として読み込み
+	int v_divnum = (int)Prop[1];						// ユーザーステータスのprop2をv方向分割数として読み込み
+	double u_val = (S->U[1] - S->U[0])/u_divnum;		// パラメトリック空間内でのu方向線分長を得る
+	double v_val = (S->V[1] - S->V[0])/v_divnum;		// パラメトリック空間内でのv方向線分長を得る
 
+	// u方向，v方向の各分割点における座標値を求める
+	for(int i=0;i<=u_divnum;i++){
+		for(int j=0;j<=v_divnum;j++){
+			Coord P = nfunc.CalcNurbsSCoord(S,S->U[0]+u_val*i,S->V[0]+v_val*j);	// 指定した(u,v)の座標値を求める
+			DrawPoint(P,1,3,green);						// 描画
+		}
+	}
+
+	return KOD_TRUE;
+}
+
+</pre><br>
+　4〜15行目まではこれまでの例題と同じですので，説明を省略します．17行目から見ていきましょう．<br>
+　17，18行目では"User Status"のProp1，Prop2で入力したU方向V方向それぞれの分割数の値を取り出していきます．<br>
+　次に19，20行目ですが，これを理解するためには，NURBS曲面の知識が若干必要になります．(EX.3)の冒頭で，NURBS<br>
+曲線/曲面を定義した構造体の変数は，Kodatunoモジュールを使う際，気にしなくてもよいようになっていると述べましたが，<br>
+本例題ではあえてその一部を解説し，Kodatunoモジュール自体の理解へとつなげたいと思います．<br>
+　(EX.3)で少しだけ触れましたが，NURBSはパラメータを媒介した表現になっています．下図を参照してください．
+
+<p><CENTER><img src="pixmaps/UserFunc_SmpUVDivLine2.jpg"width="763" height="294"></CENTER></p>
+
+　この図ではU-V座標系上の0-u_MAX，0-v_MAXの範囲でNURBS曲面が存在しており，その範囲内におけるある座標値(u,v)は，
+3次元空間における曲面上の点(x､y､z)に対応しています．(u,v)から(x,y,z)への変換は，(Ex.4)で示した
+NURBS_unk::CalcNurbsSCord()によって行うことができます．NURBS曲面が存在する範囲は，そのNURBS曲線/曲面を作成した
+CADソフト等によってまちまちで，決まりはありません．上の図では0からスタートしていますが，0でない場合も当然あり
+ますので，正確にはu_min，v_minが存在し，今回はたまたま両方とも0だったということになります．<br>
+　KodatunoにおいてNURBS曲面を表す構造体NURBSSで，曲面の存在範囲を格納している変数がU[2]とV[2]です(BODY.h
+138，139行目)．U[0]にu_minが，U[1]にu_maxが格納されています．Vに関しても同様です．(ちなみにNURBS曲線の場合は
+BODY.h119行目のV[2]の1つになります．)<br>
+
+ ここでようやくソースに戻ります．ソースの19行目は，u_maxからu=minを引いて，指定した分割数で割っています．つまり，
+NURBS曲面のパラメータ座標上で等分割したときの区間長さを求めています．20行目は同様にv方向についての区間長さを
+求めています．そして23行目から28行目にかけて，U,V両方向の分割点を求め，3次元空間上の座標に変換しています．<br><br>
+
+　以上で(Ex.5)の解説は終了ですが，19〜28行目の一連のNURBSS構造体の変数を利用した分割点算出は，実は1つの関数として
+Kodatunoモジュールに実装されています．<br>
+　それがNURBS_Func::CalcDeltaPtsOnNurbsS()です．19〜28行目はこの関数によって1行に置き換えることができます．実際
+に"NURBS_Func.cpp"の4193行目をご覧ください．NURBS Func::CalcDeltaPtsOnNurbsS()の実体が記述されていますが，例題の
+19〜28行目となんら変わっていないことがわかると思います．<br><br>
 　次はNURBS曲面と平面との干渉を扱った例題になります．
-
-
-</blockquote> <HR>  Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote>
+<HR>  Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-6-4.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-6-6.html">Next</A><br>
@@ -87,8 +124,7 @@ NURBS_Func::CalcDeltaPtsOnNurbsS()の実体が記述されていますが，例題の153〜162行目
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
-</html>  
-
+</html>

@@ -3,6 +3,12 @@
 <HEAD LANG="ja"> 
 	<TITLE>Kodatuno User's Guide</TITLE> 
 	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+	<!--SyntaxHighlighterの必要なファイルをHTMLに読み込む-->
+	<script src="shCore.js"></script>  <!--必須-->
+	<script src="shBrushCpp.js"></script>  <!--C++-->
+	<link rel="stylesheet" href="shCoreDefault.css">  <!--標準は配色-->
+	<script>SyntaxHighlighter.all();</script>
+<!--ここまで-->
 </HEAD> 
 <BODY bgcolor="#ffffff"> 
 <table cellspacing="0" cellpadding="0" border="0" width="100%">   
@@ -10,7 +16,7 @@
 	</tr>   
 	<tr valign="top">        
 		<td width="256" valign="bottom" align="left">          
-			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+			<img SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
 		</td>        
 		<td valign="bottom" align="center">          
 			<center> 	   
@@ -34,7 +40,43 @@
 NURBS曲線の場合はパラメータは1つ，NURBS曲面の場合はパラメータは2つあり，パラメータの値が決まれば，3次元座標値も一意に決まります．<BR>
 　KodatunoにおけるNURBS曲線/曲面の表現は"BODY.h"の構造体NURBSCとNURBSSによって定義されています．
 
-<P><CENTER><IMG SRC="pixmaps/NURBSC_NURBSS.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "BODY.h">
+// 有理Bスプライン(NURBS)曲線
+typedef struct{
+	int K;			// コントロールポイントの数
+	int M;			// 階数(=次数+1)
+	int N;			// ノットベクトルの数
+	int prop[4];	// 各プロパティ								// prop[0]==0:非平面内曲線, 1:平面内曲線
+	double *T;		// ノットシーケンスの値 K+M個				// prop[1]==0:閉曲線でない，1:閉曲線
+	double *W;		// Weightの値 K個							// prop[2]==0:有理式，1:多項式
+	Coord *cp;		// コントロールポイント K個					// prop[3]==0:非周期的曲線, 1:周期的曲線				
+	double V[2];	// パラメータの範囲
+	Coord norm;		// 法線ベクトル
+	int EntUseFlag; // ディレクトリ部 Entity Use Flag の値(0:幾何要素 5:2Dパラメトリック要素)
+	int pD;			// ディレクトリ部への逆ポインタ
+	int OriginEnt;	// 元のエンティティタイプ
+	void *pOriginEnt;	// 元のエンティティへのポインタ
+	DispStat Dstat;	// 表示属性（色r,g,b）
+}NURBSC;
+
+// 有理Bスプライン(NURBS)曲面
+typedef struct{
+	int K[2];		// コントロールポイントの数(u方向,v方向)
+	int M[2];		// 階数(=次数+1)
+	int N[2];		// ノットベクトルの数(K+M)
+	int prop[5];	// パラメータ								// prop[0]==0:u方向で閉じている, 1:閉じていない
+	double *S;		// u方向ノットベクトルの値 A+1個			// prop[1]==0:v方向で閉じている，1:閉じていない
+	double *T;		// v方向ノットベクトルの値 B+1個			// prop[2]==0:有理式，1:多項式
+	double **W;		// Weightの値								// prop[3]==0:u方向で非周期的, 1:周期的
+	Coord  **cp;	// コントロールポイント C個					// prop[4]==0:v方向で非周期的, 1:周期的
+	double U[2];	// u方向パラメータの範囲
+	double V[2];	// v方向パラメータの範囲
+	int pD;			// ディレクトリ部への逆ポインタ
+	int TrmdSurfFlag;// このNURBS曲面がトリム面として呼ばれているのか、独立して存在するのかを示すフラグ(トリム面:KOD_TRUE  独立面:KOD_FALSE)
+	DispStat Dstat;	// 表示属性（色r,g,b,）
+}NURBSS;
+</pre>
+<!--"<"=&lt; ">"=&gt;-->
 
 　これらの変数を全て理解するには，NURBSに関する専門書とIGES規格書を読まなければなりませんが，
 Kodatunoモジュールを使う場合は，これら変数はできる限り隠蔽していますので，特に気にする必要はないと思います．<BR>
@@ -50,7 +92,7 @@ Kodatunoモジュールを使う場合は，これら変数はできる限り隠蔽していますので，特に気
 <LI>選択したエッジ上に等間隔に分割点が生成されたことを確認してください．
 </OL>
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpDivCurves.jpg"></CENTER></P>
+<P><CENTER><img SRC="pixmaps/UserFunc_SmpDivCurves.jpg"></CENTER></P>
 
 <BR><BR>
 <H4>＜ソース解説＞</H4>
@@ -58,35 +100,88 @@ Kodatunoモジュールを使う場合は，これら変数はできる限り隠蔽していますので，特に気
 さらにMode3を選択したことから，UserStat.Modeには2が代入されているので，SmpDivCurves()が実行されます．<BR>
 　では，SmpDivCurves()を見てみましょう．
 
-<P><CENTER><IMG SRC="pixmaps/UserFunc_SmpDivCurves2.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "SmapleFunc1.cpp">
+// Sample3: 曲線を指定した分割数で分割した点を生成する
+int SmpDivCurves(BODYList *BodyList,OBJECTList *ObjList, int PickCount, double Prop[])
+{
+	if(!PickCount)	return KOD_ERR;		// セレクションされていなかったら、何もしない
 
-　最初の行(57行目)には，先ほどと同様，ポカよけ処理としてピック数による例外処理が記述されています．<BR>
-　つづいて59行目では，NURBSを扱うクラスである"NURBS_Func"クラスを呼び出しています．"NURBS_Func"クラスは"NURBS_Func.cpp/.h"に定義されています．
-60行目では，三次元座標を扱うCoordの変数div_pt配列を宣言しています．算出した分割点の格納用です．61行目は分割点を表示するための色を指定しています．
+	NURBS_Func	nfunc;					// NURBSを扱う関数集を呼び出す
+	Coord div_pt[102];					// 分割点の座標値を格納する
+	double green[3] = {0,1,0};			// 分割点表示の色(緑)
+
+	int divnum = (int)Prop[0];			// ユーザーステータスのprop1を分割数として読み込み
+
+	// セレクションした数だけループ
+	for(int i=0;i&lt;PickCount;i++){
+		OBJECT *obj = (OBJECT *)ObjList->getData(i);			// i番目にセレクションされたエンティティの情報を得る
+		BODY *body = (BODY *)BodyList->getData(obj->Body);		// i番目にセレクションされたBODYの実体を得る
+		if(obj->Type == _NURBSC){								// i番目にセレクションされたエンティティがNURBS曲線なら
+			int ptnum = nfunc.CalcDeltaPtsOnNurbsC(&body->NurbsC[obj->Num],divnum,div_pt);		// 分割点を求める
+			for(int j=0;j&lt;ptnum;j++){
+				DrawPoint(div_pt[j],1,3,green);					// 分割点を表示
+			}
+		}
+	}
+
+	return KOD_TRUE;
+}
+</pre>
+<!--"<"=&lt; ">"=&gt;-->
+
+　最初の行(4行目)には，先ほどと同様，ポカよけ処理としてピック数による例外処理が記述されています．<BR>
+　つづいて6行目では，NURBSを扱うクラスである"NURBS_Func"クラスを呼び出しています．"NURBS_Func"クラスは"NURBS_Func.cpp/.h"に定義されています．
+7行目では，三次元座標を扱うCoordの変数div_pt配列を宣言しています．算出した分割点の格納用です．8行目は分割点を表示するための色を指定しています．
 色はRGB値を0-1の範囲で指定します．<BR>
 　今回の例題では，"User Status"のProp1に値を設定しました．Porpの値は引数のProp配列に格納されており，Prop1はProp[0]です．
 引数ではdouble型ですので，必要に応じてキャストしてください．<BR>
-　66行目以降より，ピックしたエッジの数だけ分割点を求めていきます．67, 68行目はEx. 2で解説したように，i番目にピックしたオブジェクト情報の取り出しと，
+　13行目以降より，ピックしたエッジの数だけ分割点を求めていきます．14, 15行目はEx. 2で解説したように，i番目にピックしたオブジェクト情報の取り出しと，
 そのピックしたオブジェクトが属するBodyの実体の取り出しを行っています．今回，NURBS曲線を取り扱う必要があるため，以降の処理でピックしたオブジェクトが
-本当にNURBS曲線であるかを判別する必要があります．69行目ではその判別を行っています．ここで"_NURBSC"と記述されたシンボルは，"BODY.h"内に21個定義されており，
+本当にNURBS曲線であるかを判別する必要があります．16行目ではその判別を行っています．ここで"_NURBSC"と記述されたシンボルは，"BODY.h"内に21個定義されており，
 i番目にピックしたオブジェクトがどの種類であるかをこのような形で判別します．
 
-<P><CENTER><IMG SRC="pixmaps/Symbol_enum.jpg"></CENTER></P>
+<pre class = "brush:cpp toolbar:false; highlight:[];" title = "BODY.h">
+// エンティティタイプのシンボルをenumで定義
+enum EntityType{
+	_CIRCLE_ARC,					// 0:円・円弧
+	_COMPOSITE_CURVE,				// 1:複合曲線
+	_CONIC_ARC,						// 2:円錐曲線
+	_COPIOUS_DATA,					// 3:有意点列
+	_PLANE,							// 4:平面
+	_LINE,							// 5:線分
+	_PARAMETRIC_SPLINE_CURVE,		// 6:パラメトリックスプライン曲線
+	_PARAMETRIC_SPLINE_SURFACE,		// 7:パラメトリックスプライン曲面
+	_POINT,							// 8:点
+	_TRANSFORMATION_MATRIX,			// 9:変換行列
+	_NURBSC,						// 10:有理Bスプライン曲線
+	_NURBSS,						// 11:有理Bスプライン曲面
+	_CURVE_ON_PARAMETRIC_SURFACE,	// 12:面上線
+	_TRIMMED_SURFACE,				// 13:トリム面
+	_SUBFIGURE_DEFINITION,			// 14:子図の定義
+	_ASSOCIATIVITY_INSTANCE,		// 15:グループ
+	_DRAWING,						// 16:図面
+	_PROPERTY,						// 17:図面サイズ
+	_SINGULAR_SUBFIGURE_INSTANCE,	// 18:子図の参照
+	_VIEW,							// 19:投象面
+	_MESH							// 20:メッシュ
+};
+</pre>
+<!--"<"=&lt; ">"=&gt;-->
 
-　ただし，KodatunoではNURBS表現のみを扱っていますので，21個のシンボルは定義されていても，
+　ただし，KodatunoではNURBS表現を扱うのがほとんどですので，21個のシンボルは定義されていても，
 実際に用いるシンボルは10:_NURBSC, 11:_NURBSS, 13:_TRIMMED_SURFACEの3つの場合がほとんどです．<BR><BR>
 
-　NURBS曲線であることが確認できたならば，ようやく70行目にて分割点群の算出を行います．NURBS曲線の分割点群を求めるには，NURBS_Func::CalcDeltaPtsOnNurbsC()
+　NURBS曲線であることが確認できたならば，ようやく17行目にて分割点群の算出を行います．NURBS曲線の分割点群を求めるには，NURBS_Func::CalcDeltaPtsOnNurbsC()
 関数を使います．この関数の引数等の説明は第3章の関数ライブラリリファレンスを参照していただければよいのですが，第1引数に関してはここで説明を加えておきます．
-この第1引数には，分割点を生成するためのNURBS曲線へのポインタを指定しなければなりません．68行目でBodyの実体は取得できており，
+この第1引数には，分割点を生成するためのNURBS曲線へのポインタを指定しなければなりません．15行目でBodyの実体は取得できており，
 ピックしたNURBS曲線のインデックス番号はOBJECT構造体の変数Numに格納されていますので，Body->NurbsC[obj->Num]とすることで，
 現在注目中のNURBS曲線を取り出すことができます．<BR>
-　最後に，得られた分割点群は，72行目でその点の数だけ描画しています．この描画関数DorwPoint()は"StdAfx.h"でグローバル関数として定義されています．
+　最後に，得られた分割点群は，19行目でその点の数だけ描画しています．この描画関数DorwPoint()は"StdAfx.h"でグローバル関数として定義されています．
 <BR><BR>
 
 　以上で(Ex. 3)の解説を終了します．次はNURBS曲面に対する取り扱いについて解説します．
 　
-</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+</blockquote> <HR> Document Release 3.0.1 for Kodatuno R3.0.1, Oct. 2014<P> <hr> <center>
 <A HREF="./2-6-2.html">Prev</A>
 <A HREF="./index.html">index</A>
 <A HREF="./2-6-4.html">Next</A><br>
@@ -96,7 +191,7 @@ i番目にピックしたオブジェクトがどの種類であるかをこのような形で判別します．
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Jul. 11, 2013</i></small>      
+		<small><i>Last modified: Oct. 22, 2014</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  
