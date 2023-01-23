@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+<HTML> 
+<HEAD LANG="ja"> 
+	<TITLE>Kodatuno User's Guide</TITLE> 
+	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+</HEAD> 
+<BODY bgcolor="#ffffff"> 
+<table cellspacing="0" cellpadding="0" border="0" width="100%">   
+	<tr valign="top" height="32">   
+	</tr>   
+	<tr valign="top">        
+		<td width="256" valign="bottom" align="left">          
+			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+		</td>        
+		<td valign="bottom" align="center">          
+			<center> 	   
+		<b><big>Kodatuno User's Guide</big>
+		</b>
+		<center>        
+		</td>       
+		<td width="20%" valign="bottom" align="right">     
+			<A HREF="./2-4.html">Prev</A>     
+			<A HREF="./index.html">Index</A>
+			<A HREF="./2-6.html">Next</A><br>
+		</td>   
+	</tr> 
+</table> 
+<blockquote> 
+
+<BR><HR><H2>サンプルアプリケーションの実行</H2>
+
+Kodatunoには2つのサンプルアプリケーションが用意されています。<BR><BR>
+
+<BR><H3>Ex.1) 等高線算出プログラム</H3><BR>
+1つのBody(NURBS曲面)と、x-y平面に平行な平面の交線(交点群)を、z方向に少しずつシフトしながら求めてく、等高線算出プログラムです。
+<OL>
+<BR><LI>まず、<A HREF="./2-2.html">2.2 Kodatunoを動かしてみよう</A>で示したように、Kodatunoアプリケーションを起動します。<BR><BR>
+<BR><LI>次に等高線算出の対象となるBodyを読み込みます。"Open"ボタンを押し、"Kodatuno_R***"フォルダ内にある、
+"IGES"フォルダを開くと、"FreeSurf.IGS"という名前のIGESファイルがありますので、それを選択し、"OK"。グラフィック領域に
+自由曲面が表示されたことを確認します。
+<P><CENTER>
+<P><CENTER><IMG SRC="pixmaps/FreeSurfView.jpg"></CENTER></P>
+</CENTER></P>
+
+<BR><LI>次に、ユーザー用ボタンの中から、"User Status"をクリック、User Statusダイアログを表示します。"Mode1"を選択し、プロパティ値
+として、
+<UL>
+<BR><LI>prop1：　40<BR>
+交線算出用の平面のz方向シフトのz軸の最大値<BR>
+<BR><LI>prop2：　-20<BR>
+交線算出用の平面のz方向シフトのz軸の最小値<BR>
+<BR><LI>prop3：　2<BR>
+交線算出用の平面のz方向シフト1回でのシフト量<BR>
+<BR><LI>prop4：　0.5<BR>
+交点群各点間の距離。実寸法の値です。値が大きいほど演算回数は減りますが、対象となる曲率が大きい場合は、入力値をあまり大きくとると、
+交点群算出に失敗する場合があります。<BR><BR>
+</UL>
+をそれぞれ入力し、"OK"。
+<P><CENTER>
+<P><CENTER><IMG SRC="pixmaps/Ex1_UserStat.jpg"></CENTER></P>
+</CENTER></P>
+
+<BR><LI>グラフィック領域に表示されているBody上で左クリックし、Bodyをハイライト表示にします。<BR><BR>
+
+<BR><LI>ユーザー用ボタンの下から2つ目の"CalcIntersecLine"というラベル名のボタンをクリックします。
+これによって、等高線算出計算がスタートします。<BR><BR>
+
+<BR><LI>Consoleに計算経過が表示され、計算が終了すると、計算結果がグラフィック領域に描画されます。
+<P><CENTER>
+<P><CENTER><IMG SRC="pixmaps/FreeSurfResult.jpg"></CENTER></P>
+</CENTER></P>
+緑の点は、等高線上の点群であり、赤の線はその点における法線ベクトルを表しています。<BR>
+</OL>
+プロパティ値を色々変更して、結果がどのように変わるか試してみてください。<BR><BR>
+
+
+<BR><BR><H3>Ex.2) NURBS曲面同士の交線算出プログラム</H3><BR>
+2つのBodyを読み込み、両者の交差する交線を算出するプログラムです。
+
+<OL>
+<BR><LI>Ex.1から継続して行う場合は、グラフィック操作アイコンの下から2つ目(消しゴムのマーク)をクリックし、Ex.1の演算結果を消去
+します。<BR><BR>
+
+<BR><LI>交線算出用に2つのBodyをそれぞれ読み込みます。"Open"より、デフォルトで表示されるディレクトリから1つ戻り、
+"IGES"ディレクトリを開き、"FreeSurf.IGS"及び"Sp100.IGS"を順番に読み込みます。Ex.1から継続している場合は、"Sp100.IGS"のみ
+読み込みます。
+<P><CENTER>
+<P><CENTER><IMG SRC="pixmaps/FreeSurf_Sp100.jpg"></CENTER></P>
+</CENTER></P>
+
+<BR><LI>2つのBodyを選択状態にします。<BR><BR>
+
+<BR><LI>ユーザー用ボタンの中から、"User Status"をクリックし、User Statusダイアログを表示します。"Mode2"を選択し、プロパティ値
+として、
+<UL>
+<BR><LI>prop1：　10<BR>
+交線を算出する際に初期点を幾つか求めなければなりません。その初期点サーチにおける曲面分割数を指定しています。
+分割数が少ないと交線の初期点の獲得に失敗し、交線を算出できない場合があります。<BR><BR>
+
+<BR><LI>prop2：　0.5<BR>
+交点群各点間の距離。<BR><BR>
+</UL>
+を入力し、"OK"。<BR><BR>
+
+<BR><LI>ユーザー用ボタンの下から2つ目の"CalcIntersecLine"ボタンをクリックし、交線算出計算をスタートさせます。<BR><BR>
+
+<BR><LI>計算が終了すると、下図に示すように、2つのNURBS曲面が交差する交点群が表示されます。
+<P><CENTER>
+<P><CENTER><IMG SRC="pixmaps/FreeSurf_Sp100_Result.jpg"></CENTER></P>
+</CENTER></P>
+</OL>
+
+</blockquote> <HR> Document Release 1.0 for Kodatuno R1.1, Mar. 2011<P> <hr> <center>
+<A HREF="./2-4.html">Prev</A>
+<A HREF="./index.html">index</A>
+<A HREF="./2-6.html">Next</A><br>
+</center> <hr> <table cellpadding="0" cellspacing="0" border="0" width="100%">    
+<tr>      
+	<td align="left">        
+		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
+	</td>      
+	<td align="right">        
+		<small><i>Last modified: Mar. 3, 2011</i></small>      
+	</td>   
+</tr> </table>  <!-- end of body --> </body>  
+</html>  
+
