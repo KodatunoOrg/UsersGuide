@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+<HTML> 
+<HEAD LANG="ja"> 
+	<TITLE>Kodatuno User's Guide</TITLE> 
+	<meta HTTP-EQUIV="Content-type" CONTENT="text/html; charset=euc-jp"> 
+</HEAD> 
+<BODY bgcolor="#ffffff"> 
+<table cellspacing="0" cellpadding="0" border="0" width="100%">   
+	<tr valign="top" height="32">   
+	</tr>   
+	<tr valign="top">        
+		<td width="256" valign="bottom" align="left">          
+			<IMG SRC="pixmaps/logo.jpg" width="300" height="98" alt="Kodatuno Logo" ALIGN="top">
+		</td>        
+		<td valign="bottom" align="center">          
+			<center> 	   
+		<b><big>Kodatuno User's Guide</big>
+		</b>
+		<center>        
+		</td>       
+		<td width="20%" valign="bottom" align="right">     
+			<A HREF="./3-9.html">Prev</A>     
+			<A HREF="./index.html">Index</A>
+			<A HREF="./4-2.html">Next</A><br>
+		</td>   
+	</tr> 
+</table> 
+<blockquote> 
+
+<BR><HR><H2>各関数の実行例</H2>
+　Kodatunoによって得られる幾何計算結果の例を下図に示します．（基本的にはこれまで説明してきた内容のまとめです）<br>
+<P><CENTER><IMG SRC="pixmaps/funcsample.jpg"></CENTER></P>
+
+  <ul type="disc">
+  　<li>NURBS曲面と平面との交線</li><br>
+		　NURBS_Func::CalcIntersecPtsPlaneSearch()によって生成できます．<br>
+		平面の向きと位置を指定することによって，図のようなスキャンラインや等高線を得ることができます．<br><br>
+		
+  　<li>NURBS曲面同士の交線</li><br>
+		　NURBS_Func::CalcIntersecPtsNurbsSSearch()によって生成できます．<br><br>
+		
+  　<li>NURBS曲面の法線ベクトル</li><br>
+		　NURBS_Func::CalcNormVecOnNurbsS()によって生成できます．さらに，CalcMeanCurvature()やCalcMeanCurvature()によってガウス曲率や平均曲率
+		を求める関数などもあり，曲面が持つ種々の幾何学的情報を抽出することができます．<br><br>
+		
+  　<li>NURBS曲面の極値探索線</li><br>
+		　曲面の情報は法線や曲率以外にも，様々なものがあります．極値探索線は曲面の2階微分がゼロとなる位置を繋いだものであり，曲率がゼロとなる位置を表しています．<br>
+		NURBS_Func::CalcExtSearchCurve()によって得ることができます．<br><br>
+		
+  　<li>NURBS曲面補間</li><br>
+		　空間上に任意の点を与え，それらを補間するNURBS曲線/曲面を生成することができます．<br>
+		曲線補間はNURBS_Func::GenInterpolatedNurbsC1()あるいはGenInterpolatedNurbsC2()によってできます．両者の違いは，始点と終点が一致しているかしていないかの違いです．<br>
+		曲面補間はNURBS_Func::GenInterpolatedNurbsS1()によって生成できます．<br>
+		その他にも，点列を近似するNURBS曲線/曲面を生成するGenApproximationNurbsC()/GenApproximationNurbsS()や，
+		与えられた点列をコントロールポイントとするNURBS曲線/曲面を生成するGenNurbsCfromCP()/GenNurbsSfromCP()などが用意されています．<br><br>
+  </ul>
+  
+
+</blockquote> <HR> Document Release 2.3 for Kodatuno R2.3, Jul. 2013<P> <hr> <center>
+<A HREF="./3-9.html">Prev</A>
+<A HREF="./index.html">index</A>
+<A HREF="./4-2.html">Next</A><br>
+</center> <hr> <table cellpadding="0" cellspacing="0" border="0" width="100%">    
+<tr>      
+	<td align="left">        
+		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
+	</td>      
+	<td align="right">        
+		<small><i>Last modified: Jul. 11, 2013</i></small>      
+	</td>   
+</tr> </table>  <!-- end of body --> </body>  
+</html>  
+
+
+
+
