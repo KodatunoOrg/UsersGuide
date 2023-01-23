@@ -29,7 +29,7 @@
 
 <BR><HR><H2>描画ライブラリ</H2>
 【Describe_BODY.h】<BR><BR>
-NURBS描画用モジュールを提供します。<BR>
+BODY描画用モジュールを提供します。<BR>
 
 <BR>■シンボル
 <pre><font size="3">
@@ -64,6 +64,19 @@ Describe_BODY() <BR>
 <DD>コンストラクタ/デストラクタ</DD>
 <DT> ＜引数＞ </DT>
 <DD>なし</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし</DD>
+</DL>
+<BR><BR>
+
+<A NAME="DrawBody()"> </A>
+<H4>public<BR>
+void DrawBody(BODY *Body) <BR></H3>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>BODYを描画する。</DD>
+<DT> ＜引数＞ </DT>
+<DD>*Body: BODY構造体へのポインタ</DD>
 <DT> ＜戻り値＞ </DT>
 <DD>なし</DD>
 </DL>
@@ -174,15 +187,40 @@ void DrawNurbsCurve_Param(NURBSC *) <BR></H3>
 </DL>
 <BR><BR>
 
-<A NAME="CheckDegenracy()"> </A>
+<A NAME="Draw_NurbsCurves()"> </A>
 <H4>public<BR>
-void CheckDegenracy(BODY *) <BR></H3>
+void Draw_NurbsCurves(BODY *Body) <BR></H3>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>トリムを構成する2DパラメトリックNURBS曲線要素の縮退(2Dパラメトリック曲線の始点と終点が一致していない)をチェックし、
-縮退であった場合は、NURBSで表現された線分を用いて始点と終点を一致させる。</DD>
+<DD>BODYに含まれるNURBS曲線を全て描画</DD>
 <DT> ＜引数＞ </DT>
-<DD>Body *body: 縮退をチェックするBODYへのポインタ</DD>
+<DD>*Body：BODY構造体へのポインタ</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし</DD>
+</DL>
+<BR><BR>
+
+<A NAME="Draw_NurbsSurfaces()"> </A>
+<H4>public<BR>
+void Draw_NurbsSurfaces(BODY *Body) <BR></H3>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>BODYに含まれるNURBS曲面を全て描画</DD>
+<DT> ＜引数＞ </DT>
+<DD>*Body：BODY構造体へのポインタ</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>なし</DD>
+</DL>
+<BR><BR>
+
+<A NAME="Draw_TrimSurfes()"> </A>
+<H4>public<BR>
+void Draw_TrimSurfes(BODY *Body) <BR></H3>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>BODYに含まれるトリム面を全て描画</DD>
+<DT> ＜引数＞ </DT>
+<DD>*Body：BODY構造体へのポインタ</DD>
 <DT> ＜戻り値＞ </DT>
 <DD>なし</DD>
 </DL>
@@ -255,7 +293,157 @@ GLfloat	CCtlp[CTLPNUMMAX][4]               NURBS曲線描画用コントロールポイントバ
 GLfloat	SCtlp[CTLPNUMMAX][CTLPNUMMAX][4]   NURBS曲面描画用コントロールポイントバッファ
 </font></pre>
 
-</blockquote> <HR> Document Release 1.0 for Kodatuno R1.0, Mar. 2011<P> <hr> <center>
+<HR>
+<BR><HR><H2>BODY操作ライブラリ</H2>
+【BODY_Handler.h】<BR><BR>
+BODYの各種操作モジュールを提供します。<BR>
+
+<BR>■シンボル
+<pre><font size="3">
+なし
+</font></pre>
+
+<HR>
+<BR>■インクルードライブラリ<BR><BR>
+"Describe_BODY.h" "NURBS_Func.h"<BR><BR>
+
+<HR>
+<BR>■型定義<BR><BR>
+なし<BR><BR>
+
+<HR>
+<BR>■クラス<BR><BR>
+BODY_Handler<BR>
+<継承><BR>
+Describe_BODY<BR><BR>
+
+<HR>
+<BR>■関数(Class BODY_Handler)<BR><BR>
+
+<pre><font size="3">
+<A NAME="InitCurveColor()"> </A>
+<A NAME="InitSurfaceColor()"> </A>
+<H4>public
+InitCurveColor();
+InitSurfaceColor();</H4>
+＜説明＞
+    コンストラクタ
+    ユーザが独自に作成した関数とUserボタンとの関連付け及び、Userステータスの初期化を行う。  
+＜引数＞  
+   なし
+＜戻り値＞  
+    なし
+    
+<A NAME="ChangeStatColor()"> </A>
+<H4>public
+void Change StatColor(float *Col, float r, float g, flaot b, float a); </H4>
+＜説明＞
+    エンティティの表示色を変更する  
+＜引数＞  
+    Col：変更したいエンティティのColorステータス 
+    r：変更したいエンティティのColorステータスのR値 
+    g：変更したいエンティティのColorステータスのG値 
+    b：変更したいエンティティのColorステータスのB値 
+    a：変更したいエンティティのColorステータスのa値 
+＜戻り値＞  
+    なし 
+
+<A NAME="SearchBodyList()"> </A>
+<H4>public
+BODY *SearchBodyList(BODYList *BodyList, int Key); </H4>
+＜説明＞
+    セレクションされているBODYの実体を得る  
+＜引数＞  
+    *BodyList：サーチしたいBODYのリストを指定 
+    Key：サーチしたいBODY番号を指定  
+＜戻り値＞  
+    BODYへのポインタ 
+
+<A NAME="Init_body()"> </A>
+<H4>public
+void Init_body(BODY *Body);  </H4>
+＜説明＞
+    BOYD構造体を初期化する。  
+    Body->MaxCoord = 1.0;  
+    Body->TypeNum[i] = 0;  
+＜引数＞  
+    *Body：初期化したいBODY構造体へのポインタ 
+＜戻り値＞  
+    なし 
+
+<A NAME="RegistNurbsCtoBody()"> </A>
+<A NAME="RegistNurbsCtoBodyN()"> </A>
+<H4>public
+void BODY_Handler::RegistNurbsCtoBody(BODYList *BodyList,BODY *Body,NURBSC Nurb,char BodyName[])
+void BODY_Handler::RegistNurbsCtoBodyN(BODYList *BodyList,BODY *Body,NURBSC Nurb[],char BodyName[],int N)</H4>
+＜説明＞
+    1つ/N個のNURBS曲線を新たなBODYとして登録する
+＜引数＞
+    *BodyList：サーチしたいBODYのリストを指定 
+    *Body : 新たなBody構造体のポインタ
+    Nurb : 登録するNURBS曲線
+    BodyName[] : Bodyリストウィンドウに登録するBody名
+    N : 登録するNURBS曲線の個数
+＜戻り値＞
+    なし
+    
+<A NAME="RegistNurbsStoBody()"> </A>
+<A NAME="RegistNurbsStoBodyN()"> </A>
+<H4>public
+void BODY_Handler::RegistNurbsStoBody(BODYList *BodyList,BODY *Body,NURBSS Nurb,char BodyName[])
+void BODY_Handler::RegistNurbsStoBodyN(BODYList *BodyList,BODY *Body,NURBSS Nurb[],char BodyName[],int N)</H4>
+＜説明＞
+    1つ/N個のNURBS曲面を新たなBODYとして登録する
+＜引数＞
+    *BodyList：サーチしたいBODYのリストを指定 
+    *Body : 新たなBody構造体のポインタ
+    Nurb : 登録するNURBS曲面
+    BodyName[] : Bodyリストウィンドウに登録するBody名
+    N : 登録するNURBS曲面の個数
+＜戻り値＞
+    なし
+    
+<A NAME="RotBody()"></A>
+<H4>public
+void BODY_Handler::RotBody(BODY *Body,Coord Axis,double deg) </H4>
+＜説明＞
+    1つのBODYを指定した軸周りに指定した角度回転させる
+＜引数＞
+    *Body：回転させるBODYへのポインタ
+    Axis：回転軸
+    deg：回転角
+＜戻り値＞
+    なし
+    
+<A NAME="ShiftBody()"></A>
+<H4>public
+void BODY_Handler::ShiftBody(BODY *Body,Coord d) </H4>
+＜説明＞
+    1つのBODYを指定した量だけ平行移動量する
+＜引数＞
+    *Body：平行移動量させるBODYへのポインタ
+    d：平行移動量
+＜戻り値＞
+    なし
+
+<A NAME="New_body()"> </A>
+<A NAME="Free_body()"> </A>
+<H4>public
+void New_body(BODY *Body, int TypeNum[]);   
+void Free_body(BODY *Body, int TypeNum[]);  </H4>
+＜説明＞
+    BODY構造体内要素の各エンティティのメモリー確保/解放 
+＜引数＞  
+    Body：Body構造体のポインタ  
+    TypeNum[i]：メモリー確保したい各エンティティの数を格納した配列 
+    iはenum型で定義されたエンティティのシンボル値と同じ。 
+    ex)TypeNum[10] = TypeNum[_NURBSC]であり、NURBS曲線エンティティの数が格納されていること。 
+＜戻り値＞  
+    なし 
+</font></pre>
+
+
+</blockquote> <HR> Document Release 2.0 for Kodatuno R2.0, Nov. 2011<P> <hr> <center>
 			<A HREF="./3-2.html" TARGET="_top">Prev</A>     
 			<A HREF="./index.html" TARGET="_top">Index</A>          
 			<A HREF="./3-4.html" TARGET="_top">Next</A><br>     
@@ -265,7 +453,7 @@ GLfloat	SCtlp[CTLPNUMMAX][CTLPNUMMAX][4]   NURBS曲面描画用コントロールポイントバ
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Mar. 3, 2011</i></small>      
+		<small><i>Last modified: Nov. 11, 2011</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

@@ -186,6 +186,16 @@ Coord SetCoord(double a, double b, double c);  </H4>
     絶対値を求めたいCoord.
 ＜戻り値＞
     絶対値化されたCoord.
+    
+<A NAME=" ZeroCoord()"> </A>
+<H4>Coord ZeroCoord(Coord a)</H4>
+＜説明＞
+    座標値が(0.0 , 0.0 , 0.0)の場合にKOD_FALSEを返す
+＜引数＞
+    3次元座標値
+＜戻り値＞
+    KOD_FALSE：座標値が(0.0 , 0.0 , 0.0)
+    KOD_TURE：座標値が(0.0 , 0.0 , 0.0)でない
 
 <A NAME=" NormalizeVec()"> </A>
 <H4>Coord NormalizeVec(Coord A);
@@ -893,7 +903,7 @@ Quat QSlerp(Quat p, Quat q, double t);  </H4>
     補間された点を表すクォータニオン 
 </font></pre>
 
-</blockquote> <HR> Document Release 1.0 for Kodatuno R1.0, Mar. 2011<P> <hr> <center>
+</blockquote> <HR> Document Release 2.0 for Kodatuno R2.0, Nov. 2011<P> <hr> <center>
 			<A HREF="./3-2.html" TARGET="_top">Prev</A>     
 			<A HREF="./index.html" TARGET="_top">Index</A>          
 			<A HREF="./3-4.html" TARGET="_top">Next</A><br>     
@@ -903,7 +913,7 @@ Quat QSlerp(Quat p, Quat q, double t);  </H4>
 		<small>Copyright(C) Kodatuno Development Team, 2011</small>      
 	</td>      
 	<td align="right">        
-		<small><i>Last modified: Mar. 3, 2011</i></small>      
+		<small><i>Last modified: Nov. 11, 2011</i></small>      
 	</td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  

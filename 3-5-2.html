@@ -152,7 +152,37 @@ int IGES_Parser_Main(BODY *body,char IGES_fname[]); </H4>
 бу╠сдъ├═бф  
     └о╕∙бзKOD_TRUE  
     ╝║╟╘бзKOD_ERR 
+    
+<A NAME="NormalizeKnotRange()"> </A>
+<H4>public
+int NormalizeKnotRange(BODY *body); </H4>
+бу└т╠└бф
+    е╬е├е╚е┘епе╚еыдЄ└╡╡м▓╜д╣дыбг  
+бу░·┐Їбф  
+    *bodyбз╬й┬╬дЄ╣╜└од╣дыеиеєе╞еге╞егд╬╜╕╣чеке╓е╕езепе╚д╪д╬е▌едеєе┐ 
+бу╠сдъ├═бф  
+    KOD_TRUE  
+    
+<A NAME="ModifyParamConect()"> </A>
+<H4>public
+int ModifyParamConect(BODY *body); </H4>
+бу└т╠└бф
+    е╤ещесе╚еъе├еп╩┐╠╠╞тд╬е╚еъер╢╩└■╞▒╗╬д╬д─д╩дмдъдЄе┴езе├епбв╜д└╡д╣дыбг  
+бу░·┐Їбф  
+    *bodyбз╬й┬╬дЄ╣╜└од╣дыеиеєе╞еге╞егд╬╜╕╣чеке╓е╕езепе╚д╪д╬е▌едеєе┐ 
+бу╠сдъ├═бф  
+    KOD_TRUE  
 
+<A NAME="CheckDegenracy()"> </A>
+<H4>public
+int CheckDegenracy(BODY *body); </H4>
+бу└т╠└бф
+    NURBS╢╩╠╠д╬╜╠┬рдЄе┴езе├епд╖бв╕лд─длдьд╨╜д└╡д╣дыбг  
+бу░·┐Їбф  
+    *bodyбз╬й┬╬дЄ╣╜└од╣дыеиеєе╞еге╞егд╬╜╕╣чеке╓е╕езепе╚д╪д╬е▌едеєе┐ 
+бу╠сдъ├═бф  
+    KOD_TRUE  
+    
 <A NAME="IGES_PARSER()"> </A>
 <H4>public
 IGES_PARSER();  </H4>
@@ -588,7 +618,7 @@ int  entity[ALL_ENTITY_TYPE_NUM];    еиеєе╞еге╞егд╬╚╓╣цдЄ│╩╟╝д╖д┐╟█╬є
 int  TypeCount[ALL_ENTITY_TYPE_NUM]; │╞еиеєе╞еге╞еге┐еде╫д╬└╡╛яесетеъб╝│╬╩▌┐ЇдЄ│╩╟╝
 </font></pre>
 
-</blockquote> <HR> Document Release 1.0 for Kodatuno R1.0, Mar. 2011<P> <hr> <center>
+</blockquote> <HR> Document Release 2.0 for Kodatuno R2.0, Nov. 2011<P> <hr> <center>
             <A HREF="./3-4.html" TARGET="_top">Prev</A>     
             <A HREF="./index.html" TARGET="_top">Index</A>          
             <A HREF="./3-6.html" TARGET="_top">Next</A><br>     
@@ -598,7 +628,7 @@ int  TypeCount[ALL_ENTITY_TYPE_NUM]; │╞еиеєе╞еге╞еге┐еде╫д╬└╡╛яесетеъб╝│╬╩▌┐ЇдЄ│
         <small>Copyright(C) Kodatuno Development Team, 2011</small>      
     </td>      
     <td align="right">        
-        <small><i>Last modified: Mar. 3, 2011</i></small>      
+		<small><i>Last modified: Nov. 11, 2011</i></small>      
     </td>   
 </tr> </table>  <!-- end of body --> </body>  
 </html>  
