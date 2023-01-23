@@ -29,7 +29,7 @@
 
 <BR><HR><H2>NURBS演算ライブラリ</H2>
 【NURBS_Func.h】<BR><BR>
-NURBS操作モジュールを提供します。<BR>
+NURBS操作モジュールを提供します．<BR>
 
 <BR>■シンボル
 <pre><font size="3">
@@ -69,7 +69,7 @@ Coord CalcNurbsCCoord(NURBSC *NurbsC)  <BR>
 Coord CalcNurbsSCoord(NURBSS *NurbsS) <BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>指定したパラメータにおけるNURBS曲線/曲面の座標値を求める。</DD>
+<DD>指定したパラメータにおけるNURBS曲線/曲面の座標値を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>*NurbsC / *NurbsS：NURBS曲線/曲面へのポインタ</DD>
 <DT> ＜戻り値＞ </DT>
@@ -83,7 +83,7 @@ void CalcNurbsCCoords(NURBSC *NurbsC,int Ptnum,double *T,Coord *Pt) <BR>
 void CalcNurbsSCoords(NURBSS *NurbsS,int Ptnum,Coord *UV,Coord *Pt) <BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>指定したパラメータ群におけるNURBS曲線/曲面の座標値群を求める。</DD>
+<DD>指定したパラメータ群におけるNURBS曲線/曲面の座標値群を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>*NurbsC / *NurbsS：NURBS曲線/曲面へのポインタ <BR>
  Ptnum：求める点群の数  <BR>
@@ -102,7 +102,7 @@ Coord CalcDiffvNurbsS(NURBSS *NurbsS,double div_u,double div_v);<BR>
 Coord CalcDiffNNurbsS(NURBSS *NurbsS,int k,int l,double div_u,double div_v);<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>指定したパラメータにおけるNURBS曲面のu/v方向の1階/N階微分係数を求める。</DD>
+<DD>指定したパラメータにおけるNURBS曲面のu/v方向の1階/N階微分係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>*NurbsS：NURBS曲面へのポインタ  <BR>
  div_u：uパラメータ  <BR>
@@ -121,7 +121,7 @@ int GenNurbsC(NURBSC *NurbsC,int K,int M,int N,double T[],double W[],Coord cp[],
 int GenNurbsC(NURBSC *NurbsC,NURBSC nurb)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>1つのNURBS曲線を生成/コピーする。</DD>
+<DD>1つのNURBS曲線を生成/コピーする．</DD>
 <DT> ＜引数＞ </DT>
 <DD>*NurbsC：NURBS曲線へのポインタ  <BR>
  K：コントロールポイントの数  <BR>
@@ -148,7 +148,7 @@ int GenNurbsS(NURBSS *NurbsS,int Mu,int Mv,int Ku,int Kv,double *S,double *T,dou
 int NURBS_Func::GenNurbsS(NURBSS *Nurbs,NURBSS nurb)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>1つのNURBS曲面を生成/コピーする。</DD>
+<DD>1つのNURBS曲面を生成/コピーする．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *NurbsS：NURBS曲面へのポインタ  <BR>
  Mu：u方向の階数  <BR>
@@ -178,7 +178,7 @@ int NURBS_Func::GenNurbsS(NURBSS *Nurbs,NURBSS nurb)<BR></H4>
 int GenRotNurbsS(NURBSS *NurbsS,NURBSC NurbsC,Coord Axis,double deg)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線を原点を通る任意の回転軸回りにある角度だけ回転させ、回転サーフェスを生成する。</DD>
+<DD>NURBS曲線を原点を通る任意の回転軸回りにある角度だけ回転させ，回転サーフェスを生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *NurbsS：生成された回転サーフェス  <BR>
  NurbsC：回転させるNURBS曲線  <BR>
@@ -197,7 +197,7 @@ int GenRotNurbsS(NURBSS *NurbsS,NURBSC NurbsC,Coord Axis,double deg)<BR></H4>
 int GenSweepNurbsS(NURBSS *NurbsS,NURBSC NurbsC,Coord Axis,double Len) <BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線を原点を通る任意の回転軸回りにある角度だけ回転させ、回転サーフェスを生成する。</DD>
+<DD>NURBS曲線を原点を通る任意の回転軸回りにある角度だけ回転させ，回転サーフェスを生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>   *NurbsS：生成されたスイープサーフェス  <BR>
  NurbsC：スイープさせるNURBS曲線  <BR>
@@ -216,7 +216,7 @@ int GenSweepNurbsS(NURBSS *NurbsS,NURBSC NurbsC,Coord Axis,double Len) <BR></H4>
 int GenIsoparamCurveU(NURBSS *P,double u,NURBSC *C) <BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面上のu方向パラメータ値を固定したときのアイソパラメトリックNURBS曲線を生成する。</DD>
+<DD>NURBS曲面上のu方向パラメータ値を固定したときのアイソパラメトリックNURBS曲線を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>   *NurbsS：アイソパラメトリック曲線生成元のNURBS曲面  <BR>
  u：u方向の固定パラメータ  <BR>
@@ -234,7 +234,7 @@ int GenIsoparamCurveU(NURBSS *P,double u,NURBSC *C) <BR></H4>
 int GenIsoparamCurveV(NURBSS *P,double v,NURBSC *C) <BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面上のv方向パラメータ値を固定したときのアイソパラメトリックNURBS曲線を生成する。</DD>
+<DD>NURBS曲面上のv方向パラメータ値を固定したときのアイソパラメトリックNURBS曲線を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>   *NurbsS：アイソパラメトリック曲線生成元のNURBS曲面  <BR>
  v：v方向の固定パラメータ  <BR>
@@ -252,7 +252,7 @@ int GenIsoparamCurveV(NURBSS *P,double v,NURBSC *C) <BR></H4>
 int GenTrimdNurbsS(TRIMD_NURBSS *TNurbs,TRIMD_NURBSS  tnurb) <BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>トリム面を有するNURBS曲面を生成する。</DD>
+<DD>トリム面を有するNURBS曲面を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>    *Tnurbs：新たに生成するトリム面  <BR>
  nurb：元となるトリム面 <BR>
@@ -269,7 +269,7 @@ int GenTrimdNurbsS(TRIMD_NURBSS *TNurbs,TRIMD_NURBSS  tnurb) <BR></H4>
 int DelTrimdNurbsS(TRIMD_NURBSS *TNurbs)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>GenTrimdNurbsS()によって生成されたトリム面を削除する。</DD>
+<DD>GenTrimdNurbsS()によって生成されたトリム面を削除する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>    *Tnurbs：削除するトリム面  <BR>
 </DD>
@@ -286,7 +286,7 @@ void DelNurbsC(NURBSC *NurbsC)<BR>
 void DelNurbsS(NURBSS *NurbsS)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>GenNurbsC()/GenNurbsS()によって生成されたNURBS曲線/曲面を削除する。</DD>
+<DD>GenNurbsC()/GenNurbsS()によって生成されたNURBS曲線/曲面を削除する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>   *NurbsC/*NurbsS：削除するNURBS曲線/曲面  <BR>
 </DD>
@@ -301,7 +301,7 @@ void DelNurbsS(NURBSS *NurbsS)<BR></H4>
 double CalcBSbasis(double t, double knot[],int N,int I,int M)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>GenNurbsC()/GenNurbsS()によって生成されたNURBS曲線/曲面を削除する。</DD>
+<DD>GenNurbsC()/GenNurbsS()によって生成されたNURBS曲線/曲面を削除する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>    t：ノット  <BR>
  knot[]：ノットベクトル  <BR>
@@ -320,7 +320,7 @@ double CalcBSbasis(double t, double knot[],int N,int I,int M)<BR></H4>
 double CalcDiffBSbasis(double t,double knot[],int N,int I,int M)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>Bスプライン基底関数の1階微分係数を求める。</DD>
+<DD>Bスプライン基底関数の1階微分係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>     t：ノット  <BR>
  knot[]：ノットベクトル  <BR>
@@ -339,7 +339,7 @@ double CalcDiffBSbasis(double t,double knot[],int N,int I,int M)<BR></H4>
 double CalcDiffBSbasisN(double t,double knot[],int N,int I,int M,int Dn)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>Bスプライン基底関数のN階微分係数を求める。</DD>
+<DD>Bスプライン基底関数のN階微分係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  t：ノット  <BR>
  knot[]：ノットベクトル  <BR>
@@ -359,7 +359,7 @@ double CalcDiffBSbasisN(double t,double knot[],int N,int I,int M,int Dn)<BR></H4
 Coord CalcDiffNurbsC(NURBSC *NurbsC,double t)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線の1階微分係数を求める。</DD>
+<DD>NURBS曲線の1階微分係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *NurbsC：NURBS曲線へのポインタ  <BR>
  t：ノット <BR>
@@ -375,7 +375,7 @@ Coord CalcDiffNurbsC(NURBSC *NurbsC,double t)<BR></H4>
 Coord CalcDiff2NurbsC(NURBSC *NurbsC,double t)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線の2階微分係数を求める。</DD>
+<DD>NURBS曲線の2階微分係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *NurbsC：NURBS曲線へのポインタ  <BR>
  t：ノット <BR>
@@ -391,7 +391,7 @@ Coord CalcDiff2NurbsC(NURBSC *NurbsC,double t)<BR></H4>
 Coord CalcDiffNNurbsC(NURBSC *NurbsC,int r,double t)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線のN階微分係数を求める。</DD>
+<DD>NURBS曲線のN階微分係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *NurbsC：NURBS曲線へのポインタ  <BR>
  r：微分階数
@@ -408,7 +408,7 @@ Coord CalcDiffNNurbsC(NURBSC *NurbsC,int r,double t)<BR></H4>
 Coord CalcNormVecOnNurbsS(NURBSS *nurb,double u,double v)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面上の(u,v)における法線ベクトルを求める。</DD>
+<DD>NURBS曲面上の(u,v)における法線ベクトルを求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *nurb：NURBS曲面へのポインタ  <BR>
  u：uパラメータ  <BR>
@@ -420,12 +420,49 @@ Coord CalcNormVecOnNurbsS(NURBSS *nurb,double u,double v)<BR></H4>
 </DL>
 <BR><BR>
 
-<A NAME="CalcAveCurvatureNormVec()"> </A>
+<A NAME="CalcDiff*NormVecOnNurbsS()"> </A>
 <H4>public<BR>
-Coord CalcAveCurvatureNormVec(NURBSS *nurb,double u,double v)<BR></H4>
+Coord CalcDiffuNormVecOnNurbsS(NURBSS *nurb,double u,double v)<BR>
+Coord CalcDiffvNormVecOnNurbsS(NURBSS *nurb,double u,double v)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面上の(u,v)における平均曲率法線ベクトルを求める。</DD>
+<DD>NURBS曲面上の(u,v)における法線ベクトルのu/v方向1階微分を求める．</DD>
+<DT> ＜引数＞ </DT>
+<DD>  *nurb：NURBS曲面へのポインタ  <BR>
+ u：uパラメータ  <BR>
+ ｖ：vパラメータ <BR>
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD> 計算結果<BR>
+</DD>
+</DL>
+<BR><BR>
+
+<A NAME="CalcMeanCurvature()"> </A>
+<H4>public<BR>
+double CalcMeanCurvature(NURBSS *nurb,double u,double v)<BR>
+double CalcMeanCurvature(SFQuant q)<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>NURBS曲面上の(u,v)における平均曲率を求める．</DD>
+<DT> ＜引数＞ </DT>
+<DD>  *nurb：NURBS曲面へのポインタ  <BR>
+ u：uパラメータ  <BR>
+ v：vパラメータ <BR>
+ q：曲面の基本量<BR>
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD> 平均曲率<BR>
+</DD>
+</DL>
+<BR><BR>
+
+<A NAME="CalcMeanCurvatureNormVec()"> </A>
+<H4>public<BR>
+Coord CalcMeanCurvatureNormVec(NURBSS *nurb,double u,double v)<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>NURBS曲面上の(u,v)における平均曲率法線ベクトルを求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *nurb：NURBS曲面へのポインタ  <BR>
  u：uパラメータ  <BR>
@@ -437,12 +474,51 @@ Coord CalcAveCurvatureNormVec(NURBSS *nurb,double u,double v)<BR></H4>
 </DL>
 <BR><BR>
 
+<A NAME="CalcGaussCurvature()"> </A>
+<H4>public<BR>
+double CalcGaussCurvature(NURBSS *nurb,double u,double v)<BR>
+double CalcGaussCurvature(SFQuant q)<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>NURBS曲面上の(u,v)におけるガウス曲率を求める．</DD>
+<DT> ＜引数＞ </DT>
+<DD>  *nurb：NURBS曲面へのポインタ  <BR>
+ u：uパラメータ  <BR>
+ v：vパラメータ <BR>
+ q：曲面の基本量<BR>
+
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD> ガウス曲率<BR>
+</DD>
+</DL>
+<BR><BR>
+
+<A NAME="CalcGaussCurvatureNormVec()"> </A>
+<H4>public<BR>
+Coord CalcGaussCurvatureNormVec(NURBSS *nurb,double u,double v)<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>NURBS曲面上の(u,v)におけるガウス曲率法線ベクトルを求める．</DD>
+<DT> ＜引数＞ </DT>
+<DD>  *nurb：NURBS曲面へのポインタ  <BR>
+ u：uパラメータ  <BR>
+ ｖ：vパラメータ <BR>
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD> ガウス曲率法線ベクトル<BR>
+</DD>
+</DL>
+<BR><BR>
+
+
+
 <A NAME="ClacuIntersecPtNurbsLine()"> </A>
 <H4>public<BR>
 int ClacuIntersecPtNurbsLine(NURBSS *Nurb,Coord r,Coord p,Coord *ans,Coord *param)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面と直線の交点を算出する。</DD>
+<DD>NURBS曲面と直線の交点を算出する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurb：NURBS曲面へのポインタ  <BR>
  r：直線N(t)上の1点  <BR>
@@ -457,12 +533,32 @@ int ClacuIntersecPtNurbsLine(NURBSS *Nurb,Coord r,Coord p,Coord *ans,Coord *para
 </DL>
 <BR><BR>
 
+<A NAME="CalcIntersecPtNurbsPt()"> </A>
+<H4>public<BR>
+int CalcIntersecPtNurbsPt(NURBSS *S,Coord P,int Divnum,double Stepsize,Coord *Q)<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD> NURBS曲面S上における空間上の1点Pからの最近傍点Qをニュートン法により求める．</DD>
+<DT> ＜引数＞ </DT>
+<DD>  *Nurb：NURBS曲面へのポインタ  <BR>
+ P：空間上の任意点
+ Divnum：ニュートン法初期値指定用の曲面分割数  <BR>
+ Stepsize：ニュートンパラメータ更新時のステップサイズ(1 <= Stepsize < 0)  <BR>
+ *Q：交点のu,vパラメータ <BR>
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD> KOD_FALSE：収束しなかった  <BR>
+ KOD_TRUE：収束した <BR>
+</DD>
+</DL>
+<BR><BR>
+
 <A NAME="CalcIntersecCurve()"> </A>
 <H4>public<BR>
 int CalcIntersecCurve(NURBSC *nurb,Coord pt,Coord nvec,int Divnum,double *ans,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線と平面との交点をニュートン法により求める。</DD>
+<DD>NURBS曲線と平面との交点をニュートン法により求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>   *nurb：NURBS曲面へのポインタ   <BR>
  pt：平面上の一点   <BR>
@@ -473,8 +569,8 @@ int CalcIntersecCurve(NURBSC *nurb,Coord pt,Coord nvec,int Divnum,double *ans,in
 </DD>
 <DT> ＜戻り値＞ </DT>
 <DD> 交点の個数  <BR>
- 交点は最大で(M-1)*(K-M+1)点得られる。  
- よって引数*ansは（M-1)*(K-M+1)個の配列を用意することが望ましい。 <BR>
+ 交点は最大で(M-1)*(K-M+1)点得られる．  
+ よって引数*ansは（M-1)*(K-M+1)個の配列を用意することが望ましい． <BR>
 </DD>
 </DL>
 <BR><BR>
@@ -484,7 +580,7 @@ int CalcIntersecCurve(NURBSC *nurb,Coord pt,Coord nvec,int Divnum,double *ans,in
 int CalcIntersecCurve3(NURBSC *nurb,Coord pt,Coord nvec,double *ans,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線と平面との交点を求める。</DD>
+<DD>NURBS曲線と平面との交点を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>   *nurb：NURBS曲面へのポインタ   <BR>
  pt：平面上の一点   <BR>
@@ -494,8 +590,8 @@ int CalcIntersecCurve3(NURBSC *nurb,Coord pt,Coord nvec,double *ans,int ans_size
 </DD>
 <DT> ＜戻り値＞ </DT>
 <DD> 交点の個数  <BR>
- 交点は最大で(M-1)*(K-M+1)点得られる。  
- よって引数*ansは（M-1)*(K-M+1)個の配列を用意することが望ましい。 <BR>
+ 交点は最大で(M-1)*(K-M+1)点得られる．  
+ よって引数*ansは（M-1)*(K-M+1)個の配列を用意することが望ましい． <BR>
 </DD>
 </DL>
 <BR><BR>
@@ -505,7 +601,7 @@ int CalcIntersecCurve3(NURBSC *nurb,Coord pt,Coord nvec,double *ans,int ans_size
 int CalcIntersecPtsPlaneV3(NURBSS *nurb,Coord pt,Coord nvec,int v_divnum,Coord *ans,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>3次以下のNURBS曲面と平面との交点群を代数解法にて求める(vパラメータ)。</DD>
+<DD>3次以下のNURBS曲面と平面との交点群を代数解法にて求める(vパラメータ)．</DD>
 <DT> ＜引数＞ </DT>
 <DD>    *nurb：NURBS曲面へのポインタ  <BR>
  pt：平面上の一点  <BR>
@@ -525,7 +621,7 @@ int CalcIntersecPtsPlaneV3(NURBSS *nurb,Coord pt,Coord nvec,int v_divnum,Coord *
 int CalcIntersecPtsPlaneU3(NURBSS *nurb,Coord pt,Coord nvec,int u_divnum,Coord *ans,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>3次以下のNURBS曲面と平面との交点群を代数解法にて求める(vパラメータ)。</DD>
+<DD>3次以下のNURBS曲面と平面との交点群を代数解法にて求める(vパラメータ)．</DD>
 <DT> ＜引数＞ </DT>
 <DD>     *nurb：NURBS曲面へのポインタ  <BR>
  pt：平面上の一点  <BR>
@@ -545,7 +641,7 @@ int CalcIntersecPtsPlaneU3(NURBSS *nurb,Coord pt,Coord nvec,int u_divnum,Coord *
 int CalcIntersecPtsPlaneSearch(NURBSS *nurb,Coord pt,Coord nvec,double ds,int initdivnum,Coord *ans,int ans_size,int method)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面と平面との交点群を交線追跡法にて求める。</DD>
+<DD>NURBS曲面と平面との交点群を交線追跡法にて求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *nurb：NURBS曲面へのポインタ  <BR>
  pt：平面上の一点  <BR>
@@ -556,7 +652,7 @@ int CalcIntersecPtsPlaneSearch(NURBSS *nurb,Coord pt,Coord nvec,double ds,int in
  method : 交点算出時の数値計算法の選択（RUNGE_KUTTA：ルンゲクッタ法, BULIRSH_STOER：Bulirsh-Stoer法)
 </DD>
 <DT> ＜戻り値＞ </DT>
-<DD> 交点の個数(NURBS曲面と平面が交差していない：KOD_FALSE、交点の数がans_sizeを超えた：KOD_ERR)<BR>
+<DD> 交点の個数(NURBS曲面と平面が交差していない：KOD_FALSE，交点の数がans_sizeを超えた：KOD_ERR)<BR>
 </DD>
 </DL>
 <BR><BR>
@@ -566,7 +662,7 @@ int CalcIntersecPtsPlaneSearch(NURBSS *nurb,Coord pt,Coord nvec,double ds,int in
 int CalcIntersecPtsNurbsSNurbsC(NURBSS *NurbsS,NURBSC *NurbsC,int Divnum,Coord *ans,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面とNURBS曲線との交点群を交線追跡法で求める。</DD>
+<DD>NURBS曲面とNURBS曲線との交点群を交線追跡法で求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *NurbsS：NURBS曲面へのポインタ  <BR>
  *NurbsC：NURBS曲線へのポインタ<BR>
@@ -575,7 +671,7 @@ int CalcIntersecPtsNurbsSNurbsC(NURBSS *NurbsS,NURBSC *NurbsC,int Divnum,Coord *
  ans_size：ans配列の配列長
 </DD>
 <DT> ＜戻り値＞ </DT>
-<DD> 交点の個数(NURBS曲面と平面が交差していない：KOD_FALSE、交点の数がans_sizeを超えた：KOD_ERR)<BR>
+<DD> 交点の個数(NURBS曲面と平面が交差していない：KOD_FALSE，交点の数がans_sizeを超えた：KOD_ERR)<BR>
 </DD>
 </DL>
 <BR><BR>
@@ -607,7 +703,7 @@ int CalcIntersecPtsNurbsSGeom(NURBSS *nurbR,NURBSS *nurbS,int u_divnum,int v_div
 int CalcIntersecPtsNurbsSSearch(NURBSS *nurbR,NURBSS *nurbS,int div,double ds,Coord *ansR,Coord *ansS,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面S(u,v)とNURBS曲面R(w,t)の交線(交点群)を交点追跡法にて求める。</DD>
+<DD>NURBS曲面S(u,v)とNURBS曲面R(w,t)の交線(交点群)を交点追跡法にて求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *nurbR：NURBS曲面R(w,t)へのポインタ  <BR>
  *nurbS：NURBS曲面S(u,v)へのポインタ  <BR>
@@ -628,7 +724,7 @@ int CalcIntersecPtsNurbsSSearch(NURBSS *nurbR,NURBSS *nurbS,int div,double ds,Co
 int CalcIntersecPtsNurbsCNurbsCParam(NURBSC *NurbA,NURBSC *NurbB,int Divnum,Coord *ans,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線同士の交点を求めるをニュートン法にて求める。</DD>
+<DD>NURBS曲線同士の交点を求めるをニュートン法にて求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *NurbA,NurbB：2つのNURBS曲線へのポインタ  <BR>
  DivNum：初期点サーチ時の曲線分割数<BR>
@@ -648,7 +744,7 @@ int GetBSplCoef2(int, int, int, double *, double **)<BR>
 int GetBSplCoef1(int, int, int, double *, double **)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>3/2/1次のBスプライン曲線の各係数を求める。</DD>
+<DD>3/2/1次のBスプライン曲線の各係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD> M：階数  
  K：コントロールポイントの数  <BR>
@@ -668,7 +764,7 @@ void ShiftNurbsC(NURBSC *nurbs,Coord shift)<BR>
 void ShiftNurbsS(NURBSS *nurbs,Coord shift)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線/曲面をシフトする。</DD>
+<DD>NURBS曲線/曲面をシフトする．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *NurbsC/*NurbsS：シフトされるNURBS曲線/曲面 <BR>
  shift：シフト量 <BR>
@@ -685,7 +781,7 @@ void ChRatioNurbsC(NURBSC *NurbsC,Coord ratio)<BR>
 void ChRatioNurbsS(NURBSS *NurbsS,Coord ratio)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線/曲面の倍率を変更する。</DD>
+<DD>NURBS曲線/曲面の倍率を変更する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *NurbsC/*NurbsS：変更されるNURBS曲線/曲面 <BR>
  ratio：倍率<BR>
@@ -701,7 +797,7 @@ void ChRatioNurbsS(NURBSS *NurbsS,Coord ratio)<BR></H4>
 int SetCPNurbsS(NURBSS *nurbs,NURBSS Nurbs)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面間にコントロールポイントを代入する。</DD>
+<DD>NURBS曲面間にコントロールポイントを代入する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>   *nurbs：代入されるNURBS曲面 <BR> 
  Nurbs：代入元のNURBS曲面 <BR>
@@ -718,7 +814,7 @@ int SetCPNurbsS(NURBSS *nurbs,NURBSS Nurbs)<BR></H4>
 int GenInterpolatedNurbsC1(NURBSC *Nurbs,Coord *P,int PNum,int N)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>与えられた点列を補間する最高4階のNURBS曲線を生成する(端末条件を与えない)。</DD>
+<DD>与えられた点列を補間する最高4階のNURBS曲線を生成する(端末条件を与えない)．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲線<BR>  
  *P：点列  <BR>
@@ -737,7 +833,7 @@ int GenInterpolatedNurbsC1(NURBSC *Nurbs,Coord *P,int PNum,int N)<BR></H4>
 int GenInterpolatedNurbsC2(NURBSC *Nurbs,Coord *P_,int PNum,int N)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>与えられた点列を補間する最高4階のNURBS曲線を生成する(端末条件：始点とC2で一致)。</DD>
+<DD>与えられた点列を補間する最高4階のNURBS曲線を生成する(端末条件：始点とC2で一致)．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *Nurbs：生成されるNURBS曲線  <BR>
  *P_：通過点列  <BR>
@@ -757,7 +853,7 @@ int GenInterpolatedNurbsC2(NURBSC *Nurbs,Coord *P_,int PNum,int N)<BR></H4>
 int GenApproximationNurbsC(NURBSC *Nurbs,Coord *P,int PNum,int M)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>与えられた点列を近似するn階のNURBS曲線を生成する。</DD>
+<DD>与えられた点列を近似するn階のNURBS曲線を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲線  <BR>
  *P：点列  <BR>
@@ -776,7 +872,7 @@ int GenApproximationNurbsC(NURBSC *Nurbs,Coord *P,int PNum,int M)<BR></H4>
 int GenNurbsCfromCP(NURBSC *Nurbs,Coord *P,int PNum,int M)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>コントロールポイントからNURBS曲線を生成する。</DD>
+<DD>コントロールポイントからNURBS曲線を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲線  <BR>
  *P：点列  <BR>
@@ -795,7 +891,7 @@ int GenNurbsCfromCP(NURBSC *Nurbs,Coord *P,int PNum,int M)<BR></H4>
 int GenPolygonalLine(NURBSC *Nurbs,Coord *P,int PNum)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>折れ線を生成する。</DD>
+<DD>折れ線を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲線<BR>  
  *P：コントロールポイント  <BR>
@@ -813,7 +909,7 @@ int GenPolygonalLine(NURBSC *Nurbs,Coord *P,int PNum)<BR></H4>
 int GenInterpolatedNurbsS1(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v,int Mu,int Mv)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>与えられた点列を補間する最高4階のNURBS曲面を生成する。</DD>
+<DD>与えられた点列を補間する最高4階のNURBS曲面を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲面  <BR>
  **P：与えられた点列  <BR>
@@ -832,7 +928,7 @@ int GenInterpolatedNurbsS1(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v,int Mu,
 int GenPolygonalSurface(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>折れ面を生成する。</DD>
+<DD>折れ面を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲面<BR>  
  **P：コントロールポイント  <BR>
@@ -850,12 +946,12 @@ int GenPolygonalSurface(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v)<BR></H4>
 int GenApproximationNurbsS(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v,int Mu,int Mv)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>与えられた点列を近似するn階のNURBS曲面を生成する。</DD>
+<DD>与えられた点列を近似するn階のNURBS曲面を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲面<BR>  
  **P：与えられた点列  <BR>
  PNum_u/PNum_v：点の数 <BR>
- Mu,Mv：u方向、v方向の階数
+ Mu,Mv：u方向，v方向の階数
 </DD>
 <DT> ＜戻り値＞ </DT>
 <DD>  成功：KOD_TRUE<BR>  
@@ -869,12 +965,12 @@ int GenApproximationNurbsS(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v,int Mu,
 int GenNurbsSfromCP(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v,int Mu,int Mv)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>与えられたコントロールポイントからn階のNURBS曲面を生成する。</DD>
+<DD>与えられたコントロールポイントからn階のNURBS曲面を生成する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Nurbs：生成されるNURBS曲面<BR>  
  **P：与えられたコントロールポイント列  <BR>
  PNum_u/PNum_v：点の数 <BR>
- Mu,Mv：u方向、v方向の階数
+ Mu,Mv：u方向，v方向の階数
 </DD>
 <DT> ＜戻り値＞ </DT>
 <DD>  成功：KOD_TRUE<BR>  
@@ -888,7 +984,7 @@ int GenNurbsSfromCP(NURBSS *Nurbs,Coord **P,int PNum_u,int PNum_v,int Mu,int Mv)
 int DetermPtOnTRMSurf(TRMS *Trim,double u,double v)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>注目中のNURBS曲面上の1点(u,v)がトリミング領域内にあるのかを判定する。</DD>
+<DD>注目中のNURBS曲面上の1点(u,v)がトリミング領域内にあるのかを判定する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *Trim：トリム曲面へのポインタ <BR> 
  u：注目中のuパラメータ  <BR>
@@ -908,7 +1004,7 @@ void RotNurbsC(NURBSC *nurbs,Coord axis,double deg)<BR>
 void RotNurbsS(NURBSS *nurbs,Coord axis,double deg)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線/曲面をDベクトル回りにdeg(°)だけ回転させる。</DD>
+<DD>NURBS曲線/曲面をDベクトル回りにdeg(°)だけ回転させる．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *nurbs：回転させるNURBS曲線/曲面  <BR>
  axis：回転軸の単位ベクトル<BR>  
@@ -926,7 +1022,7 @@ int DetectInterfereNurbsS(NURBSS *nurbR,NURBSS *nurbS,int divnum)<BR>
 int DetectInterfereTrmS(TRIMD_NURBSS *tNurbR,TRIMD_NURBSS *tNurbS,int divnum)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS/トリム曲面S(u,v)とNURBS/トリム曲面R(w,t)の干渉を検出する。</DD>
+<DD>NURBS/トリム曲面S(u,v)とNURBS/トリム曲面R(w,t)の干渉を検出する．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *nurbsR/tNurbsR：NURBS/トリム曲面R(w,t)  <BR>
  *nurbsS/tNurbsS：NURBS/トリム曲面S(u,v)  <BR>
@@ -943,7 +1039,7 @@ int DetectInterfereTrmS(TRIMD_NURBSS *tNurbR,TRIMD_NURBSS *tNurbS,int divnum)<BR
 double CalcIntersecPtsPlaneGeom(NURBSS *nurb,Coord pt,Coord nf,int u_divnum,int v_divnum,Coord *ans,int ans_size)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面と平面との交点群を幾何学的に求める(補助平面を用いた解法)。</DD>
+<DD>NURBS曲面と平面との交点群を幾何学的に求める(補助平面を用いた解法)．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *Nurb：NURBS曲面<BR>
  pt：平面上の一点
@@ -964,7 +1060,7 @@ double CalcIntersecPtsPlaneGeom(NURBSS *nurb,Coord pt,Coord nf,int u_divnum,int 
 double CalcNurbsCLength(NURBSC *Nurb)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線の線分長を微小線分近似により求める。</DD>
+<DD>NURBS曲線の線分長を微小線分近似により求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *Nurb：対象となるNURBS曲線<BR>
 </DD>
@@ -979,7 +1075,7 @@ double CalcNurbsCLength(NURBSC *Nurb)<BR></H4>
 int CalcDeltaPtsOnNurbsC(NURBSC *Nurb,double D,Coord *Pts)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>指定した間隔でNURBS曲線上の座標値を出力する。</DD>
+<DD>指定した間隔でNURBS曲線上の座標値を出力する．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *Nurb：対象となるNURBS曲線  <BR>
  D：間隔  <BR>
@@ -996,7 +1092,7 @@ int CalcDeltaPtsOnNurbsC(NURBSC *Nurb,double D,Coord *Pts)<BR></H4>
 int CalcExtremumNurbsC(NURBSC *C,Coord nf,double *pt,int ptnum)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線の指定した方向における極値の座標値を得る。</DD>
+<DD>NURBS曲線の指定した方向における極値の座標値を得る．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *C：極値座標を求めたいNURBS曲線へのポインタ  <BR>
  nf：方向ベクトル   <BR>
@@ -1014,7 +1110,7 @@ int CalcExtremumNurbsC(NURBSC *C,Coord nf,double *pt,int ptnum)<BR></H4>
 int New_NurbsC(NURBSC *nurb,int K, int N)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>Nurbs曲線のメモリー確保。</DD>
+<DD>Nurbs曲線のメモリー確保．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *nurb：極値座標を求めたいNURBS曲線へのポインタ  <BR>
  K：コントロールポイントの数   <BR>
@@ -1031,7 +1127,7 @@ int New_NurbsC(NURBSC *nurb,int K, int N)<BR></H4>
 void Free_NurbsC_1DArray(NURBSC *a,int num)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線配列のメモリー解放。</DD>
+<DD>NURBS曲線配列のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：NURBS曲線配列へのポインタ  <BR>
  num：配列長   <BR>
@@ -1047,7 +1143,7 @@ void Free_NurbsC_1DArray(NURBSC *a,int num)<BR></H4>
 void Free_NurbsC(NURBSC *a)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線のメモリー解放。</DD>
+<DD>NURBS曲線のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：NURBS曲線へのポインタ  <BR>
 </DD>
@@ -1062,7 +1158,7 @@ void Free_NurbsC(NURBSC *a)<BR></H4>
 int New_NurbsS(NURBSS *nurb,int K[2],int N[2])<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面のメモリー確保。</DD>
+<DD>NURBS曲面のメモリー確保．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *nurb：メモリー確保するNurbs曲面へのポインタ  <BR>
  K[2]：u,vコントロールポイントの数 <BR>
@@ -1079,7 +1175,7 @@ int New_NurbsS(NURBSS *nurb,int K[2],int N[2])<BR></H4>
 void Free_NurbsS_1DArray(NURBSC *a,int num)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面配列のメモリー解放。</DD>
+<DD>NURBS曲面配列のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：NURBS曲面へのポインタ  <BR>
  num：配列長
@@ -1095,7 +1191,7 @@ void Free_NurbsS_1DArray(NURBSC *a,int num)<BR></H4>
 void Free_NurbsS(NURBSC *a)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲面のメモリー解放。</DD>
+<DD>NURBS曲面のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：NURBS曲面へのポインタ  <BR>
 </DD>
@@ -1110,7 +1206,7 @@ void Free_NurbsS(NURBSC *a)<BR></H4>
 int New_TrmS(TRMS *trms,int num)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>トリム面のメモリー確保。</DD>
+<DD>トリム面のメモリー確保．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *trms：メモリー確保するトリム面へのポインタ  <BR>
  num：トリム面の数 <BR>
@@ -1126,7 +1222,7 @@ int New_TrmS(TRMS *trms,int num)<BR></H4>
 void Free_TrmS_1DArray(TRMS *a,int num)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>トリム面配列のメモリー解放。</DD>
+<DD>トリム面配列のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：トリム面配列へのポインタ  <BR>
  num：配列長   <BR>
@@ -1142,7 +1238,7 @@ void Free_TrmS_1DArray(TRMS *a,int num)<BR></H4>
 void Free_TrmS(TRMS *a)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>トリム面のメモリー解放。</DD>
+<DD>トリム面のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：トリム面へのポインタ  <BR>
 </DD>
@@ -1157,7 +1253,7 @@ void Free_TrmS(TRMS *a)<BR></H4>
 int New_CompC(COMPC *compc,int num)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>複合曲線のメモリー確保。</DD>
+<DD>複合曲線のメモリー確保．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *compc：メモリー確保する複合曲線へのポインタ  <BR>
  num：複合曲線の数 <BR>
@@ -1173,7 +1269,7 @@ int New_CompC(COMPC *compc,int num)<BR></H4>
 void Free_CompC_1DArray(COMPC *a,int num)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>複合曲線配列のメモリー解放。</DD>
+<DD>複合曲線配列のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：複合曲線配列へのポインタ  <BR>
  num：配列長   <BR>
@@ -1189,7 +1285,7 @@ void Free_CompC_1DArray(COMPC *a,int num)<BR></H4>
 void Free_CompC(COMPC *a)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>複合曲線のメモリー解放。</DD>
+<DD>複合曲線のメモリー解放．</DD>
 <DT> ＜引数＞ </DT>
 <DD> *a：複合曲線へのポインタ  <BR>
 </DD>
@@ -1204,7 +1300,7 @@ void Free_CompC(COMPC *a)<BR></H4>
 int GetNurbsCCoef(NURBSC *nurb,double **coef,int i,Coord *P,double *Q)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線の係数を求める(最高3次)。</DD>
+<DD>NURBS曲線の係数を求める(最高3次)．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *nurb：対象となるNURBS曲線  <BR>
  coef：Bスプライン基底関数の係数  <BR>
@@ -1223,7 +1319,7 @@ int GetNurbsCCoef(NURBSC *nurb,double **coef,int i,Coord *P,double *Q)<BR></H4>
 int CalcEquation(double *a,double *t,int M)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>3次方程式まで解く。</DD>
+<DD>3次方程式まで解く．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  *a：係数<BR>  
  *t：解  <BR>
@@ -1241,7 +1337,7 @@ int CalcEquation(double *a,double *t,int M)<BR></H4>
 void GetNurbsSCoef(int M,double **coef,double *a,Coord *b,int i,Coord *P,double *Q)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線C(u) or C(v)の係数を求める。</DD>
+<DD>NURBS曲線C(u) or C(v)の係数を求める．</DD>
 <DT> ＜引数＞ </DT>
 <DD>  M：階数  <BR>
  coef：Bスプライン基底関数の係数  <BR>
@@ -1260,7 +1356,7 @@ void GetNurbsSCoef(int M,double **coef,double *a,Coord *b,int i,Coord *P,double 
 void GetIntersecEquation(int M,Coord *P,double *Q,Coord pt,Coord nvec,double *a)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
-<DD>NURBS曲線と平面の交線導出用方程式を得る。</DD>
+<DD>NURBS曲線と平面の交線導出用方程式を得る．</DD>
 <DT> ＜引数＞ </DT>
 <DD> M：階数  <BR>
  *P/*Q：NURBS曲線の係数（P,Q)  <BR>
@@ -1510,9 +1606,25 @@ Coord TrimNurbsSPlaneSub1(double a,double b,double x0,double y0,double x1,double
 </DL>
 <BR><BR>
 
-
-
-
+<A NAME="GetMinDist()"> </A>
+<H4>private<BR>
+int GetMinDist(NURBSS *S,Coord P,Coord *Q,int N,Coord *Ans)<BR></H4>
+<DL>
+<DT> ＜説明＞ </DT>
+<DD>CalcIntersecPtNurbsPtのサブ関数(空間上の1点とNURBS曲面上にあるいくつかの点との距離で最小のものを調べる)</DD>
+<DT> ＜引数＞ </DT>
+<DD> *S：NURBS曲面へのポインタ<BR>
+ P：空間上の1点
+ *Q：曲面上の点群(u,vパラメータで指定)
+ N：点数
+ *Ans：最小距離を持つ曲面上の点
+</DD>
+<DT> ＜戻り値＞ </DT>
+<DD>  成功：KOD_TRUE<BR>  
+ 失敗：KOD_FALSE <BR>
+</DD>
+</DL>
+<BR><BR>
 
 </blockquote> <HR> Document Release 2.0 for Kodatuno R2.0, Nov. 2011<P> <hr> <center>
 <A HREF="./3-1.html" TARGET="_top">Prev</A>

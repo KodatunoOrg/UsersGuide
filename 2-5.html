@@ -27,90 +27,87 @@
 </table> 
 <blockquote> 
 
-<BR><HR><H2>サンプルアプリケーションの実行</H2>
+<BR><HR><H2>サンプルアプリケーションの実行とソース解説 1</H2>
 
-Kodatuno CAM Kernelを使ったCAMアプリケーションの実装手順を説明します。<BR>
-Kodatuno W/S Ver.には2つのサンプルアプリケーションが用意されています。以下で、そのサンプルアプリケーションの実行方法及び
-ソース解説を行います。<BR><BR>
+　Kodatuno CAM Kernelを使ったCAMアプリケーションの実装手順を説明します．<BR>
+　<A HREF="./2-3.html">2.3 各ウィンドウの名称と機能</A>で述べたとおり，KodatunonにはKodatunoが提供するライブラリをユーザーが呼び出し，
+独自のCAMアプリケーションを構築するための仕組みが用意されています．<BR>
+　"WS"フォルダに"UserFunc.cpp/.h", "SampleFunc1.cpp", "SampleFunc2.cpp", "SampleFunc.h"の5つのソースファイルがあることを確認してください．
+"UserFunc.cpp/.h"は，KodatunoのGE部/GUI部と，ユーザーが独自に作成するソースコードとのブリッジとしての役割を果たす部分です．
+また，Kodatuno R2.2 W/S Ver.には8つのサンプルアプリケーションが用意されており，それらが"SampleFunc1.cpp"および"SapmeFunc2.cpp"に記述されています．
+本セクションおよび次セクションにてこれら8つのサンプルアプリケーションの解説を行いますが，その前に"UserFunc.cpp/.h"の取り扱いについて説明します．<BR><BR>
 
-<BR><H3>Ex.1) 等高線算出プログラム</H3><BR>
-1つのBody(NURBS曲面)と、x-y平面に平行な平面の交線(交点群)を、z方向に少しずつシフトしながら求めてく、等高線算出プログラムです。
+<BR><LI><H3>UserFunc.cpp/.h</H3>
+　"UserFunc.cpp/.h"にはUSERクラスが定義されており，メイン画面に割り当てられたユーザー用ボタンにイベントが発生すると，このクラスを介してKodatuno GUI部とUser部が情報をやりとりします．
+具体例として, ピックされたBody情報をコンソールに出力するサンプル関数ExecSampleFunc0()を用意しましたので，これを通してどのような情報がUser部に渡されるかを解説します．
+
+<H4>＜実行手順＞</H4>
 <OL>
-<BR><LI>まず、<A HREF="./2-2.html">2.2 Kodatunoを動かしてみよう</A>で示したように、Kodatunoアプリケーションを起動します。<BR><BR>
-<BR><LI>次に等高線算出の対象となるBodyを読み込みます。"Open"ボタンを押し、"Kodatuno_R***"フォルダ内にある、
-"IGES"フォルダを開くと、"FreeSurf.IGS"という名前のIGESファイルがありますので、それを選択し、"OK"。グラフィック領域に
-自由曲面が表示されたことを確認します。
-<P><CENTER>
+<LI>まず、<A HREF="./2-2.html">2.2 Kodatunoを動かしてみよう</A>で示したように，Kodatunoアプリケーションを起動します．<BR><BR>
+<BR><LI>次に適当なIGESファイルを読み込みます．メイン画面右上"Open"ボタンを押し，"Kodatuno_R***"フォルダ内にある，
+"IGES"フォルダを開くと，"FreeSurf.IGS"という名前のIGESファイルがありますので，それを選択し、"OK"．グラフィック領域に
+自由曲面が表示されたことを確認します．
+
 <P><CENTER><IMG SRC="pixmaps/FreeSurfView.jpg"></CENTER></P>
-</CENTER></P>
 
-<BR><LI>次に、ユーザー用ボタンの中から、"User Status"をクリック、User Statusダイアログを表示します。"Mode1"を選択し、プロパティ値
-として、
-<UL>
-<BR><LI>prop1：　40<BR>
-交線算出用の平面のz方向シフトのz軸の最大値<BR>
-<BR><LI>prop2：　-20<BR>
-交線算出用の平面のz方向シフトのz軸の最小値<BR>
-<BR><LI>prop3：　2<BR>
-交線算出用の平面のz方向シフト1回でのシフト量<BR>
-<BR><LI>prop4：　0.5<BR>
-交点群各点間の距離。実寸法の値です。値が大きいほど演算回数は減りますが、対象となる曲率が大きい場合は、入力値をあまり大きくとると、
-交点群算出に失敗する場合があります。<BR><BR>
-</UL>
-をそれぞれ入力し、"OK"。
-<P><CENTER>
+<BR><LI>"FreeSurf.IGS"は1枚の自由曲面と4本のエッジから成っています．これらを適当にピックします．
+
+<P><CENTER><IMG SRC="pixmaps/Seld_Stat.jpg"></CENTER></P>
+
+<BR><LI>次に，ユーザー用ボタンの中から，"User Status"をクリック，User Statusダイアログを表示します．Modeを適当に選択，Prop1, Prop2に適当な数値を入れ，OK．
+
 <P><CENTER><IMG SRC="pixmaps/Ex1_UserStat.jpg"></CENTER></P>
-</CENTER></P>
 
-<BR><LI>グラフィック領域に表示されているBody上で左クリックし、Bodyをハイライト表示にします。<BR><BR>
+<BR><LI>最後に，ユーザー用ボタンの"Sample Func 0"をクリックすることによって，このボタンに割り当てられた関数が実行されます．
+ボタンを押すことによって，コンソールに"User Status"情報およびピックされたオブジェクトの情報が出力されたことを確認してください．
+</OL><BR><BR>
 
-<BR><LI>ユーザー用ボタンの下から2つ目の"CalcIntersecLine"というラベル名のボタンをクリックします。
-これによって、等高線算出計算がスタートします。<BR><BR>
+<H4>＜ソース解説＞</H4>
 
-<BR><LI>Consoleに計算経過が表示され、計算が終了すると、計算結果がグラフィック領域に描画されます。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/FreeSurfResult.jpg"></CENTER></P>
-</CENTER></P>
-緑の点は、等高線上の点群であり、赤の線はその点における法線ベクトルを表しています。<BR>
-</OL>
-プロパティ値を色々変更して、結果がどのように変わるか試してみてください。<BR><BR>
+まずUSERクラスのコンストラクタを見てみましょう. 
 
+<P><CENTER><IMG SRC="pixmaps/UserFunc_Constructor.jpg"></CENTER></P>
 
-<BR><BR><H3>Ex.2) NURBS曲面同士の交線算出プログラム</H3><BR>
-2つのBodyを読み込み、両者の交差する交線を算出するプログラムです。
-
+　ここでUserFunc()という関数ポインタにユーザーが作成した関数を登録します．13行目を見てみると，ExecSampleFunc0()という名の関数を
+UserFunc()に代入しています. これは，メイン画面ユーザーボタンの"Sample Func 0"に当たる部分に対応します．このように，関数ポインタを介してKodatuno GUI部とUser部がやりとりします．<BR>
+　ExecSampleFunc0()はユーザーが自作する関数であり，その実体は33行目から書かれています。（プロトタイプ宣言も当然必要です．UserFunc.h内に記述されています．）<BR>
+　また，UserFunc()自体は引数が決まっていますので、それに代入するExecSampleFunc0()の引数もUserFunc()に合わせる必要があります．引数は，
 <OL>
-<BR><LI>Ex.1から継続して行う場合は、グラフィック操作アイコンの下から2つ目(消しゴムのマーク)をクリックし、Ex.1の演算結果を消去
-します。<BR><BR>
-
-<BR><LI>交線算出用に2つのBodyをそれぞれ読み込みます。"Open"より、デフォルトで表示されるディレクトリから1つ戻り、
-"IGES"ディレクトリを開き、"FreeSurf.IGS"及び"Sp100.IGS"を順番に読み込みます。Ex.1から継続している場合は、"Sp100.IGS"のみ
-読み込みます。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/FreeSurf_Sp100.jpg"></CENTER></P>
-</CENTER></P>
-
-<BR><LI>2つのBodyを選択状態にします。<BR><BR>
-
-<BR><LI>ユーザー用ボタンの中から、"User Status"をクリックし、User Statusダイアログを表示します。"Mode2"を選択し、プロパティ値
-として、
-<UL>
-<BR><LI>prop1：　10<BR>
-交線を算出する際に初期点を幾つか求めなければなりません。その初期点サーチにおける曲面分割数を指定しています。
-分割数が少ないと交線の初期点の獲得に失敗し、交線を算出できない場合があります。<BR><BR>
-
-<BR><LI>prop2：　0.5<BR>
-交点群各点間の距離。<BR><BR>
-</UL>
-を入力し、"OK"。<BR><BR>
-
-<BR><LI>ユーザー用ボタンの下から2つ目の"CalcIntersecLine"ボタンをクリックし、交線算出計算をスタートさせます。<BR><BR>
-
-<BR><LI>計算が終了すると、下図に示すように、2つのNURBS曲面が交差する交点群が表示されます。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/FreeSurf_Sp100_Result.jpg"></CENTER></P>
-</CENTER></P>
+<H4><LI>BODYList *BodyList</H4>
+Kodatunoは読み込んだBodyの幾何情報を読み込んだ数だけ、読み込んだ順にリスト構造として保持します。Bodyの幾何情報は"BODY.h"で定義されており，
+BODYクラスによって統括されています．*BodyListはリスト化されたBodyへのポインタです．
+<BR><H4><LI>OBJECTList *ObjList</H4>
+あるBodyに対して、ある面やエッジ(オブジェクト)をピックした場合、そのピックされたオブジェクトを識別するための情報が必要です。
+*ObjListはそのセレクション情報を提供する引数です。
+<BR><H4><LI>int PickCount</H4>
+全部で幾つの面あるいはエッジを選択したかを示します。<BR><BR>
 </OL>
+の3つです．BODYListとOBJECTListはピックしたオブジェクトの実体を取り出すための重要な要素ですが，ここでは概略をおさえるだけにとどめ，<A HREF="./2-8.html">2.8 BODYListとOBJECTList</A>でまとめて解説します．<BR>
+　また，USERクラス内にUserStat構造体が定義されており，この中に"User Status"ダイアログでの設定情報が格納されています．
+
+<P><CENTER><IMG SRC="pixmaps/UserStat_.jpg"></CENTER></P>
+
+では，ExecSampleFunc0()を見てみましょう．
+
+<P><CENTER><IMG SRC="pixmaps/ExecSampleFunc0.jpg"></CENTER></P>
+
+　先ほども述べたとおり，引数は必ず固定しなければなりません．<BR>
+　コンソールへの文字列出力はSetMessage()関数を使います．42〜49行目では"User Status"ダイアログでの設定情報を取り出し，出力しています．
+54行目ではExecSampleFunc0()の引数PickCountを出力しています．57行目以降では，ピックした数分のオブジェクトの情報を出力しています．<BR>
+i番目にピックされたオブジェクトの情報を取得するには58行目のように記述します．この記述の意味は解説しませんので，はおまじないとして覚えてしまってください．
+なお，OBJECT構造体は"BODY.h"の194行目に記述されています．
+
+<P><CENTER><IMG SRC="pixmaps/OBJECT_Structure.jpg"></CENTER></P>
+
+　以上でExecSampleFunc0()の解説は終わりです．ユーザーが定義した関数の登録方法，ピックした曲面/曲線の幾何情報の取り出し方が理解できたでしょうか．<BR>
+　つづいて，サンプルアプリケーションの解説に入っていきます．<BR><BR>
+　そうそう，ユーザーボタン名を変更する方法を説明するのを忘れていました．ボタン名は"UserFunc.cpp"の169行目，SetMenuLabelName()関数内で記述します．
+
+<P><CENTER><IMG SRC="pixmaps/UserFunc_LabelName.jpg"></CENTER></P>
+
+適当に名前を変更し，変更が反映されることを確認してみましょう．
+
+
 
 </blockquote> <HR> Document Release 2.0 for Kodatuno R2.0, Nov. 2011<P> <hr> <center>
 <A HREF="./2-4.html">Prev</A>

@@ -45,9 +45,11 @@
 #define FNAMEMAX      256                 ファイル名の最大文字数
 #define PI            3.141592653589793   円周率
 #define APPROX_ZERO_L 1.0e-6              ゼロと見なせる値(低精度)
-#define APPROX_ZERO   1.0e-9              ゼロと見なせる値(普通精度)
-#define APPROX_ZERO_H 1.0e-12             ゼロと見なせる値(高精度)
-#define LOOPCOUNTMAX  1000                収束計算回数の条件
+#define APPROX_ZERO   1.0e-12             ゼロと見なせる値(普通精度)
+#define APPROX_ZERO_H 1.0e-16             ゼロと見なせる値(高精度)
+#define LOOPCOUNTMAX  100                 収束計算回数の条件
+#define COORDINDEX    3                   3次元座標を示すインデックス数
+#define QUADINDEX     4                   3次元同次座標を示すインデックス数
 </font></pre>
 
 <HR>
@@ -89,6 +91,7 @@ public:
     Coord operator *(Coord);    座標値同士の掛け算(MulCoord())
     Coord operator *(double);   オーバーロード
     Coord operator /(Coord);    座標値同士の割り算(DivCoord())
+    Coord operator /(double);   オーバーロード
     double operator &(Coord);   座標値同士の内積(CalcInnerProduct())
     Coord operator &&(Coord);   座標値同士の外積(CalcOuterProduct())
 };
@@ -112,84 +115,127 @@ void InitCoord(Coord *a,int n)</H4>
     なし
 
 <A NAME=" AddCoord()"> </A>
+<A NAME=" AddCoord2D()"> </A>
 <H4>Coord AddCoord(Coord A, Coord B)  
 Coord AddCoord(Coord A, double b)  
-Coord AddCoord(Coord A, double b, double c, doule d) </H4>
+Coord AddCoord(Coord A, double b, double c, doule d)
+Coord AddCoord2D(Coord A, Coord B)
+Coord AddCoord2D(Coord A, double b)  
+Coord AddCoord2D(Coord A, double b, double c)</H4>
 ＜説明＞
     座標値の足し算．  
     ans = (A.x+B.x, A.y+B.y, A.z+B.z)  あるいは、 
     ans = (A.x+b, A.y+b, A.z+b)  あるいは、  
     ans = (A.x+b, A.y+c, A.z+d)  
+    2Dの場合はzの演算は行わない
  ＜引数＞  
     加算する2つのCoord．　あるいは、片方をdouble値とすることも可能． 
  ＜戻り値＞  
     加算の結果 
 
 <A NAME=" DivCoord()"> </A>
+<A NAME=" DivCoord2D()"> </A>
 <H4>Coord DivCoord(Coord A, Coord B);  
 Coord DivCoord(Coord A, double b);  
-Coord DivCoord(Coord A, double b, double c, double d)</H4>
+Coord DivCoord(Coord A, double b, double c, double d)
+Coord DivCoord2D(Coord A, Coord B);  
+Coord DivCoord2D(Coord A, double b);  
+Coord DivCoord2D(Coord A, double b, double c)</H4>
 ＜説明＞
     座標値の割り算  
     ans = (A.x/B.x, A.y/B.y, A.z/B.z)  あるいは、 
     ans = (A.x/b, A.y/b, A.z/b)  あるいは、  
-    ans = (A.x/b, A.y/c, A.z/d)  
+    ans = (A.x/b, A.y/c, A.z/d)
+    2Dの場合はzの演算は行わない  
 ＜引数＞  
     除算する2つのCoord．　あるいは、片方をdouble値とすることも可能． 
 ＜戻り値＞  
     除算の結果 
 
 <A NAME=" MulCoord()"> </A>
+<A NAME=" MulCoord2D()"> </A>
 <H4>Coord MulCoord(Coord A, Coord B);  
 Coord MulCoord(Coord A, double b);  
-Coord MulCoord(Coord A, double b, double c, double d); </H4>
+Coord MulCoord(Coord A, double b, double c, double d);
+Coord MulCoord2D(Coord A, Coord B);  
+Coord MulCoord2D(Coord A, double b);  
+Coord MulCoord2D(Coord A, double b, double c); </H4>
 ＜説明＞
     座標値の掛け算  
     ans = (A.x*B.x, A.y*B.y, A.z*B.z)  あるいは、 
     ans = (A.x*b, A.y*b, A.z*b)  あるいは、  
     ans = (A.x*b, A.y*c, A.z*d)  
+    2Dの場合はzの演算は行わない
 ＜引数＞  
     乗算する2つのCoord．　あるいは、片方をdouble値とすることも可能． 
 ＜戻り値＞  
     乗算の結果 
  
 <A NAME=" SubCoord()"> </A>
+<A NAME=" SubCoord2D()"> </A>
 <H4>Coord SubCoord(Coord A, Coord B);  
 Coord SubCoord(Coord A, double b);  
-Coord SubCoord(Coord A, double b, double c, double d); </H4>
+Coord SubCoord(Coord A, double b, double c, double d); 
+Coord SubCoord2D(Coord A, Coord B);  
+Coord SubCoord2D(Coord A, double b);  
+Coord SubCoord2D(Coord A, double b, double c); </H4>
 ＜説明＞
     座標値の掛け算  
     ans = (A.x-B.x, A.y-B.y, A.z-B.z)  あるいは、 
     ans = (A.x-b, A.y-b, A.z-b)  あるいは、  
     ans = (A.x-b, A.y-c, A.z-d)  
+    2Dの場合はzの演算は行わない
 ＜引数＞  
     減算する2つのCoord．　あるいは、片方をdouble値とすることも可能． 
 ＜戻り値＞  
     減算の結果 
 
 <A NAME=" SetCoord()"> </A>
+<A NAME=" SetCoord2D()"> </A>
 <H4>Coord SetCoord(Coord A);  
-Coord SetCoord(double a, double b, double c);  </H4>
+Coord SetCoord(double a, double b, double c); 
+Coord SetCoord2D(Coord A);  
+Coord SetCoord2D(double a, double b); </H4>
 ＜説明＞
     座標値の代入  
     ans = (A.x, A.y, A.z)  あるいは  
     ans = (a,b,c)  
+    2Dの場合はzの演算は行わない
 ＜引数＞  
     代入するCoord．　あるいは、double型  
 ＜戻り値＞  
     代入の結果 
+    
+<A NAME=" CopyCoord()"> </A>
+<A NAME=" CopyCoord2D()"> </A>
+<H4>void CopyCoord(Coord *a,int n,Coord *b);</H4>
+＜説明＞
+    座標値群のコピー(b<--a)  
+＜引数＞  
+    *a：コピー元
+    n：座標値の数
+    *b：コピー先  
+＜戻り値＞  
+    なし 
 
 <A NAME=" DiffCoord()"> </A>
-<H4>int DiffCoord(Coord A, Coord B);  </H4>
+<A NAME=" DiffCoord2D()"> </A>
+<H4>int DiffCoord(Coord A, Coord B);
+int DiffCoord(Coord A, Coord B, double App);
+int DiffCoord2D(Coord A, Coord B);
+int DiffCoord2D(Coord A, Coord B, double App);  </H4>
 ＜説明＞
     AとBを比較する．　APPROX_ZERO以内で一致しているか 
+    精度を指定することもできる．
 ＜引数＞  
     比較したい座標値  
 ＜戻り値＞  
     A = B：KOD_TRUE　　　A != B： 
 
 <A NAME=" AbsCoord()"> </A>
-<H4>Coord AbsCoord(Coord a)</H4>
+<A NAME=" AbsCoord2D()"> </A>
+<H4>Coord AbsCoord(Coord a)
+Coord AbsCoord2D(Coord a)</H4>
 ＜説明＞
     座標値の絶対値を返す
 ＜引数＞
@@ -198,9 +244,12 @@ Coord SetCoord(double a, double b, double c);  </H4>
     絶対値化されたCoord.
     
 <A NAME=" ZeroCoord()"> </A>
-<H4>Coord ZeroCoord(Coord a)</H4>
+<A NAME=" ZeroCoord2D()"> </A>
+<H4>Coord ZeroCoord(Coord a)
+Coord ZeroCoord2D(Coord a)</H4>
 ＜説明＞
     座標値が(0.0 , 0.0 , 0.0)の場合にKOD_FALSEを返す
+    2Dの場合はzの値は見ない
 ＜引数＞
     3次元座標値
 ＜戻り値＞
@@ -250,7 +299,9 @@ double CalcInnerProduct(Coord A, double b, double c, double d); </H4>
     内積(スカラー) 
 
 <A NAME=" CalcOuterProduct()"> </A>
-<H4>Coord CalcOuterProduct(Coord A, Coord B);  </H4>
+<A NAME=" CalcOuterProduct2D()"> </A>
+<H4>Coord CalcOuterProduct(Coord A, Coord B);
+Coord CalcOuterProduct2D(Coord A, Coord B);  </H4>
 ＜説明＞
     外積を求める  
 ＜引数＞  
@@ -354,6 +405,40 @@ Coord CalcRotVec2D(Coord A, double Ang);  </H4>
     KOD_TRUE：内  
     KOD_FALSE：外  
     KOD_ONEDGE：エッジ上 
+    
+<A NAME=" CalcNormVecFrom3Pts()"> </A>
+<H4>Coord CalcNormVecFrom3Pts(Coord p1,Coord p2,Coord p3); </H4>
+＜説明＞
+   空間上の3点からなる平面の法線ベクトルを求める． 
+＜引数＞  
+    p1, p2, p3：空間上の3点
+＜戻り値＞  
+    法線ベクトル
+    
+<A NAME=" ClacPolygonArea2D()"> </A>
+<H4>double ClacPolygonArea2D(Coord p[],int Vnum); </H4>
+＜説明＞
+   2D平面上の多角形の符号付き面積を得る． 
+＜引数＞  
+    p[ ]：頂点列
+    Vnum：頂点の数
+＜戻り値＞  
+    符号付面積(CCW：正，CW：負)
+
+<A NAME=" DiscriminateCW2D()"> </A>
+<H4>int DiscriminateCW2D(Coord p[],int Vnum); </H4>
+＜説明＞
+   2D平面上の多角形が時計回りか反時計回りかを判別する． 
+＜引数＞  
+    p[ ]：頂点列
+    Vnum：頂点の数
+＜戻り値＞  
+    CCW：KOD_TRUE
+    CW：KOD_FALSE
+
+</font></pre>
+<BR><BR>
+    
 </font></pre>
 <BR><BR>
 

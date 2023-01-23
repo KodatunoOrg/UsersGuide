@@ -498,15 +498,62 @@ int GenNurbsCurve(int Val, char *Fname, int M); </H4>
     NurbsCDlg_Proc(); 
 
 <A NAME="GenNurbsSurface()"> </A>
-<H4>private
-void Describe_Main();  </H4>
+<H4>public
+int GenNurbsSurface(int Val, char *Fname, int M); </H4>
 ＜説明＞
-    BODY描画メイン。  
+    Inputファイル(点列)を読み込み、指定した生成方法を用いてNURBS曲面を生成する。 
 ＜引数＞  
-    なし  
+    Vaｌ：NURBS曲面の生成方法を示すシンボル  
+    *Fname：Inputファイル名  
+    M：生成するNURBS曲面の階数  
 ＜戻り値＞  
-    なし  
+    NURBS曲面の生成に成功：KOD_TRUE  
+    Inputファイルの読み込みに失敗した：KOD_ERR 
+    Inputファイルに記述されている点の数がCTLPNUMMAXを超えている：KOD_ERR 
+＜呼び出し元＞  
+    NurbsCDlg_Proc(); 
  
+<A NAME="SearchBodyList()"> </A>
+<H4>public
+BODY *SearchBodyList(BODYList *BodyList, int Key); </H4>
+＜説明＞
+    セレクションされているBODYの実体を得る  
+＜引数＞  
+    *BodyList：サーチしたいBODYのリストを指定 
+    Key：サーチしたいBODY番号を指定  
+＜戻り値＞  
+    BODYへのポインタ 
+
+<A NAME="GetSurfInfo()"> </A>
+<H4>public
+void GetSurfInfo(void); </H4>
+＜説明＞
+    選択されている曲面の情報をコンソール出力する  
+＜引数＞  
+    なし 
+＜戻り値＞  
+    なし 
+
+<A NAME="ChangeRank()"> </A>
+<H4>public
+void ChangeRank(int Newrank[2]); </H4>
+＜説明＞
+    選択されている曲面のRankを変更する 
+＜引数＞  
+    Newrank[2]：変更後のu方向,v方向ランク
+＜戻り値＞  
+    なし 
+
+<A NAME="ChangeBackColor()"> </A>
+<H4>public
+void ChangeBackColor(double rgb[3]); </H4>
+＜説明＞
+    背景の色を変更する  
+＜引数＞  
+    rgb[3]：変更後の色をrgbで指定 
+＜戻り値＞  
+    なし 
+
 
 <A NAME="Describe_Main()"> </A>
 <H4>private
