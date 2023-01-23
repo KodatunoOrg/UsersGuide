@@ -45,10 +45,13 @@ NURBS操作モジュールを提供します。<BR>
 #define INVERSE             0           交線追跡の方向(逆)
 #define OUTTER_TRIM         0           外周トリミング領域
 #define INNER_TRIM          1           内周トリミング領域
+#define RUNGE_KUTTA         0           Runge-Kutta法のシンボル
+#define BULIRSH_STOER       1           Bulirsch-Stoer法のシンボル
+
 </font></pre>
 <HR>
 <BR>■インクルードライブラリ<BR><BR>
-"BODY.h" "Describe_BODY.h"<BR><BR>
+"BODY.h" "Quaternion.h"<BR><BR>
 <HR>
 <BR>■型定義<BR><BR>
 なし<BR><BR>
@@ -539,7 +542,7 @@ int CalcIntersecPtsPlaneU3(NURBSS *nurb,Coord pt,Coord nvec,int u_divnum,Coord *
 
 <A NAME="CalcIntersecPtsPlaneSearch()"> </A>
 <H4>public<BR>
-int CalcIntersecPtsPlaneSearch(NURBSS *nurb,Coord pt,Coord nvec,double ds,int initdivnum,Coord *ans,int ans_size)<BR></H4>
+int CalcIntersecPtsPlaneSearch(NURBSS *nurb,Coord pt,Coord nvec,double ds,int initdivnum,Coord *ans,int ans_size,int method)<BR></H4>
 <DL>
 <DT> ＜説明＞ </DT>
 <DD>NURBS曲面と平面との交点群を交線追跡法にて求める。</DD>
@@ -550,6 +553,7 @@ int CalcIntersecPtsPlaneSearch(NURBSS *nurb,Coord pt,Coord nvec,double ds,int in
  ds：交線(交点群)の粗さ(密0.1〜2疎)  <BR>
  *ans：算出された交点のu,vパラメータ値  <BR>
  ans_size：ansの配列長 <BR>
+ method : 交点算出時の数値計算法の選択（RUNGE_KUTTA：ルンゲクッタ法, BULIRSH_STOER：Bulirsh-Stoer法)
 </DD>
 <DT> ＜戻り値＞ </DT>
 <DD> 交点の個数(NURBS曲面と平面が交差していない：KOD_FALSE、交点の数がans_sizeを超えた：KOD_ERR)<BR>

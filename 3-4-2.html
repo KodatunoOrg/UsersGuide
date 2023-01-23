@@ -44,31 +44,22 @@
 #define HIGH_ACCURACY 2                   高精度のシンボル
 #define FNAMEMAX      256                 ファイル名の最大文字数
 #define PI            3.141592653589793   円周率
-#define APPROX_ZERO_L 1.0e-3              ゼロと見なせる値(低精度)
-#define APPROX_ZERO   1.0e-6              ゼロと見なせる値(普通精度)
+#define APPROX_ZERO_L 1.0e-6              ゼロと見なせる値(低精度)
+#define APPROX_ZERO   1.0e-9              ゼロと見なせる値(普通精度)
 #define APPROX_ZERO_H 1.0e-12             ゼロと見なせる値(高精度)
 #define LOOPCOUNTMAX  1000                収束計算回数の条件
 </font></pre>
 
 <HR>
 <BR>■インクルードライブラリ<BR><BR>
-&lt;stdio.h&gt;<BR> &lt;stdlib.h&gt;<BR> &lt;math.h&gt;<BR> &lt;string.h&gt;<BR> &lt;unistd.h&gt;<BR>
- &lt;GL/gl.h&gt;<BR> &lt;GL/glut.h&gt;<BR><BR>
-&lt;WSCfileSelect.h&gt;<BR> &lt;WSCmessageDialog.h&gt;<BR> &lt;WSCimageSet.h&gt;<BR> &lt;WSDkeyboard.h&gt;<BR>
-&lt;WSDmwindowDev.h&gt;<BR>&lt;WSDmouse.h&gt;<BR> &lt;WSCcolorSet.h&gt;<BR><BR>
-"Kodatuno_Win.h"<BR><BR>
+&lt;stdio.h&gt;<BR> &lt;stdlib.h&gt;<BR> &lt;math.h&gt;<BR> &lt;string.h&gt;<BR> &lt;GL/glut.h&gt;<BR>
+"StdAfxWS.h"<BR><BR>
 
 <HR>
 <BR>■型定義
 <pre><font size="3">
 typedef double **Matirx       double形の2次元配列をMatrixとして定義
 typedef double *Vector        double形の1次元配列をVectorとして定義
-
-＜座標用構造体＞
-typedef struct{
-    double x,y,z;    x,y,z座標値
-    double dmy;      汎用
-}Coord;
 
 ＜同次変換行列用構造体＞
 typedef struct{
@@ -83,8 +74,27 @@ typedef struct{
 </font></pre>
 
 <HR>
-<BR>■クラス<BR><BR>
-なし<BR><BR>
+<BR>■クラス
+<pre><font size="3">
+＜三次元座標用クラス＞
+class Coord
+{
+public:
+    double x,y,z;    x,y,z座標値
+    double dmy;      汎用
+
+    // オペレータのオーバーロード
+    Coord operator +(Coord);    座標値同士の足し算(AddCoord())
+    Coord operator -(Coord);    座標値同士の引き算(SubCoord())
+    Coord operator *(Coord);    座標値同士の掛け算(MulCoord())
+    Coord operator *(double);   オーバーロード
+    Coord operator /(Coord);    座標値同士の割り算(DivCoord())
+    double operator &(Coord);   座標値同士の内積(CalcInnerProduct())
+    Coord operator &&(Coord);   座標値同士の外積(CalcOuterProduct())
+};
+</font></pre>
+
+<BR><BR>
 
 <HR>
 <BR>■関数(Global)<BR><BR>
@@ -414,6 +424,17 @@ void InitMatrix(Matrix M, int m, int n);  </H4>
     n,m：ベクトルorマトリックスの配列長  
 ＜戻り値＞  
     なし 
+    
+<A NAME=" CopyVector()"> </A>
+<H4>void CopyVector(Vector a,int n,Vector b); </H4>
+＜説明＞
+    ベクトルのコピー  
+＜引数＞  
+    a：コピー元
+    n：ベクトル次元数
+    b：コピー先
+＜戻り値＞  
+    なし 
 
 <A NAME=" MulMxMx()"> </A>
 <H4>void MulMxMx(Matrix A, int m1, int n1, Matrix B, int m2, int n2, Matrix Ans); </H4>
@@ -453,35 +474,50 @@ Coord MulMxCOord(Matrix M, Coord B);  </H4>
     乗算結果 
 
 <A NAME=" TranMx()"> </A>
-<H4>void TranMx(Matrix M, int n, Matrix Ans);  
-void TranMx(Coord A[3], Coord B[3]);  </H4>
+<H4>void TranMx(Matrix M, int n, Matrix Ans);
+void TranMx(Coord A[3], Coord B[3]);
+void TranMx(Coord **A, int m, int n, Cord **B)</H4>
 ＜説明＞
-    n*n行列Mまたは3*3行列A[3]の転置行列を得る 
+    n*n行列Mまたはm*n行列A[m][n]または3*3行列A[3]の転置行列を得る 
 ＜引数＞  
     M：転置するn*n行列  
-    n：行列Mの行/列数  
+    m：行列Aの行数
+    n：行列Mの行/列数または行列Aの列数
     A[3]：転置する3*3行列　　　　　(注意)Mは次元任意だが、Aは3次元 
     Ans,B[3]：転置された行列  
 ＜戻り値＞  
     なし 
 
 <A NAME=" Gauss()"> </A>
-<H4>double Gauss(int n, Matrix A, Vector B, Vector X);  </H4>
+<H4>double Gauss(int n, Matrix a, Vector b, Vector x);  
+double Gauss(int n, Matrix a, Coord *b, Coord *x);</H4>
 ＜説明＞
     ガウスの消去法を用いて連立1次方程式を解く 
     [A]{X} = {B}      {X} = [A]^{B}             [A]^：[A]の逆行列 
 ＜引数＞  
     n：行/列数  
-    A：n*nの係数行列　　　　　(注意)出力としてLU分解された結果が格納される 
-    B：n次元の右辺ベクトル  
-    X：n次元の変数ベクトル  
+    a：n*nの係数行列　　　　　(注意)出力としてLU分解された結果が格納される 
+    b：n次元の右辺ベクトル  
+    x：n次元の変数ベクトル  
 ＜戻り値＞  
     行列式  
     メモリー確保に失敗した場合はKOD_ERR  
     行列式の絶対値がAPPROX_ZERO以下の場合はKOD_FALSE 
 
 <A NAME=" LU_Solver()"> </A>
-
+<H4>void LU_Solver(int n,Matrix a,Vector b,int *ip,Vector x);  
+void LU_Solver(int n,Matrix a,Coord *b,int *ip,Coord *x);</H4>
+＜説明＞
+    LU分解の結果から連立1次方程式を解く
+＜引数＞  
+    n：行/列数  
+    a：n*nの係数行列　　　　　(注意)出力としてLU分解された結果が格納される 
+    b：n次元の右辺ベクトル  
+    ip：行交換の情報
+    x：解  
+＜戻り値＞  
+    なし
+    
 <A NAME=" LU()"> </A>
 <H4>double LU(int n, Matrix M, int *Ip);  </H4>
 ＜説明＞

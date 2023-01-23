@@ -21,70 +21,58 @@
 		<td width="20%" valign="bottom" align="right">     
 			<A HREF="./2-7.html">Prev</A>     
 			<A HREF="./index.html">Index</A>
-			<A HREF="./3-1.html">Next</A><br>
+			<A HREF="./2-9.html">Next</A><br>
 		</td>   
 	</tr> 
 </table> 
 <blockquote> 
 
-<BR><HR><H2>その他</H2>
-UserFuncには、これまで述べてきた機能に加え、更に以下に2つの機能があります。
-<UL>
-<BR><LI>ユーザーコマンドの登録<BR><BR>
-Kodatunoでは、システムが提供するコマンド(<A HREF="2-4.html">2.4  各コマンドの名称と機能 </A>)以外に、
-ユーザーが独自でコマンドを作成し、登録することができます。サンプルとして、(<A HREF="2-7.html">2.7 簡単なアプリケーションの作成  </A>)
-で示したプログラムをコンソールから実行できるようにしてみます。
-<OL>
-<BR><LI>まず、コマンド名を登録します。コマンド名は"cross"とします。<BR>
-UserFunc.cpp内にRegistUserCommand()関数があります。その関数内を次のように変更してください。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Command_Name.jpg"></CENTER></P>
-</CENTER></P>
+<BR><HR><H2>BODYListとOBJECTList</H2>
 
-SetCmdList()関数は、Command.cpp/.hに定義されています。第1引数はコマンドの名前やオプションの有無などを格納した構造体(実体はKodatuno.hで定義されています)への
-ポインタ(変更不可)、第2引数はコマンド名、第3引数はオプション指定、第4引数はこのコマンドのシンボル、第5引数はシステムコマンドでないことを明示するためにNULLを指定します。
-第4引数であるコマンドのシンボルは、UserFunc.hでユーザーが定義しなければなりません。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Command_Symbol.jpg"></CENTER></P>
-</CENTER></P>
+画面上で選択された曲線/曲面の幾何情報はBODYListとOBJECTListの2つに格納され、UserFuncとへ渡されます。<BR>
+このセクションでは、これら2つのリストについて説明します。<BR><BR>
 
-<BR><LI>次に、"cross"が入力されたときの処理をUserFunc.cpp内のCommand()関数に記述します。<BR><BR>
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/Command_Command.jpg"></CENTER></P>
-</CENTER></P>
+BODYListとOBJECTListはBODY.h内で次のように定義されています。
+<P><CENTER><P><CENTER><IMG SRC="pixmaps/typedef_bodylist_objectlist.jpg"></CENTER></P></CENTER></P>
+更にKODlistDataはKodListFunc.h内で定義されており、リストを操作するいくつかの関数を持ったクラスです。
+つまりBODYListとOBJECTListはKODlistDataクラスの別名であり、元々は同じものを指します。
+<P><CENTER><P><CENTER><IMG SRC="pixmaps/KODListData_Class.jpg"></CENTER></P></CENTER></P>
+次に、このKODlistDataクラスに格納されるデータの実体を見てみると、Data型として宣言されており、更にこのData型は
+自己参照クラスとして定義されています。このDataクラス内で宣言されている変数void *dataに、セレクションされたデータの実体(幾何情報やセレクション情報)
+が格納されます。void *型として定義しているため、実際に格納するデータはどんなものでも構わず、(void *)型にキャストして格納します。
+つまり、KODlistDataクラスはリスト構造を構築するための箱という役割となっています。<BR><BR>
 
-コンソールに"cross"が入力されると、Command()の第4引数CmdNoに先ほど定義したcrossコマンドシンボル"CMD_CROSS"が渡されます。
-よって、Command()内ではCMD_CORSSが入力されたことを条件として、ExecSampleFunc4()を実行するようにコーディングします。<BR><BR>
-</OL>
+これをふまえて、<A HREF="2-6.html">2.6  サンプルアプリケーションのソース解説 </A>で示したExecSampleFunc1()関数をもう一度以下に示します。
+<P><CENTER><P><CENTER><IMG SRC="pixmaps/UserFunc_ExecSampleFunc1.jpg"></CENTER></P></CENTER></P>
+19行目及び20行目において、セレクションされたデータの実体をKODlistDataからそれぞれ取り出しています。
+データの取り出しには、KODlistDataクラスで定義されているgetData()関数を使います。このとき、その関数の頭には(OBJECT *)や(BODY *)
+が付いており、void *dataをOBJECT構造体やBODY構造体にキャストしていることが分かります。<BR>
+BODY構造体については<A HREF="3-8.html">3.8  CADデータの内部表現 </A>を参照してください。<BR>
+では次に、OBJECT構造体を見てみます。OBJECT構造体はBODY.ｈに定義されています。
+<P><CENTER><P><CENTER><IMG SRC="pixmaps/OBJECT_Structure.jpg"></CENTER></P></CENTER></P>
+OBJECT構造体には、セレクションされたエンティティがどのBODYに属しているか、面なのか線なのか、エンティティに割り振られたIDなど、
+セレクションされたエンティティを特定するための情報が格納されています。よってExecSampleFunc1()の19行目の様に、例えば<BR><BR>
+　　　OBJECT *obj = (OBJCET *)ObjList->getData(i);<BR><BR>
+とすれば、i番目にセレクションされたエンティティを特定するための情報がobjに格納さることになります。
+この特定情報objを元に実際にBODYの実体を引っ張ってくるには、20行目、<BR><BR>
+　　　BODY *body = (BODY *)BodyList->getData(obj->Body);<BR><BR>
+となります。getData()で引っ張ってくるデータのIDがobjの要素Bodyに格納されているわけです。<BR>
+次に23行目を見てみると、obj->Typeの中身を見て条件分岐していることが分かります。セレクションされたエンティティがNURBS曲面(#128)なのかNURBS曲線(#126)なのかといった
+形状情報がここに格納されます。エンティティに割り振られた番号はBODH.h内に定義されています。
+<P><CENTER><P><CENTER><IMG SRC="pixmaps/Entity_Symbol.jpg"></CENTER></P></CENTER></P>
+ただし、Kodatunoでは全てがNURBS表現が基本ですので、obj->Typeには#126、#128、#144しか今のところ格納されません。<BR>
+セレクションされたエンティティの幾何情報を実際に参照するには、24行目の<BR><BR>
+　　　body->NurbsS[obj->Num]<BR><BR>
+のように、obj->NumがセレクションされたエンティティにおけるTypeごとのIDとなり、20行目で取得したBodyの実体から辿ることができます。<BR>
 
-以上で、コマンド登録及び、コマンド入力後の応答を実装することができました。<BR><BR>
 
-<BR><LI>Wide Studioが提供するダイアログの利用<BR>
-例えば、ユーザー独自のファイルフォーマットの読み込みを行いたい場合などに便利です。
-Wide Studioの機能をUser Funcより用いる場合は、専用の関数ExecWSFunc()を通して行う必要があります。
-以下に、ユーザーボタン"User Func 5"にファイルをオープンするダイアログを適用する例を示します。
-<OL>
-<BR><LI>まず、ExecWSFunc()にこれから作成する関数名を記述します。今回の例では、MyOpenFileFunc()という名前とします。<BR>
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/UserWSFunc_ExecWSFunc.jpg"></CENTER></P>
-</CENTER></P>
-MyOpenFileFunc()をvalが4となる位置に挿入しました。valは"User Func"ボタンのシンボルを示し、val=4の場合、"User Func 5"を示します。<BR>
-
-<BR><LI>次に、MyOpenFileFunc()を書いていきます。
-<P><CENTER>
-<P><CENTER><IMG SRC="pixmaps/UserWSFunc_MyOpenFileFunc.jpg"></CENTER></P>
-</CENTER></P>
-Wide Studioに関するコーディングはWide Studioのリファレンスを参照してください。
-関数冒頭の3行でダイアログを開く処理を行っています。今回の例では、拡張子igsのみダイアログに表示されるようにしています。
-次のif文以降で、ダイアログのOKが押された場合の処理を記述します。<BR><BR>
-</OL>
-以上で、UserFuncにおけるダイアログの表示が可能となります。
-</UL>
+最後に、セレクションとOBJECT構造体との関係を模式的に表した図を示します。
+<P><CENTER><P><CENTER><IMG SRC="pixmaps/Selection_architecture.jpg"></CENTER></P></CENTER></P>
 
 </blockquote> <HR> Document Release 2.0 for Kodatuno R2.0, Nov. 2011<P> <hr> <center>
 <A HREF="./2-7.html">Prev</A>
 <A HREF="./index.html">index</A>
-<A HREF="./3-1.html">Next</A><br>
+<A HREF="./2-9.html">Next</A><br>
 </center> <hr> <table cellpadding="0" cellspacing="0" border="0" width="100%">    
 <tr>      
 	<td align="left">        

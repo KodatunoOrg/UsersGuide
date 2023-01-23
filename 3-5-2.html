@@ -155,9 +155,20 @@ int IGES_Parser_Main(BODY *body,char IGES_fname[]); </H4>
     
 <A NAME="NormalizeKnotRange()"> </A>
 <H4>public
-int NormalizeKnotRange(BODY *body); </H4>
+int NormalizeKnotRange(BODY *body, double val); </H4>
 ＜説明＞
-    ノットベクトルを正規化する。  
+    ノットベクトルを0〜valで正規化する。  
+＜引数＞  
+    *body：立体を構成するエンティティの集合オブジェクトへのポインタ 
+    val：ノットベクトルの範囲の上限
+＜戻り値＞  
+    KOD_TRUE  
+    
+<A NAME="ExpandKnotRange()"> </A>
+<H4>public
+int ExpandKnotRange(BODY *body); </H4>
+＜説明＞
+    隣うノットベクトルの間隔がMIN_KNOT_RANGE以上となるようにノットベクトルの範囲を修正する。  
 ＜引数＞  
     *body：立体を構成するエンティティの集合オブジェクトへのポインタ 
 ＜戻り値＞  
@@ -604,6 +615,19 @@ int CheckKnotVecRange(double Range[2],double Knot[],int N,int M,int K); </H4>
 ＜戻り値＞  
     成功：KOD_TRUE  
     失敗：KOD_ERR 
+</font></pre>
+
+<A NAME="CheckKnotVecRange()"> </A>
+<H4>private
+double CheckKnotVecRange(double Knot[],int M,int K); </H4>
+＜説明＞
+    隣り合うノットベクトルの差の最小値を返す。 
+＜引数＞  
+    Knot[]：ノットベクトル  
+    M：階数  
+    K：コントロールポイントの数  
+＜戻り値＞  
+    最小値
 </font></pre>
 
 <HR>
